@@ -4,6 +4,7 @@
   <img src="Imagens/LOGOCERTA.jpeg" alt="EquiTrade Logo" width="240" />
 </p>
 
+# Descrição
 Uma plataforma para troca e venda responsável de cavalos. O EquiTrade conecta proprietários, criadores e entusiastas para facilitar negociações seguras, com informações completas sobre cada animal.
 
 Status: WIP (Work in progress)

@@ -19,8 +19,8 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || 'equitrade',
   synchronize: process.env.NODE_ENV === 'development', // Auto-create schema in development
   logging: process.env.NODE_ENV === 'development',
-  entities: [join(__dirname, '..', 'entities', '*.{ts,js}')],
-  subscribers: [join(__dirname, '..', 'subscribers', '*.{ts,js}')],
+  entities: [join(__dirname, '..', 'db', 'entities', '*.{ts,js}')],
+  subscribers: [join(__dirname, '..', 'db', 'subscribers', '*.{ts,js}')],
 });
 
 export default AppDataSource;

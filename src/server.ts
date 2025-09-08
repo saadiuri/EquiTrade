@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express, { Application, Request, Response } from 'express';
 import { AppDataSource } from './config/database';
-import { User } from './entities/User';
+import { User } from './db/entities/User';
 
 const app: Application = express();
 const PORT: number = parseInt(process.env.PORT as string) || 3000;

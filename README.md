@@ -24,10 +24,11 @@ Funcionalidades principais
 - Busca e filtros avançados (raça, idade, sexo, localidade, propósito: esporte/lancha/recreio).
 - Sistema de mensagens internas e propostas.
 
-Tecnologias
-- Frontend: (Em desenvolvimento)
-- Backend: Node.js, Express, TypeScript
-- Banco de dados: PostgreSQL, TypeORM
+## Tecnologias
+- **Frontend:** (Em desenvolvimento)
+- **Backend:** Node.js, Express, TypeScript
+- **Banco de dados:** PostgreSQL, TypeORM
+- **Organização:** Estrutura modular com separação de responsabilidades
 - Armazenamento de mídia: (Em desenvolvimento)
 - Autenticação: (Em desenvolvimento)
 - CI/CD: GitHub Actions

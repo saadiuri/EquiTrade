@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { AppDataSource } from '../config/database';
-import { User } from '../entities/User';
+import { User } from '../db/entities/User';
 
 async function seed() {
   try {

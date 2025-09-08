@@ -1,6 +1,19 @@
 import { UserRepository } from '../db/repositories/UserRepository';
 import { User } from '../db/entities/User';
-import { CreateUserDto, UpdateUserDto, UserDto } from '../dto/user.dto';
+import { Comprador } from '../db/entities/Comprador';
+import { Vendedor } from '../db/entities/Vendedor';
+import { 
+  CreateUserDto, 
+  UpdateUserDto, 
+  UserDto, 
+  CompradorDto, 
+  VendedorDto,
+  CreateCompradorDto,
+  CreateVendedorDto,
+  UpdateCompradorDto,
+  UpdateVendedorDto,
+  USER_TYPE
+} from '../dto/user.dto';
 
 export class UserService {
   private userRepository: UserRepository;
@@ -11,32 +24,37 @@ export class UserService {
 
   async getAllUsers(): Promise<UserDto[]> {
     const users = await this.userRepository.findAll();
-    return users.map(this.toUserDto);
+    return users.map(user => this.toUserDto(user));
   }
 
-  async getUserById(id: number): Promise<UserDto | null> {
+  async getUserById(id: string): Promise<UserDto | null> {
     const user = await this.userRepository.findById(id);
     return user ? this.toUserDto(user) : null;
   }
 
   async createUser(userData: CreateUserDto): Promise<UserDto> {
     // Business logic: validate email uniqueness
-    const existingUser = await this.userRepository.findByEmail(userData.email);
+    const existingUser = await this.userRepository.findByEmail(userData.data.email);
     if (existingUser) {
       throw new Error('Email already exists');
     }
 
-    // Business logic: set default role
-    const userToCreate = {
-      ...userData,
-      role: userData.role || 'user'
-    };
-
-    const user = await this.userRepository.create(userToCreate);
-    return this.toUserDto(user);
+    // Create user based on type
+    if (userData.type === USER_TYPE.COMPRADOR) {
+      const comprador = await this.userRepository.createComprador(userData.data);
+      return this.toUserDto(comprador);
+    } else {
+      // Default nota to 0.0 if not provided for Vendedor
+      const vendedorData = {
+        ...userData.data,
+        nota: userData.data.nota ?? 0.0
+      };
+      const vendedor = await this.userRepository.createVendedor(vendedorData);
+      return this.toUserDto(vendedor);
+    }
   }
 
-  async updateUser(id: number, userData: UpdateUserDto): Promise<UserDto | null> {
+  async updateUser(id: string, userData: UpdateUserDto): Promise<UserDto | null> {
     // Business logic: check if user exists
     const existingUser = await this.userRepository.findById(id);
     if (!existingUser) {
@@ -44,43 +62,125 @@ export class UserService {
     }
 
     // Business logic: validate email uniqueness if email is being updated
-    if (userData.email && userData.email !== existingUser.email) {
-      const emailExists = await this.userRepository.existsByEmail(userData.email);
+    if (userData.data.email && userData.data.email !== existingUser.email) {
+      const emailExists = await this.userRepository.existsByEmail(userData.data.email);
       if (emailExists) {
         throw new Error('Email already exists');
       }
     }
 
-    const updatedUser = await this.userRepository.update(id, userData);
+    // Update user based on type and existing type
+    let updatedUser: User | null = null;
+
+    if (userData.type === USER_TYPE.COMPRADOR) {
+      // Ensure we're updating the right type
+      const comprador = await this.userRepository.findCompradorById(id);
+      if (!comprador) {
+        throw new Error('User is not a Comprador');
+      }
+      updatedUser = await this.userRepository.updateComprador(id, userData.data as UpdateCompradorDto);
+    } else {
+      // Vendedor
+      const vendedor = await this.userRepository.findVendedorById(id);
+      if (!vendedor) {
+        throw new Error('User is not a Vendedor');
+      }
+      updatedUser = await this.userRepository.updateVendedor(id, userData.data as UpdateVendedorDto);
+    }
+
     return updatedUser ? this.toUserDto(updatedUser) : null;
   }
 
-  async deleteUser(id: number): Promise<boolean> {
+  async deleteUser(id: string): Promise<boolean> {
     // Business logic: check if user exists
     const existingUser = await this.userRepository.findById(id);
     if (!existingUser) {
       throw new Error('User not found');
     }
 
-    // Business logic: prevent deletion of admin users (example)
-    if (existingUser.role === 'admin') {
-      const adminCount = await this.userRepository.count();
-      if (adminCount <= 1) {
-        throw new Error('Cannot delete the last admin user');
-      }
-    }
-
     return await this.userRepository.delete(id);
   }
 
+  // Type-specific methods for better API
+  async getAllCompradores(): Promise<CompradorDto[]> {
+    const compradores = await this.userRepository.getAllCompradores();
+    return compradores.map(comprador => this.toCompradorDto(comprador));
+  }
+
+  async getAllVendedores(): Promise<VendedorDto[]> {
+    const vendedores = await this.userRepository.getAllVendedores();
+    return vendedores.map(vendedor => this.toVendedorDto(vendedor));
+  }
+
+  async createComprador(userData: CreateCompradorDto): Promise<CompradorDto> {
+    //validate email uniqueness
+    const existingUser = await this.userRepository.findByEmail(userData.email);
+    if (existingUser) {
+      throw new Error('Email already exists');
+    }
+
+    const comprador = await this.userRepository.createComprador(userData);
+    return this.toCompradorDto(comprador);
+  }
+
+  async createVendedor(userData: CreateVendedorDto): Promise<VendedorDto> {
+    //validate email uniqueness
+    const existingUser = await this.userRepository.findByEmail(userData.email);
+    if (existingUser) {
+      throw new Error('Email already exists');
+    }
+
+    // Default nota to 0.0 if not provided
+    const vendedorData = {
+      ...userData,
+      nota: userData.nota ?? 0.0
+    };
+
+    const vendedor = await this.userRepository.createVendedor(vendedorData);
+    return this.toVendedorDto(vendedor);
+  }
+
+  // Private mapping methods
   private toUserDto(user: User): UserDto {
+    if (user instanceof Comprador) {
+      return this.toCompradorDto(user);
+    } else if (user instanceof Vendedor) {
+      return this.toVendedorDto(user);
+    } else {
+      // Fallback - check constructor name as TypeORM might not preserve instanceof
+      const userType = user.constructor.name;
+      if (userType === USER_TYPE.COMPRADOR) {
+        return this.toCompradorDto(user as Comprador);
+      } else {
+        return this.toVendedorDto(user as Vendedor);
+      }
+    }
+  }
+
+  private toCompradorDto(comprador: Comprador): CompradorDto {
     return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      id: comprador.id,
+      nome: comprador.nome,
+      email: comprador.email,
+      celular: comprador.celular,
+      endereco: comprador.endereco,
+      type: USER_TYPE.COMPRADOR,
+      createdAt: comprador.createdAt,
+      updatedAt: comprador.updatedAt
+    };
+  }
+
+  private toVendedorDto(vendedor: Vendedor): VendedorDto {
+    return {
+      id: vendedor.id,
+      nome: vendedor.nome,
+      email: vendedor.email,
+      celular: vendedor.celular,
+      endereco: vendedor.endereco,
+      type: USER_TYPE.VENDEDOR,
+      nota: vendedor.nota,
+      createdAt: vendedor.createdAt,
+      updatedAt: vendedor.updatedAt
     };
   }
 }

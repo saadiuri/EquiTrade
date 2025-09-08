@@ -1,57 +1,79 @@
 import 'reflect-metadata';
 import { AppDataSource } from '../config/database';
-import { User } from '../db/entities/User';
+import { Comprador } from '../db/entities/Comprador';
+import { Vendedor } from '../db/entities/Vendedor';
 
 async function seed() {
   try {
     await AppDataSource.initialize();
     console.log('Connected to database');
 
-    const userRepository = AppDataSource.getRepository(User);
+    const compradorRepository = AppDataSource.getRepository(Comprador);
+    const vendedorRepository = AppDataSource.getRepository(Vendedor);
 
     // Check if users already exist
-    const existingUsers = await userRepository.count();
-    if (existingUsers > 0) {
-      console.log(`Database already has ${existingUsers} users. Skipping seed.`);
+    const existingCompradores = await compradorRepository.count();
+    const existingVendedores = await vendedorRepository.count();
+    
+    if (existingCompradores > 0 || existingVendedores > 0) {
+      console.log(`Database already has ${existingCompradores + existingVendedores} users. Skipping seed.`);
       console.log('Use npm run db:reset to clear and reseed');
       return;
     }
 
-    // Create seed data
-    const seedUsers = [
+    // Create compradores (buyers)
+    const compradores = [
       {
-        name: 'Admin User',
-        email: 'admin@equitrade.com',
-        password: 'admin123',
-        role: 'admin'
-      },
-      {
-        name: 'João Silva',
-        email: 'joao@equitrade.com', 
-        password: 'password123',
-        role: 'seller'
-      },
-      {
-        name: 'Maria Santos',
+        nome: 'Maria Santos',
         email: 'maria@equitrade.com',
-        password: 'password123', 
-        role: 'buyer'
+        senha: 'password123',
+        celular: '(11) 99999-1111',
+        endereco: 'São Paulo, SP'
       },
       {
-        name: 'Pedro Oliveira',
+        nome: 'João Comprador',
+        email: 'joao.comprador@equitrade.com',
+        senha: 'password123',
+        celular: '(21) 99999-2222',
+        endereco: 'Rio de Janeiro, RJ'
+      }
+    ];
+
+    // Create vendedores (sellers)
+    const vendedores = [
+      {
+        nome: 'Pedro Oliveira',
         email: 'pedro@equitrade.com',
-        password: 'password123',
-        role: 'breeder'
+        senha: 'password123',
+        celular: '(31) 99999-3333',
+        endereco: 'Belo Horizonte, MG',
+        nota: 4.5
+      },
+      {
+        nome: 'Ana Vendedora',
+        email: 'ana.vendedora@equitrade.com',
+        senha: 'password123',
+        celular: '(41) 99999-4444',
+        endereco: 'Curitiba, PR',
+        nota: 4.8
       }
     ];
     
-    for (const userData of seedUsers) {
-      const user = userRepository.create(userData);
-      await userRepository.save(user);
-      console.log(`Created user: ${user.email} (${user.role})`);
+    // Seed compradores
+    for (const compradorData of compradores) {
+      const comprador = compradorRepository.create(compradorData);
+      await compradorRepository.save(comprador);
+      console.log(`Created comprador: ${comprador.email}`);
     }
 
-    console.log(`Successfully seeded ${seedUsers.length} users!`);
+    // Seed vendedores
+    for (const vendedorData of vendedores) {
+      const vendedor = vendedorRepository.create(vendedorData);
+      await vendedorRepository.save(vendedor);
+      console.log(`Created vendedor: ${vendedor.email} (nota: ${vendedor.nota})`);
+    }
+
+    console.log(`Successfully seeded ${compradores.length + vendedores.length} users!`);
     
   } catch (error) {
     console.error('Seed failed:', error);

@@ -24,33 +24,48 @@ Funcionalidades principais
 - Busca e filtros avançados (raça, idade, sexo, localidade, propósito: esporte/lancha/recreio).
 - Sistema de mensagens internas e propostas.
 
-Tecnologias (IR COLOCANDO O QUE FOR USAR)
-- Frontend: 
-- Backend: 
-- Banco de dados:
-- Armazenamento de mídia: 
-- Autenticação: 
+Tecnologias
+- Frontend: (Em desenvolvimento)
+- Backend: Node.js, Express, TypeScript
+- Banco de dados: (Em desenvolvimento)
+- Armazenamento de mídia: (Em desenvolvimento)
+- Autenticação: (Em desenvolvimento)
 - CI/CD: GitHub Actions
-- Testes:
+- Testes: (Em desenvolvimento)
 
-Quickstart (exemplo genérico)
+## 🚀 Como usar
+
+### Desenvolvimento
 ```bash
-# clonar o repositório
+# Clonar o repositório
 git clone https://github.com/SEU_USUARIO/EquiTrade.git
 cd EquiTrade
 
-# instalar dependências (ajuste conforme stack)
+# Instalar dependências
 npm install
 
-# rodar em modo de desenvolvimento
+# Desenvolvimento (executa TypeScript diretamente)
 npm run dev
+
+# Desenvolvimento com auto-restart
+npm run dev:watch
 ```
-Contribuição
-Obrigado por contribuir! Favor:
-- Abrir uma issue antes de implementar mudanças significativas.
-- Criar branches com nomes claros: feature/<descrição>, fix/<descrição>.
-- Seguir Conventional Commits para mensagens de commit.
-- Incluir testes quando aplicável.
+
+### Produção
+```bash
+# Compilar TypeScript
+npm run build
+
+# Executar versão compilada
+npm start
+```
+
+### Scripts disponíveis
+- `npm run dev` - Executa o servidor em modo desenvolvimento
+- `npm run dev:watch` - Executa com auto-restart quando arquivos mudam
+- `npm run build` - Compila TypeScript para JavaScript
+- `npm start` - Executa a versão compilada (produção)
+
 
 Contato
 - Autor: SEU_NOME (substitua aqui)

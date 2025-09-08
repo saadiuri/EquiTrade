@@ -1,13 +1,13 @@
-import express, { json } from 'express';
+import express, { Application, Request, Response } from 'express';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app: Application = express();
+const PORT: number = parseInt(process.env.PORT as string) || 3000;
 
 // Middleware to parse JSON
-app.use(json());
+app.use(express.json());
 
 // GET route that returns server status and port information
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.json({
     message: 'EquiTrade server is running!',
     port: PORT,

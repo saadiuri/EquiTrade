@@ -27,13 +27,30 @@ Funcionalidades principais
 Tecnologias
 - Frontend: (Em desenvolvimento)
 - Backend: Node.js, Express, TypeScript
-- Banco de dados: (Em desenvolvimento)
+- Banco de dados: PostgreSQL, TypeORM
 - Armazenamento de mídia: (Em desenvolvimento)
 - Autenticação: (Em desenvolvimento)
 - CI/CD: GitHub Actions
 - Testes: (Em desenvolvimento)
 
 ## 🚀 Como usar
+
+### Pré-requisitos
+- Node.js (v16 ou superior)
+- PostgreSQL (v12 ou superior)
+
+### Configuração do Banco de Dados
+```bash
+# Instalar PostgreSQL (macOS com Homebrew)
+brew install postgresql
+brew services start postgresql
+
+# Criar banco de dados
+createdb equitrade
+
+# Criar usuário postgres (se necessário)
+createuser -s postgres
+```
 
 ### Desenvolvimento
 ```bash
@@ -43,6 +60,13 @@ cd EquiTrade
 
 # Instalar dependências
 npm install
+
+# Configurar variáveis de ambiente
+cp env.example .env
+# Editar .env com suas configurações de banco
+
+# Povoar banco com dados iniciais (opcional)
+npm run db:seed
 
 # Desenvolvimento (executa TypeScript diretamente)
 npm run dev
@@ -65,6 +89,8 @@ npm start
 - `npm run dev:watch` - Executa com auto-restart quando arquivos mudam
 - `npm run build` - Compila TypeScript para JavaScript
 - `npm start` - Executa a versão compilada (produção)
+- `npm run db:seed` - Popula o banco com dados iniciais
+- `npm run db:reset` - Limpa e repovoar o banco de dados
 
 
 Contato

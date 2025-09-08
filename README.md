@@ -1,7 +1,7 @@
 # EquiTrade
 <p align="center">
   <!-- Substitua o caminho abaixo pela sua logo (ex.: /assets/logo.png ou /docs/logo.png) -->
-  <img src="Imagens/LOGOCERTA.jpeg" alt="EquiTrade Logo" width="240" />
+  <img src="assets/Imagens/logo.jpeg" alt="EquiTrade Logo" width="240" />
 </p>
 
 # Descrição

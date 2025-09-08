@@ -28,7 +28,7 @@ Funcionalidades principais
 - **Frontend:** (Em desenvolvimento)
 - **Backend:** Node.js, Express, TypeScript
 - **Banco de dados:** PostgreSQL, TypeORM
-- **Organização:** Estrutura modular com separação de responsabilidades
+- **Organização:** Estrutura modular com rotas organizadas e separação de responsabilidades
 - Armazenamento de mídia: (Em desenvolvimento)
 - Autenticação: (Em desenvolvimento)
 - CI/CD: GitHub Actions

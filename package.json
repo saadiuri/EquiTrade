@@ -1,0 +1,26 @@
+{
+  "name": "equitrade",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "<p align=\"center\">   <!-- Substitua o caminho abaixo pela sua logo (ex.: /assets/logo.png ou /docs/logo.png) -->   <img src=\"docs/logo.png\" alt=\"EquiTrade Logo\" width=\"240\" /> </p>",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saadiuri/EquiTrade.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saadiuri/EquiTrade/issues"
+  },
+  "homepage": "https://github.com/saadiuri/EquiTrade#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

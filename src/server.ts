@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import express, { Application, Request, Response } from 'express';
+import swaggerUi from 'swagger-ui-express';
 import { AppDataSource } from './config/database';
+import { swaggerSpec } from './config/swagger';
 import apiRoutes from './routes';
 
 const app: Application = express();
@@ -19,6 +21,12 @@ const initializeDatabase = async () => {
 // Middleware to parse JSON
 app.use(express.json());
 
+// Swagger Documentation
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'EquiTrade API Documentation',
+}));
+
 // Root route - server status
 app.get('/', (req: Request, res: Response) => {
   res.json({
@@ -27,7 +35,8 @@ app.get('/', (req: Request, res: Response) => {
     status: 'healthy',
     database: AppDataSource.isInitialized ? 'connected' : 'disconnected',
     uptime: process.uptime(),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    documentation: `http://localhost:${PORT}/docs`
   });
 });
 
@@ -39,9 +48,10 @@ const startServer = async () => {
   await initializeDatabase();
   
   app.listen(PORT, () => {
-    console.log(`EquiTrade server is running on port ${PORT}`);
-    console.log(`Access the server at: http://localhost:${PORT}`);
-    console.log(` Database: ${AppDataSource.isInitialized ? 'Connected' : 'Disconnected'}`);
+    console.log(`🚀 EquiTrade server is running on port ${PORT}`);
+    console.log(`📍 Access the server at: http://localhost:${PORT}`);
+    console.log(`📚 API Documentation: http://localhost:${PORT}/docs`);
+    console.log(`🗄️ Database: ${AppDataSource.isInitialized ? 'Connected' : 'Disconnected'}`);
   });
 };
 

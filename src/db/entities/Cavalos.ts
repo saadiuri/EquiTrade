@@ -1,9 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, TableInheritance } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { User } from './User';
 
 @Entity('cavalos')
-@TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export abstract class Cavalo {
+export class Cavalo {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -25,6 +24,9 @@ export abstract class Cavalo {
   @Column({ type: 'boolean', default: true })
   disponivel!: boolean;
 
+  @Column({ type: 'text', nullable: true })
+  premios?: string; // String simples para versao incial, depois será entidade separado em uma relacao com outra entidade de premios
+
   @CreateDateColumn()
   createdAt!: Date;
 
@@ -32,10 +34,15 @@ export abstract class Cavalo {
   updatedAt!: Date;
 
   // Relacionamento: um cavalo pertence a um usuário (dono/vendedor)
-  @ManyToOne(() => User, user => user.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
   dono!: User;
 
-  // Métodos abstratos para implementação nas classes filhas
-  abstract marcarComoVendido(): Promise<void>;
-  abstract reativarAnuncio(): Promise<void>;
+  // Métodos simples para MVP
+  marcarComoVendido(): void {
+    this.disponivel = false;
+  }
+
+  reativarAnuncio(): void {
+    this.disponivel = true;
+  }
 }

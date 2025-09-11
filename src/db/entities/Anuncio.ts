@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 import { Cavalo } from './Cavalos';
 
 @Entity('anuncios')
-export abstract class Anuncio {
+export class Anuncio {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -26,16 +26,21 @@ export abstract class Anuncio {
   updatedAt!: Date;
 
   // Relacionamento: um anúncio pertence a um usuário (vendedor)
-  @ManyToOne(() => User, user => user.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'vendedorId' })
   vendedor!: User;
 
   // Relacionamento: um anúncio está vinculado a um cavalo
-  @ManyToOne(() => Cavalo, cavalo => cavalo.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Cavalo, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'cavaloId' })
   cavalo!: Cavalo;
 
-  // Métodos abstratos para implementação nas classes filhas
-  abstract marcarComoVendido(): Promise<void>;
-  abstract reativarAnuncio(): Promise<void>;
+  // Métodos simples para MVP
+  marcarComoVendido(): void {
+    this.ativo = false;
+  }
+
+  reativarAnuncio(): void {
+    this.ativo = true;
+  }
 }

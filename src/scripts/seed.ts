@@ -123,13 +123,14 @@ async function seed() {
     const anuncioCavalo = anuncioRepository.create({
     titulo: `Venda do cavalo ${cavaloPrincipal.nome}`,
     descricao: `Cavalo da raça ${cavaloPrincipal.raca}, ${cavaloPrincipal.idade} anos, em excelente estado.`,
+    preco: cavaloPrincipal.preco, // <- adicionado
     tipo: 'CAVALO',
     cavalo: cavaloPrincipal,
     vendedor: vendedorPrincipal,
     ativo: true
     });
-
     await anuncioRepository.save(anuncioCavalo);
+
     console.log(`Created anuncio de cavalo: ${anuncioCavalo.titulo}`);
 
     console.log('✅ Seed finalizado com sucesso!');

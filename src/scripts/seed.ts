@@ -2,6 +2,8 @@ import 'reflect-metadata';
 import { AppDataSource } from '../config/database';
 import { Comprador } from '../db/entities/Comprador';
 import { Vendedor } from '../db/entities/Vendedor';
+import { Anuncio } from '../db/entities/Anuncio';
+import { Cavalo } from '../db/entities/Cavalos';
 
 async function seed() {
   try {
@@ -10,18 +12,22 @@ async function seed() {
 
     const compradorRepository = AppDataSource.getRepository(Comprador);
     const vendedorRepository = AppDataSource.getRepository(Vendedor);
+    const cavaloRepository = AppDataSource.getRepository(Cavalo);
+    const anuncioRepository = AppDataSource.getRepository(Anuncio);
 
-    // Check if users already exist
+    // Verifica se já tem registros
     const existingCompradores = await compradorRepository.count();
     const existingVendedores = await vendedorRepository.count();
-    
-    if (existingCompradores > 0 || existingVendedores > 0) {
-      console.log(`Database already has ${existingCompradores + existingVendedores} users. Skipping seed.`);
-      console.log('Use npm run db:reset to clear and reseed');
+    const existingCavalos = await cavaloRepository.count();
+    const existingAnuncios = await anuncioRepository.count();
+
+    if (existingCompradores > 0 || existingVendedores > 0 || existingCavalos > 0 || existingAnuncios > 0) {
+      console.log('Database já possui dados. Skipping seed.');
+      console.log('Use npm run db:reset para limpar e reseed.');
       return;
     }
 
-    // Create compradores (buyers)
+    // Compradores
     const compradores = [
       {
         nome: 'Maria Santos',
@@ -39,7 +45,7 @@ async function seed() {
       }
     ];
 
-    // Create vendedores (sellers)
+    // Vendedores
     const vendedores = [
       {
         nome: 'Pedro Oliveira',
@@ -58,7 +64,7 @@ async function seed() {
         nota: 4.8
       }
     ];
-    
+
     // Seed compradores
     for (const compradorData of compradores) {
       const comprador = compradorRepository.create(compradorData);
@@ -67,19 +73,71 @@ async function seed() {
     }
 
     // Seed vendedores
+    let vendedorPrincipal: Vendedor | null = null;
     for (const vendedorData of vendedores) {
       const vendedor = vendedorRepository.create(vendedorData);
       await vendedorRepository.save(vendedor);
       console.log(`Created vendedor: ${vendedor.email} (nota: ${vendedor.nota})`);
+
+      if (!vendedorPrincipal) vendedorPrincipal = vendedor; // pega o primeiro vendedor
     }
 
-    console.log(`Successfully seeded ${compradores.length + vendedores.length} users!`);
-    
+    if (!vendedorPrincipal) {
+      throw new Error('Nenhum vendedor criado!');
+    }
+
+    // Cavalos vinculados ao vendedorPrincipal
+    const cavalos = [
+      {
+        nome: 'Relâmpago',
+        idade: 5,
+        raca: 'Mangalarga Marchador',
+        preco: 15000.00,
+        descricao: 'Cavalo dócil, excelente para cavalgadas.',
+        dono: vendedorPrincipal
+      },
+      {
+        nome: 'Trovão',
+        idade: 7,
+        raca: 'Quarto de Milha',
+        preco: 25000.00,
+        descricao: 'Cavalo de corrida, muito veloz e treinado.',
+        dono: vendedorPrincipal
+      }
+    ];
+
+    let cavaloPrincipal: Cavalo | null = null;
+    for (const cavaloData of cavalos) {
+      const cavalo = cavaloRepository.create(cavaloData);
+      await cavaloRepository.save(cavalo);
+      console.log(`Created cavalo: ${cavalo.nome}`);
+
+      if (!cavaloPrincipal) cavaloPrincipal = cavalo; // pega o primeiro cavalo
+    }
+
+    if (!cavaloPrincipal) {
+      throw new Error('Nenhum cavalo criado!');
+    }
+
+    // Anúncio para o cavaloPrincipal
+    const anuncioCavalo = anuncioRepository.create({
+    titulo: `Venda do cavalo ${cavaloPrincipal.nome}`,
+    descricao: `Cavalo da raça ${cavaloPrincipal.raca}, ${cavaloPrincipal.idade} anos, em excelente estado.`,
+    tipo: 'CAVALO',
+    cavalo: cavaloPrincipal,
+    vendedor: vendedorPrincipal,
+    ativo: true
+    });
+
+    await anuncioRepository.save(anuncioCavalo);
+    console.log(`Created anuncio de cavalo: ${anuncioCavalo.titulo}`);
+
+    console.log('✅ Seed finalizado com sucesso!');
+
   } catch (error) {
     console.error('Seed failed:', error);
     process.exit(1);
   } finally {
-    // Close connection
     if (AppDataSource.isInitialized) {
       await AppDataSource.destroy();
     }
@@ -87,7 +145,6 @@ async function seed() {
   }
 }
 
-// Run if called directly (ES module check)
 if (import.meta.url === `file://${process.argv[1]}`) {
   seed();
 }

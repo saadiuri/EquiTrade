@@ -199,6 +199,190 @@ const swaggerDefinition: SwaggerDefinition = {
         },
         required: ['total', 'compradores', 'vendedores', 'averageVendedorRating'],
       },
+      CavaloDto: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID único do cavalo',
+          },
+          nome: {
+            type: 'string',
+            description: 'Nome do cavalo',
+          },
+          idade: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 50,
+            description: 'Idade do cavalo em anos',
+          },
+          raca: {
+            type: 'string',
+            description: 'Raça do cavalo',
+          },
+          preco: {
+            type: 'number',
+            format: 'decimal',
+            minimum: 0,
+            description: 'Preço do cavalo',
+          },
+          descricao: {
+            type: 'string',
+            description: 'Descrição detalhada do cavalo',
+          },
+          disponivel: {
+            type: 'boolean',
+            description: 'Indica se o cavalo está disponível para venda',
+          },
+          premios: {
+            type: 'string',
+            description: 'Prêmios e conquistas do cavalo',
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Data de criação do anúncio',
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Data de última atualização',
+          },
+          dono: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                format: 'uuid',
+                description: 'UUID do proprietário',
+              },
+              nome: {
+                type: 'string',
+                description: 'Nome do proprietário',
+              },
+              email: {
+                type: 'string',
+                format: 'email',
+                description: 'Email do proprietário',
+              },
+            },
+            required: ['id', 'nome', 'email'],
+            description: 'Informações do proprietário do cavalo',
+          },
+        },
+        required: ['id', 'nome', 'idade', 'raca', 'preco', 'disponivel', 'createdAt', 'updatedAt', 'dono'],
+      },
+      CreateCavaloDto: {
+        type: 'object',
+        properties: {
+          nome: {
+            type: 'string',
+            description: 'Nome do cavalo',
+          },
+          idade: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 50,
+            description: 'Idade do cavalo em anos',
+          },
+          raca: {
+            type: 'string',
+            description: 'Raça do cavalo',
+          },
+          preco: {
+            type: 'number',
+            format: 'decimal',
+            minimum: 0,
+            description: 'Preço do cavalo',
+          },
+          descricao: {
+            type: 'string',
+            description: 'Descrição detalhada do cavalo',
+          },
+          disponivel: {
+            type: 'boolean',
+            default: true,
+            description: 'Indica se o cavalo está disponível para venda',
+          },
+          premios: {
+            type: 'string',
+            description: 'Prêmios e conquistas do cavalo',
+          },
+          donoId: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID do proprietário do cavalo',
+          },
+        },
+        required: ['nome', 'idade', 'raca', 'preco', 'donoId'],
+      },
+      UpdateCavaloDto: {
+        type: 'object',
+        properties: {
+          nome: {
+            type: 'string',
+            description: 'Nome do cavalo',
+          },
+          idade: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 50,
+            description: 'Idade do cavalo em anos',
+          },
+          raca: {
+            type: 'string',
+            description: 'Raça do cavalo',
+          },
+          preco: {
+            type: 'number',
+            format: 'decimal',
+            minimum: 0,
+            description: 'Preço do cavalo',
+          },
+          descricao: {
+            type: 'string',
+            description: 'Descrição detalhada do cavalo',
+          },
+          disponivel: {
+            type: 'boolean',
+            description: 'Indica se o cavalo está disponível para venda',
+          },
+          premios: {
+            type: 'string',
+            description: 'Prêmios e conquistas do cavalo',
+          },
+        },
+        description: 'Todos os campos são opcionais para atualização',
+      },
+      CavaloStatsDto: {
+        type: 'object',
+        properties: {
+          total: {
+            type: 'integer',
+            description: 'Total de cavalos cadastrados',
+          },
+          available: {
+            type: 'integer',
+            description: 'Número de cavalos disponíveis',
+          },
+          unavailable: {
+            type: 'integer',
+            description: 'Número de cavalos indisponíveis',
+          },
+          averagePrice: {
+            type: 'number',
+            format: 'float',
+            description: 'Preço médio dos cavalos',
+          },
+          averageAge: {
+            type: 'number',
+            format: 'float',
+            description: 'Idade média dos cavalos',
+          },
+        },
+        required: ['total', 'available', 'unavailable', 'averagePrice', 'averageAge'],
+      },
       ApiResponse: {
         type: 'object',
         properties: {

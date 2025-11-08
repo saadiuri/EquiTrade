@@ -1,0 +1,11 @@
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/server.ts",
+    "dev:watch": "nodemon --exec tsx src/server.ts",
+    "db:seed": "tsx src/scripts/seed.ts",
+    "db:reset": "dropdb equitrade && createdb equitrade && npm run db:seed",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  Assim estava o test no package.jason ele foi alterado, mas lá não é aceito comentarios.

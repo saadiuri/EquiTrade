@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Cavalos - EquiTrade</title>
+    <link rel="stylesheet" href="/src/resources/style/styleListagemCavalo.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+            <h1>EquiTrade</h1>
+        </div>
+
+        <nav>
+            <a href="inicio.html">Início</a>
+            <a href="buscaCavalos.html">Buscar Cavalos</a>
+            <a href="listagemCavalos.html">Listagem</a>
+            <a href="batePapo.html">Bate-Papo</a>
+        </nav>
+
+        <a href="login.html" class="btn-login">Entrar</a>
+    </header>
+
+    <section class="page-header">
+        <h2>📜 Lista de Cavalos Disponíveis</h2>
+        <p>Veja todos os cavalos cadastrados para venda ou troca.</p>
+    </section>
+
+    <!-- TABELA DE CAVALOS -->
+    <section class="tabela-container">
+        <table class="tabela-cavalos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Raça</th>
+                    <th>Idade</th>
+                    <th>Preço</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>01</td>
+                    <td><img src="img/cavalo1.jpg" alt="Cavalo 1"></td>
+                    <td>Ventania</td>
+                    <td>Mangalarga</td>
+                    <td>5 anos</td>
+                    <td>R$ 12.000</td>
+                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
+                </tr>
+
+                <tr>
+                    <td>02</td>
+                    <td><img src="img/cavalo2.jpg" alt="Cavalo 2"></td>
+                    <td>Sereno</td>
+                    <td>Quarto de Milha</td>
+                    <td>7 anos</td>
+                    <td>R$ 15.500</td>
+                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
+                </tr>
+
+                <tr>
+                    <td>03</td>
+                    <td><img src="img/cavalo3.jpg" alt="Cavalo 3"></td>
+                    <td>Relâmpago</td>
+                    <td>Puro-Sangue</td>
+                    <td>4 anos</td>
+                    <td>R$ 21.000</td>
+                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>© 2025 EquiTrade — Plataforma de Troca e Venda de Cavalos</p>
+    </footer>
+
+</body>
+</html>

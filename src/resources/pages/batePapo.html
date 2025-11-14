@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bate-Papo | EquiTrade</title>
+    <link rel="stylesheet" href="/src/resources/style/styleBatePapo.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+            <h1>EquiTrade</h1>
+        </div>
+        <nav>
+            <a href="/src/pages/inicio.html">Início</a>
+            <a href="/src/pages/meusCavalos.html">Meus Cavalos</a>
+            <a href="/src/pages/trocas.html">Trocas</a>
+            <a href="/src/pages/batePapo.html" class="ativo">Bate-Papo</a>
+            <a href="/src/pages/login.html" class="btn-login">Sair</a>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="chat-container">
+        <div class="chat-header">
+            <div class="user-info">
+                <img src="/src/resources/img/user1.jpg" alt="Usuário">
+                <div>
+                    <h2>Lucas Silva</h2>
+                    <p>Negociando cavalo: <strong>Relâmpago Dourado</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="mensagem recebida">
+                <p>Olá! Vi o cavalo e fiquei interessado, ele ainda está disponível?</p>
+                <span>10:32</span>
+            </div>
+            <div class="mensagem enviada">
+                <p>Oi! Sim, o Relâmpago ainda está disponível 🐎</p>
+                <span>10:34</span>
+            </div>
+            <div class="mensagem recebida">
+                <p>Perfeito! Ele é manso com iniciantes?</p>
+                <span>10:35</span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="mensagemInput" placeholder="Digite sua mensagem...">
+            <button id="enviarBtn">Enviar</button>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 EquiTrade — Conectando apaixonados por cavalos</p>
+    </footer>
+
+    <script>
+        const input = document.getElementById("mensagemInput");
+        const chatBox = document.getElementById("chatBox");
+        const btn = document.getElementById("enviarBtn");
+
+        btn.addEventListener("click", () => {
+            const texto = input.value.trim();
+            if (texto === "") return;
+
+            const msg = document.createElement("div");
+            msg.classList.add("mensagem", "enviada");
+            msg.innerHTML = `<p>${texto}</p><span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
+            
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            input.value = "";
+        });
+    </script>
+</body>
+</html>

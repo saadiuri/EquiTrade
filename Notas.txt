@@ -8,4 +8,4 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
 
-  Assim estava o test no package.jason ele foi alterado, mas lá não é aceito comentarios.
+  Assim estava o test no package.json ele foi alterado, mas lá não é aceito comentarios.

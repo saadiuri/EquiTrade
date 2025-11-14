@@ -41,6 +41,11 @@ body {
     height: 55px;
     border-radius: 50%;
 }
+.logo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
 
 .header-nav a {
     color: #fff;
@@ -79,6 +84,7 @@ main h1 {
     padding: 30px;
     border-radius: 18px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    margin-top: 80px; /* espaço suficiente para não ficar atrás do header */
 }
 
 form .form-group {

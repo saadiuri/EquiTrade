@@ -4,108 +4,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ajuste o caminho do CSS se necessário -->
     <link rel="stylesheet" href="../style/styleCadastroUsuario.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Cadastro de Usuário</title>
-    <script src="" defer></script> <!-- Move o script aqui -->
 </head>
 
 <body>
     <header class="header">
         <div class="header-content">
             <div class="logo-container">
-                <img src="/assets/Imagens/logoSemFundo.png" alt="Logo">
+                <div class="logo">
+                    <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+                </div>
             </div>
             <nav class="header-nav">
-                <a href="inicio.html" class="header-button">Início</a>
-                <a href="#" class="header-button">Sobre</a>
-                <a href="#" class="header-button">Contato</a>
+                <a href="paginaInicial.html"header-button">Início</a>
+                <a href="sobre.html" class="header-button">Sobre</a>
+                <a href="contato.html" class="header-button">Contato</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <h1>Cadastro de Usuário</h1>
         <div class="form-container">
-            <form id="cadastroUsuario" method="post" action="/cadastrarUsuario">
+            <h1>Cadastro e Listagem de Usuários</h1>
+            <!-- Formulário de Cadastro -->
+            <form id="cadastroUsuario">
+
                 <div class="form-group input-icon">
                     <label for="nome">Nome Completo</label>
                     <span class="icon">&#128100;</span>
-                    <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Digite seu nome completo"
-                        required>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
                 </div>
+
                 <div class="form-group input-icon">
                     <label for="email">E-mail</label>
                     <span class="icon">&#9993;</span>
-                    <input type="email" id="email" name="email" autocomplete="email" placeholder="Digite seu e-mail"
-                        required>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
                 </div>
+
                 <div class="form-group input-icon">
                     <label for="senha">Senha</label>
                     <span class="icon">&#128274;</span>
-                    <input type="password" id="senha" name="senha" autocomplete="new-password"
-                        placeholder="Digite sua senha" required>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
                 </div>
+
                 <div class="form-group input-icon">
                     <label for="telefone">Telefone</label>
                     <span class="icon">&#128222;</span>
-                    <input type="tel" id="telefone" name="telefone" autocomplete="tel" placeholder="(00) 00000-0000"
-                        required>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
                 </div>
+
                 <div class="form-group input-icon">
-                    <label for="rua">Rua</label>
+                    <label for="endereco">Endereço</label>
                     <span class="icon">&#127968;</span>
-                    <input type="text" id="rua" name="rua" autocomplete="address-line1" placeholder="Rua, Número"
-                        required>
+                    <input type="text" id="endereco" name="endereco" placeholder="Rua, Número, Cidade" required>
                 </div>
-                <div class="form-group input-icon">
-                    <label for="cidade">Cidade</label>
-                    <span class="icon">&#127965;</span>
-                    <input type="text" id="cidade" name="cidade" autocomplete="address-level2"
-                        placeholder="Digite sua cidade" required>
-                </div>
-                <div class="form-group input-icon">
-                    <label for="estado">Estado</label>
-                    <span class="icon">&#127968;</span>
-                    <select id="estado" name="estado" autocomplete="address-level3" required>
-                        <option value="" disabled selected>Selecione o estado</option>
-                        <option value="AC">AC</option>
-                        <option value="AL">AL</option>
-                        <option value="AP">AP</option>
-                        <option value="AM">AM</option>
-                        <option value="BA">BA</option>
-                        <option value="CE">CE</option>
-                        <option value="DF">DF</option>
-                        <option value="ES">ES</option>
-                        <option value="GO">GO</option>
-                        <option value="MA">MA</option>
-                        <option value="MT">MT</option>
-                        <option value="MS">MS</option>
-                        <option value="MG">MG</option>
-                        <option value="PA">PA</option>
-                        <option value="PB">PB</option>
-                        <option value="PR">PR</option>
-                        <option value="PE">PE</option>
-                        <option value="PI">PI</option>
-                        <option value="RJ">RJ</option>
-                        <option value="RN">RN</option>
-                        <option value="RS">RS</option>
-                        <option value="RO">RO</option>
-                        <option value="RR">RR</option>
-                        <option value="SC">SC</option>
-                        <option value="SP">SP</option>
-                        <option value="SE">SE</option>
-                        <option value="TO">TO</option>
-                    </select>
-                </div>
-                <div class="form-group input-icon">
-                    <label for="cep">CEP</label>
-                    <span class="icon">&#128205;</span>
-                    <input type="text" id="cep" name="cep" autocomplete="postal-code" placeholder="00000-000" required>
-                </div>
-                <button type="submit" class="submit-button" onclick="cadastrarUsuario(event)">Cadastrar Usuário</button>
+
+
+                <button type="submit" class="submit-button">Cadastrar Usuário</button>
             </form>
+
+            <pre id="resultado"></pre>
+
+            <div class="listagem-container">
+                <h2>Lista de Usuários Cadastrados</h2>
+                <button id="listarBtn" class="submit-button">Listar Todos os Usuários</button>
+                <ul id="listaUsuarios">
+                    <!-- Usuários serão injetados aqui -->
+                </ul>
+            </div>
+
+            <!-- Importação do script JS compilado (ajuste o caminho se necessário!) -->
+            <!-- Assumindo que seu TS é compilado para 'dist/scripts/cadastroUsuario.js' -->
+            <!-- REMOVA a barra inicial / se o arquivo JS estiver em um subdiretório -->
+            <script type="module" src="/dist/resources/scripts/ts/cadastroUsuario.js"></script>
         </div>
+
     </main>
 
     <footer class="footer">

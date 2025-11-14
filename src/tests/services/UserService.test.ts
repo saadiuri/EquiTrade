@@ -25,7 +25,7 @@ class UserConcreto extends User {
         mensagem.remetente = this;
         mensagem.destinatario = new UserConcreto();
         mensagem.destinatario.id = destinatarioId;
-        mensagem.createdAt = new Date();
+        mensagem.createAt = new Date();
         return mensagem;
     }
 }
@@ -72,6 +72,6 @@ describe('Entidade User', () => {
         expect(msg.conteudo).toBe('Olá, tudo bem?');
         expect(msg.remetente).toBe(user);
         expect(msg.destinatario.id).toBe('xyz789');
-        expect(msg.createdAt).toBeInstanceOf(Date);
+        expect(msg.createAt).toBeInstanceOf(Date);
     });
 });

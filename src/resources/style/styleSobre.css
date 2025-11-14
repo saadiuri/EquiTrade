@@ -3,7 +3,7 @@
     --verde-escuro: #4f6d50;
     --bege: #f3f1e9;
     --marrom: #3b3b3b;
-    --marrom-claro: #895129 ;
+    --marrom-claro: #895129;
 }
 
 /* RESET */
@@ -39,8 +39,8 @@ body {
 }
 
 .logo img {
-    width: 45px;
-    height: 45px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
 }
 
@@ -75,6 +75,7 @@ nav a.ativo {
     text-align: center;
     padding-top: 120px;
     padding-bottom: 20px;
+    margin-top: 80px;
 }
 
 .page-header h2 {
@@ -94,19 +95,20 @@ nav a.ativo {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
+    margin-top: 80px;
 }
 
 .sobre-card {
     background: #fff;
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
     transition: 0.3s;
 }
 
 .sobre-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .sobre-card h3 {
@@ -136,7 +138,9 @@ footer {
 
 /* RESPONSIVO */
 @media (max-width: 768px) {
-    nav { display: none; }
+    nav {
+        display: none;
+    }
 
     .page-header h2 {
         font-size: 1.8rem;

@@ -1,5 +1,6 @@
 import { Cavalo } from '../../db/entities/Cavalos';
 import { User } from '../../db/entities/User';
+import { Comprador } from '../../db/entities/Comprador';
 
 // Criamos uma classe concreta para poder testar a abstrata
 class CavaloConcreto extends Cavalo {
@@ -16,7 +17,8 @@ describe('Entidade Cavalo', () => {
     let cavalo: CavaloConcreto;
 
     beforeEach(() => {
-        const user = new User();
+        const user = new Comprador();
+;
         user.id = '123';
         user.nome = 'João';
 

@@ -3,7 +3,7 @@
     --verde-escuro: #4f6d50;
     --bege: #f3f1e9;
     --marrom: #3b3b3b;
-    --marrom-claro:  #895129;
+    --marrom-claro: #895129;
 }
 
 /* RESET */
@@ -14,10 +14,28 @@
     font-family: "Inter", sans-serif;
 }
 
+
+html,
 body {
-    background-color: var(--bege);
-    color: var(--marrom);
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* main ocupa todo espaço restante */
+main {
+    flex: 1;
+    padding: 20px;
+    padding-top: 180px;
+    /* altura do header fixo */
+}
+
 
 /* NAVBAR */
 .navbar {
@@ -39,8 +57,8 @@ body {
 }
 
 .logo img {
-    width: 45px;
-    height: 45px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
 }
 
@@ -62,8 +80,8 @@ nav a:hover {
 
 .btn-login {
     background-color: var(--marrom-claro);
-    padding: 8px 14px;
     color: #000;
+    padding: 8px 14px;
     border-radius: 8px;
     font-weight: 600;
 }
@@ -73,6 +91,8 @@ nav a:hover {
     text-align: center;
     padding-top: 120px;
     padding-bottom: 20px;
+    margin-top: 120px;
+    /* espaço suficiente para não ficar atrás do header */
 }
 
 .page-header h2 {
@@ -93,7 +113,9 @@ nav a:hover {
     background-color: #fff;
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    margin-top: 100px;
+    /* espaço suficiente para não ficar atrás do header */
 }
 
 .tabela-cavalos {
@@ -139,19 +161,22 @@ nav a:hover {
 }
 
 /* FOOTER */
+/* footer sempre no final */
 footer {
     background-color: var(--verde-escuro);
     color: #fff;
     text-align: center;
-    padding: 18px;
-    margin-top: 40px;
+    padding: 20px;
+    margin-top: 7%;
 }
 
 /* RESPONSIVO */
 @media (max-width: 700px) {
 
-    nav { display: none; }
-    
+    nav {
+        display: none;
+    }
+
     .tabela-container {
         padding: 10px;
     }

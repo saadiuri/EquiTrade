@@ -27,7 +27,7 @@ body {
     background-color: var(--verde-escuro);
     padding: 15px 40px;
     z-index: 1000;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .header-content {
@@ -41,6 +41,13 @@ body {
     height: 55px;
     border-radius: 50%;
 }
+
+.logo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
 
 .header-nav a {
     color: #fff;
@@ -64,6 +71,7 @@ main h1 {
     margin-bottom: 10px;
     color: var(--verde-escuro);
     font-size: 2rem;
+    margin-top: 80px;
 }
 
 .contato-texto {
@@ -81,7 +89,7 @@ main h1 {
     background: #fff;
     padding: 30px;
     border-radius: 18px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .form-group {
@@ -119,7 +127,7 @@ input:focus,
 textarea:focus {
     border-color: var(--verde);
     background: #fff;
-    box-shadow: 0 0 6px rgba(107,139,110,0.4);
+    box-shadow: 0 0 6px rgba(107, 139, 110, 0.4);
 }
 
 /* BOTÃO */
@@ -147,7 +155,7 @@ textarea:focus {
     color: #fff;
     padding: 18px;
     margin-top: 40px;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* RESPONSIVO */

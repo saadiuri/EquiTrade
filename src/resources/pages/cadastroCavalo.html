@@ -27,7 +27,7 @@
 
     <main>
         <div class="form-container">
-                    <h1>Cadastro de Cavalo</h1>
+            <h1>Cadastro de Cavalo</h1>
             <form id="cadastroCavalo" method="post" action="/cadastrarCavalo" enctype="multipart/form-data">
 
                 <div class="form-group input-icon">
@@ -49,8 +49,8 @@
                 </div>
 
                 <div class="form-group input-icon">
-                    <label for="cor">Cor</label>
-                    <span class="icon">&#127912;</span>
+                    <label for="cor">Preço</label>
+                    <span class="icon">R&#36;</span>
                     <input type="text" id="cor" name="cor" placeholder="Ex: Alazão, Baio..." required>
                 </div>
 
@@ -70,6 +70,10 @@
                 <button type="submit" class="submit-button">Cadastrar Cavalo</button>
 
             </form>
+            <!-- Importação do script JS compilado (ajuste o caminho se necessário!) -->
+            <!-- Assumindo que seu TS é compilado para 'dist/scripts/cadastroUsuario.js' -->
+            <!-- REMOVA a barra inicial / se o arquivo JS estiver em um subdiretório -->
+            <script type="module" src="/dist/resources/scripts/ts/cadastroCavalo.js"></script>
         </div>
     </main>
 

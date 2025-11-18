@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bate-Papo | EquiTrade</title>
     <link rel="stylesheet" href="/src/resources/style/styleBatePapo.css">
 </head>
+
 <body>
     <!-- NAVBAR -->
     <header class="navbar">
@@ -71,12 +73,17 @@
 
             const msg = document.createElement("div");
             msg.classList.add("mensagem", "enviada");
-            msg.innerHTML = `<p>${texto}</p><span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
-            
+            msg.innerHTML = `<p>${texto}</p><span>${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
+
             chatBox.appendChild(msg);
             chatBox.scrollTop = chatBox.scrollHeight;
             input.value = "";
         });
     </script>
+    <!-- Importação do script JS compilado (ajuste o caminho se necessário!) -->
+    <!-- Assumindo que seu TS é compilado para 'dist/scripts/cadastroUsuario.js' -->
+    <!-- REMOVA a barra inicial / se o arquivo JS estiver em um subdiretório -->
+    <script type="module" src="/dist/resources/scripts/ts/batePapo.js"></script>
 </body>
+
 </html>

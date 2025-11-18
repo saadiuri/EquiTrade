@@ -26,14 +26,10 @@ interface UserResponseData extends UserFormData {
     createdAt: string;
 }
 
-// =========================================================================
 // VARIÁVEIS DE CONFIGURAÇÃO E DOM
-// =========================================================================
 const API_BASE_URL = "http://localhost:3000/api/users";
 
-// =========================================================================
 // FUNÇÃO DE CADASTRO (POST)
-// =========================================================================
 
 async function handleCadastroUsuario(event: Event) {
     event.preventDefault();
@@ -90,9 +86,7 @@ async function handleCadastroUsuario(event: Event) {
 }
 
 
-// =========================================================================
 // FUNÇÃO DE LISTAGEM (GET)
-// =========================================================================
 
 async function listarTodosOsUsuarios() {
     // Busca o elemento do DOM no momento da execução
@@ -140,9 +134,7 @@ async function listarTodosOsUsuarios() {
 }
 
 
-// =========================================================================
 // INICIALIZAÇÃO - PONTO CRÍTICO DE CORREÇÃO
-// =========================================================================
 
 /**
  * Envolve a busca de elementos DOM em um evento 'DOMContentLoaded'

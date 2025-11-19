@@ -383,6 +383,80 @@ const swaggerDefinition: SwaggerDefinition = {
         },
         required: ['total', 'available', 'unavailable', 'averagePrice', 'averageAge'],
       },
+      MensagemDto: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID único da mensagem',
+          },
+          conteudo: {
+            type: 'string',
+            description: 'Conteúdo da mensagem',
+          },
+          createAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Data de criação da mensagem',
+          },
+          remetente: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                format: 'uuid',
+              },
+              nome: {
+                type: 'string',
+              },
+              email: {
+                type: 'string',
+                format: 'email',
+              },
+            },
+            description: 'Dados do remetente',
+          },
+          destinatario: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                format: 'uuid',
+              },
+              nome: {
+                type: 'string',
+              },
+              email: {
+                type: 'string',
+                format: 'email',
+              },
+            },
+            description: 'Dados do destinatário',
+          },
+        },
+        required: ['id', 'conteudo', 'createAt', 'remetente', 'destinatario'],
+      },
+      CreateMensagemDto: {
+        type: 'object',
+        properties: {
+          remetente_id: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID do remetente',
+          },
+          destinatario_id: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID do destinatário',
+          },
+          conteudo: {
+            type: 'string',
+            description: 'Conteúdo da mensagem',
+          },
+        },
+        required: ['remetente_id', 'destinatario_id', 'conteudo'],
+      },
       ApiResponse: {
         type: 'object',
         properties: {

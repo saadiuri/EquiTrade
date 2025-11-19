@@ -4,6 +4,7 @@ import { Comprador } from '../db/entities/Comprador';
 import { Vendedor } from '../db/entities/Vendedor';
 import { Cavalo } from '../db/entities/Cavalos';
 import { Anuncio } from '../db/entities/Anuncio';
+import { Mensagem } from '../db/entities/Mensagem';
 
 async function seed() {
   try {
@@ -14,6 +15,7 @@ async function seed() {
     const vendedorRepository = AppDataSource.getRepository(Vendedor);
     const cavaloRepository = AppDataSource.getRepository(Cavalo);
     const anuncioRepository = AppDataSource.getRepository(Anuncio);
+    const mensagemRepository = AppDataSource.getRepository(Mensagem);
 
     // Check if data already exists
     const existingCompradores = await compradorRepository.count();
@@ -178,7 +180,64 @@ async function seed() {
       console.log(`📢 Created anúncio: ${anuncio.titulo}`);
     }
 
-    console.log(`Successfully seeded complete database!`);
+    const savedCompradores = await compradorRepository.find();
+
+    const mensagens = [
+      {
+        remetente: savedCompradores[0],
+        destinatario: savedVendedores[0],
+        conteudo: 'Olá! Tenho interesse no cavalo Thunder. Ele ainda está disponível?'
+      },
+      {
+        remetente: savedVendedores[0],
+        destinatario: savedCompradores[0],
+        conteudo: 'Sim, o Thunder está disponível! É um excelente cavalo para competições.'
+      },
+      {
+        remetente: savedCompradores[0],
+        destinatario: savedVendedores[0],
+        conteudo: 'Ótimo! Gostaria de agendar uma visita para conhecê-lo. Qual seria o melhor horário?'
+      },
+      {
+        remetente: savedCompradores[1],
+        destinatario: savedVendedores[1],
+        conteudo: 'Boa tarde! Vi o anúncio da égua Elegance. Poderia me passar mais informações sobre o temperamento dela?'
+      },
+      {
+        remetente: savedVendedores[1],
+        destinatario: savedCompradores[1],
+        conteudo: 'Boa tarde! A Elegance é muito dócil e focada. Perfeita para adestramento e muito receptiva aos comandos.'
+      },
+      {
+        remetente: savedCompradores[1],
+        destinatario: savedVendedores[0],
+        conteudo: 'Olá Pedro! Estou procurando um cavalo para meu filho que está começando. O Sereno seria indicado?'
+      },
+      {
+        remetente: savedVendedores[0],
+        destinatario: savedCompradores[1],
+        conteudo: 'Com certeza! O Sereno é perfeito para iniciantes. Muito manso e paciente.'
+      },
+      {
+        remetente: savedCompradores[0],
+        destinatario: savedVendedores[1],
+        conteudo: 'A Estrela ainda está à venda? Procuro uma égua para passeios.'
+      }
+    ];
+
+    console.log(`\nSeeding mensagens...`);
+    for (const mensagemData of mensagens) {
+      try {
+        const mensagem = mensagemRepository.create(mensagemData);
+        await mensagemRepository.save(mensagem);
+        console.log(`💬 Created message: ${mensagem.remetente.nome} → ${mensagem.destinatario.nome}`);
+      } catch (error) {
+        console.error(`Failed to create message:`, error);
+        throw error;
+      }
+    }
+
+    console.log(`\n✅ Successfully seeded complete database!`);
     
   } catch (error) {
     console.error('Seed failed:', error);

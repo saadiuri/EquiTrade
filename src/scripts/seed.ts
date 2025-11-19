@@ -28,7 +28,7 @@ async function seed() {
       return;
     }
 
-    // Create compradores (buyers)
+    // Compradores
     const compradores = [
       {
         nome: 'Maria Santos',
@@ -46,7 +46,7 @@ async function seed() {
       }
     ];
 
-    // Create vendedores (sellers)
+    // Vendedores
     const vendedores = [
       {
         nome: 'Pedro Oliveira',
@@ -65,7 +65,7 @@ async function seed() {
         nota: 4.8
       }
     ];
-    
+
     // Seed compradores
     for (const compradorData of compradores) {
       const comprador = compradorRepository.create(compradorData);
@@ -74,6 +74,7 @@ async function seed() {
     }
 
     // Seed vendedores
+    let vendedorPrincipal: Vendedor | null = null;
     for (const vendedorData of vendedores) {
       const vendedor = vendedorRepository.create(vendedorData);
       await vendedorRepository.save(vendedor);
@@ -243,7 +244,6 @@ async function seed() {
     console.error('Seed failed:', error);
     process.exit(1);
   } finally {
-    // Close connection
     if (AppDataSource.isInitialized) {
       await AppDataSource.destroy();
     }
@@ -251,7 +251,6 @@ async function seed() {
   }
 }
 
-// Run if called directly (ES module check)
 if (import.meta.url === `file://${process.argv[1]}`) {
   seed();
 }

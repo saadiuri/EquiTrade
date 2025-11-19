@@ -1,0 +1,188 @@
+:root {
+    /* Paleta EquiTrade */
+    --verde: #6b8b6e;
+    --verde-escuro: #4f6d50;
+    --bege: #f3f1e9;
+    --marrom: #3b3b3b;
+    --marrom-claro: #895129;
+
+    /* Elementos translúcidos */
+    --input-bg: rgba(255, 255, 255, 0.85);
+    --glass-bg: rgba(255, 255, 255, 0.15);
+
+    /* Fontes e espaçamento */
+    --font-primary: "Inter", sans-serif;
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+
+    --transition-speed: 0.3s;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Fundo bege com overlay suave para leitura */
+body {
+    font-family: var(--font-primary);
+    height: 100vh;
+    width: 100vw;
+    background: var(--bege) url('../pages/img/fundoLivros.png') no-repeat bottom / cover;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Overlay para deixar leitura mais agradável */
+body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(79, 109, 80, 0.35);
+    /* verde-escuro com transparência */
+    z-index: 0;
+}
+
+/* Container principal */
+.login-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: var(--spacing-large);
+    z-index: 1;
+}
+
+/* Cartão em Glassmorphism */
+.form-card {
+    background-color: var(--glass-bg);
+    border-radius: 18px;
+    padding: var(--spacing-large);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
+}
+
+.form-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Logo */
+.logo {
+    max-width: 150px;
+    display: block;
+    margin: 0 auto var(--spacing-large);
+}
+
+/* Títulos */
+h1 {
+    text-align: center;
+    color: var(--marrom);
+    font-size: 28px;
+    margin-bottom: var(--spacing-small);
+}
+
+h3 {
+    text-align: center;
+    color: var(--marrom-claro);
+    margin-bottom: var(--spacing-large);
+}
+
+/* Inputs */
+.input-group {
+    position: relative;
+    margin-bottom: var(--spacing-medium);
+}
+
+.input-group .icon {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: var(--verde-escuro);
+    font-size: 18px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    background: var(--input-bg);
+    font-size: 16px;
+    transition: 0.3s;
+    color: var(--marrom);
+}
+
+.input-group input:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 6px rgba(107, 139, 110, 0.4);
+    background: #fff;
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: var(--verde);
+    color: #fff;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: var(--verde-escuro);
+    transform: translateY(-2px);
+}
+
+/* Link para cadastro */
+.signup-container {
+    margin-top: var(--spacing-medium);
+    display: flex;
+    justify-content: center;
+}
+
+.signup-link {
+    color: var(--marrom-claro);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.signup-link:hover {
+    color: var(--verde-escuro);
+    text-decoration: underline;
+}
+
+/* Mensagem de erro */
+.error-message {
+    color: #b30000;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .form-card {
+        padding: var(--spacing-medium);
+    }
+
+    .logo {
+        max-width: 120px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - EquiTrade</title>
+    <link rel="stylesheet" href="../style/styleContato.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+                </div>
+            </div>
+
+            <nav class="header-nav">
+                <a href="paginaInicial.html">Início</a>
+                <a href="listagemCavalo.html">Cavalos</a>
+                <a href="cadastroCavalo.html">Cadastrar Cavalo</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- TÍTULO -->
+    <main>
+        <h1>Entre em Contato Conosco</h1>
+
+        <div class="contato-texto">
+            <p>Se tiver dúvidas, sugestões ou quiser falar com nossa equipe,<br>
+                preencha o formulário abaixo e responderemos o quanto antes.</p>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <div class="form-container">
+            <form>
+                <div class="form-group input-icon">
+                    <label for="nome">Seu Nome</label>
+                    <i class="icon">👤</i>
+                    <input type="text" id="nome" placeholder="Digite seu nome" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="email">E-mail</label>
+                    <i class="icon">✉️</i>
+                    <input type="email" id="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="assunto">Assunto</label>
+                    <i class="icon">📌</i>
+                    <input type="text" id="assunto" placeholder="Motivo do contato" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="mensagem">Mensagem</label>
+                    <i class="icon">💬</i>
+                    <textarea id="mensagem" rows="5" placeholder="Digite sua mensagem" required></textarea>
+                </div>
+
+                <button class="submit-button">Enviar Mensagem</button>
+            </form>
+        </div>
+
+        <!-- Importação do script JS compilado (ajuste o caminho se necessário!) -->
+        <!-- Assumindo que seu TS é compilado para 'dist/scripts/cadastroUsuario.js' -->
+        <!-- REMOVA a barra inicial / se o arquivo JS estiver em um subdiretório -->
+        <script type="module" src="/dist/resources/scripts/ts/contato.js"></script>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        © 2025 EquiTrade — Plataforma de Troca de Cavalos
+    </footer>
+
+</body>
+
+</html>

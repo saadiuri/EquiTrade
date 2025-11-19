@@ -1,0 +1,256 @@
+:root {
+    --verde: #6b8b6e;
+    --verde-escuro: #4f6d50;
+    --bege: #f3f1e9;
+    --marrom: #3b3b3b;
+    --marrom-claro: #895129;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+html,
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bege);
+    color: var(--marrom);
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--verde-escuro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    min-height: 180px;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.logo h1 {
+    color: #fff;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover,
+nav a.ativo {
+    color: var(--marrom-claro);
+    font-weight: 600;
+}
+
+.btn-login {
+    background-color: var(--marrom-claro);
+    color: #000;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* MAIN CONTENT */
+main {
+    display: flex;
+    justify-content: center;
+    /* centraliza horizontalmente */
+    padding: 20px;
+    margin-top: calc(180px + 20px);
+    /* espaço para navbar */
+    margin-bottom: 60px;
+    /* espaço para footer */
+}
+
+/* CHAT CONTAINER */
+.chat-container {
+    width: 100%;
+    margin: auto;       /* centraliza horizontalmente */
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Centraliza verticalmente dentro do main se necessário */
+}
+
+/* CHAT HEADER */
+.chat-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--verde);
+    padding-bottom: 15px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info h2 {
+    color: var(--verde-escuro);
+    font-size: 1.3rem;
+}
+
+.user-info p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* CHAT BOX */
+.chat-box {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding-right: 5px;
+}
+
+.mensagem {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.mensagem p {
+    margin-bottom: 5px;
+}
+
+.mensagem span {
+    font-size: 0.75rem;
+    color: #666;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.recebida {
+    background-color: var(--bege);
+    align-self: flex-start;
+    border: 1px solid var(--verde);
+}
+
+.enviada {
+    background-color: var(--verde);
+    color: #fff;
+    align-self: flex-end;
+}
+
+/* CHAT INPUT */
+.chat-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 1rem;
+}
+
+.chat-input button {
+    background-color: var(--marrom-claro);
+    color: #000;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #ffe98d;
+}
+
+/* FOOTER */
+footer {
+    background-color: var(--verde-escuro);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+        min-height: 150px;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .chat-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .user-info img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .mensagem {
+        max-width: 90%;
+    }
+
+
+    main {
+        margin-top: calc(150px + 15px);
+        /* espaço navbar menor */
+        margin-bottom: 40px;
+        /* espaço footer menor */
+    }
+}

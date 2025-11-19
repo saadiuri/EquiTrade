@@ -10,6 +10,9 @@ export class Anuncio {
   @Column({ type: 'varchar', length: 150 })
   titulo!: string;
 
+  @Column({ type: "varchar" })
+  tipo!: string;
+
   @Column({ type: 'text', nullable: true })
   descricao?: string;
 

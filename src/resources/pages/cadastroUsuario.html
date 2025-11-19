@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ajuste o caminho do CSS se necessário -->
+    <link rel="stylesheet" href="../style/styleCadastroUsuario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Cadastro de Usuário</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="paginaInicial.html" class="header-button">Início</a>
+                <a href="sobre.html" class="header-button">Sobre</a>
+                <a href="contato.html" class="header-button">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Cadastro e Listagem de Usuários</h1>
+            <!-- Formulário de Cadastro -->
+            <form id="cadastroUsuario">
+
+                <div class="form-group input-icon">
+                    <label for="nome">Nome Completo</label>
+                    <span class="icon">&#128100;</span>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="email">E-mail</label>
+                    <span class="icon">&#9993;</span>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="senha">Senha</label>
+                    <span class="icon">&#128274;</span>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="telefone">Telefone</label>
+                    <span class="icon">&#128222;</span>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                </div>
+
+                <div class="form-group input-icon">
+                    <label for="endereco">Endereço</label>
+                    <span class="icon">&#127968;</span>
+                    <input type="text" id="endereco" name="endereco" placeholder="Rua, Número, Cidade" required>
+                </div>
+
+
+                <button type="submit" class="submit-button">Cadastrar Usuário</button>
+            </form>
+
+            <pre id="resultado"></pre>
+
+            <div class="listagem-container">
+                <h2>Lista de Usuários Cadastrados</h2>
+                <button id="listarBtn" class="submit-button">Listar Todos os Usuários</button>
+                <ul id="listaUsuarios">
+                    <!-- Usuários serão injetados aqui -->
+                </ul>
+            </div>
+
+            <!-- Importação do script JS compilado (ajuste o caminho se necessário!) -->
+            <!-- Assumindo que seu TS é compilado para 'dist/scripts/cadastroUsuario.js' -->
+            <!-- REMOVA a barra inicial / se o arquivo JS estiver em um subdiretório -->
+            <script type="module" src="/dist/resources/scripts/ts/cadastroUsuario.js"></script>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 EquiTrade. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>

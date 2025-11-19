@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Cavalos | EquiTrade</title>
+    <link rel="stylesheet" href="/src/resources/style/styleBuscaCavalo.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+            <h1></h1>
+        </div>
+        <nav>
+            <a href="paginaInicial.html">Início</a>
+            <a href="listagemCavalo.html">Listagem</a>
+            <a href="buscaCavalo.html" class="ativo">Buscar</a>
+            <a href="batePapo.html">Bate-Papo</a>
+            <a href="login.html" class="btn-login">Sair</a>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+
+        <h2 class="titulo-pagina">Buscar Cavalos</h2>
+
+        <!-- BARRA DE PESQUISA -->
+        <div class="search-box">
+            <input type="text" placeholder="Digite o nome do cavalo, raça ou categoria...">
+            <button>Buscar</button>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <select>
+                <option value="">Raça</option>
+                <option>Mangalarga</option>
+                <option>Quarto de Milha</option>
+                <option>Andaluz</option>
+                <option>Puro-Sangue</option>
+            </select>
+
+            <select>
+                <option value="">Idade</option>
+                <option>1 - 4 anos</option>
+                <option>5 - 9 anos</option>
+                <option>10+ anos</option>
+            </select>
+
+            <select>
+                <option value="">Categoria</option>
+                <option>Corrida</option>
+                <option>Salto</option>
+                <option>Companhia</option>
+                <option>Trabalho</option>
+            </select>
+        </div>
+
+        <!-- LISTA DE RESULTADOS -->
+        <div class="cards">
+            <div class="card">
+                <img src="/src/resources/img/cavalo1.jpg" alt="Cavalo">
+                <div class="info">
+                    <h3>Relâmpago</h3>
+                    <p>Mangalarga • 7 anos</p>
+                    <button>Ver detalhes</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="/src/resources/img/cavalo2.jpg" alt="Cavalo">
+                <div class="info">
+                    <h3>Ventania</h3>
+                    <p>Quarto de Milha • 5 anos</p>
+                    <button>Ver detalhes</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="/src/resources/img/cavalo3.jpg" alt="Cavalo">
+                <div class="info">
+                    <h3>Majestade</h3>
+                    <p>Puro-Sangue • 8 anos</p>
+                    <button>Ver detalhes</button>
+                </div>
+            </div>
+        </div>
+        <!-- Importação do script JS compilado (ajuste o caminho se necessário!) -->
+        <!-- Assumindo que seu TS é compilado para 'dist/scripts/cadastroUsuario.js' -->
+        <!-- REMOVA a barra inicial / se o arquivo JS estiver em um subdiretório -->
+        <script type="module" src="/dist/resources/scripts/ts/batePapo.js"></script>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 EquiTrade — Conectando apaixonados por cavalos</p>
+    </footer>
+
+</body>
+
+</html>

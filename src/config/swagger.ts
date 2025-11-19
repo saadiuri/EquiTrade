@@ -457,6 +457,41 @@ const swaggerDefinition: SwaggerDefinition = {
         },
         required: ['remetente_id', 'destinatario_id', 'conteudo'],
       },
+      ConversationDto: {
+        type: 'object',
+        properties: {
+          otherUser: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                format: 'uuid',
+              },
+              nome: {
+                type: 'string',
+              },
+              email: {
+                type: 'string',
+                format: 'email',
+              },
+            },
+            required: ['id', 'nome', 'email'],
+            description: 'Dados do outro usuário na conversa',
+          },
+          messages: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/MensagemDto'
+            },
+            description: 'Lista de mensagens da conversa',
+          },
+          totalMessages: {
+            type: 'integer',
+            description: 'Total de mensagens na conversa',
+          },
+        },
+        required: ['otherUser', 'messages', 'totalMessages'],
+      },
       ApiResponse: {
         type: 'object',
         properties: {

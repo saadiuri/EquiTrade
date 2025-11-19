@@ -315,12 +315,8 @@ export class MensagemController {
    *                 - $ref: '#/components/schemas/ApiResponse'
    *                 - type: object
    *                   properties:
-   *                     count:
-   *                       type: integer
    *                     data:
-   *                       type: array
-   *                       items:
-   *                         $ref: '#/components/schemas/MensagemDto'
+   *                       $ref: '#/components/schemas/ConversationDto'
    *       400:
    *         description: IDs inválidos ou ausentes
    *       404:
@@ -349,12 +345,11 @@ export class MensagemController {
         return;
       }
 
-      const mensagens = await this.mensagemService.getConversation(currentUserId, otherUserId);
+      const conversation = await this.mensagemService.getConversation(currentUserId, otherUserId);
 
       res.json({
         success: true,
-        count: mensagens.length,
-        data: mensagens,
+        data: conversation,
       });
     } catch (error) {
       const statusCode = error instanceof Error && error.message.includes("not found") ? 404 : 500;

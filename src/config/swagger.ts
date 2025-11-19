@@ -492,6 +492,169 @@ const swaggerDefinition: SwaggerDefinition = {
         },
         required: ['otherUser', 'messages', 'totalMessages'],
       },
+      AnuncioDto: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID único do anúncio',
+          },
+          titulo: {
+            type: 'string',
+            description: 'Título do anúncio',
+          },
+          tipo: {
+            type: 'string',
+            description: 'Tipo do anúncio (ex: Venda, Aluguel)',
+          },
+          descricao: {
+            type: 'string',
+            description: 'Descrição detalhada do anúncio',
+          },
+          preco: {
+            type: 'number',
+            format: 'decimal',
+            description: 'Preço do anúncio',
+          },
+          ativo: {
+            type: 'boolean',
+            description: 'Indica se o anúncio está ativo',
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Data de criação',
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Data de última atualização',
+          },
+          vendedor: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                format: 'uuid',
+              },
+              nome: {
+                type: 'string',
+              },
+              email: {
+                type: 'string',
+                format: 'email',
+              },
+            },
+            required: ['id', 'nome', 'email'],
+            description: 'Informações do vendedor',
+          },
+          cavalo: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                format: 'uuid',
+              },
+              nome: {
+                type: 'string',
+              },
+              raca: {
+                type: 'string',
+              },
+              idade: {
+                type: 'integer',
+              },
+            },
+            required: ['id', 'nome', 'raca', 'idade'],
+            description: 'Informações do cavalo anunciado',
+          },
+        },
+        required: ['id', 'titulo', 'tipo', 'preco', 'ativo', 'createdAt', 'updatedAt', 'vendedor', 'cavalo'],
+      },
+      CreateAnuncioDto: {
+        type: 'object',
+        properties: {
+          titulo: {
+            type: 'string',
+            description: 'Título do anúncio',
+          },
+          tipo: {
+            type: 'string',
+            description: 'Tipo do anúncio (ex: Venda, Aluguel)',
+          },
+          descricao: {
+            type: 'string',
+            description: 'Descrição detalhada do anúncio',
+          },
+          preco: {
+            type: 'number',
+            format: 'decimal',
+            description: 'Preço do anúncio',
+          },
+          ativo: {
+            type: 'boolean',
+            default: true,
+            description: 'Indica se o anúncio está ativo',
+          },
+          vendedorId: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID do vendedor',
+          },
+          cavaloId: {
+            type: 'string',
+            format: 'uuid',
+            description: 'UUID do cavalo',
+          },
+        },
+        required: ['titulo', 'tipo', 'preco', 'vendedorId', 'cavaloId'],
+      },
+      UpdateAnuncioDto: {
+        type: 'object',
+        properties: {
+          titulo: {
+            type: 'string',
+            description: 'Título do anúncio',
+          },
+          tipo: {
+            type: 'string',
+            description: 'Tipo do anúncio',
+          },
+          descricao: {
+            type: 'string',
+            description: 'Descrição detalhada do anúncio',
+          },
+          preco: {
+            type: 'number',
+            format: 'decimal',
+            description: 'Preço do anúncio',
+          },
+          ativo: {
+            type: 'boolean',
+            description: 'Indica se o anúncio está ativo',
+          },
+        },
+        description: 'Todos os campos são opcionais para atualização',
+      },
+      AnuncioStatsDto: {
+        type: 'object',
+        properties: {
+          total: {
+            type: 'integer',
+            description: 'Total de anúncios cadastrados',
+          },
+          active: {
+            type: 'integer',
+            description: 'Número de anúncios ativos',
+          },
+          inactive: {
+            type: 'integer',
+            description: 'Número de anúncios inativos',
+          },
+        },
+        required: ['total', 'active', 'inactive'],
+      },
       ApiResponse: {
         type: 'object',
         properties: {

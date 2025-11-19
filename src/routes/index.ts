@@ -2,13 +2,14 @@ import { Router } from 'express';
 import userRoutes from './userRoutes';
 import cavaloRoutes from './cavaloRoutes';
 import mensagemRoutes from './mensagemRoutes';
+import anuncioRoutes from './anuncioRoutes';
 
 const router = Router();
 
-// Mount route modules
 router.use('/users', userRoutes);
 router.use('/cavalos', cavaloRoutes);
 router.use('/mensagens', mensagemRoutes);
+router.use('/anuncios', anuncioRoutes);
 
 // Health check for API
 router.get('/health', (req, res) => {

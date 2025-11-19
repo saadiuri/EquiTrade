@@ -6,33 +6,12 @@ const userController = new UserController();
 
 /**
  * @swagger
- * /api/users/stats:
- *   get:
- *     summary: Obter estatísticas dos usuários
- *     description: Retorna estatísticas gerais sobre compradores e vendedores
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Estatísticas obtidas com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               allOf:
- *                 - $ref: '#/components/schemas/ApiResponse'
- *                 - type: object
- *                   properties:
- *                     data:
- *                       $ref: '#/components/schemas/UserStatsDto'
- */
-router.get('/stats', (req, res) => userController.getUserStats(req, res));
-
-/**
- * @swagger
  * /api/users/compradores:
  *   get:
  *     summary: Listar todos os compradores
  *     description: Retorna uma lista de todos os compradores cadastrados
  *     tags: [Users]
+ *     security: []
  *     responses:
  *       200:
  *         description: Lista de compradores obtida com sucesso
@@ -57,6 +36,7 @@ router.get('/compradores', (req, res) => userController.getAllCompradores(req, r
  *     summary: Listar todos os vendedores
  *     description: Retorna uma lista de todos os vendedores cadastrados
  *     tags: [Users]
+ *     security: []
  *     responses:
  *       200:
  *         description: Lista de vendedores obtida com sucesso
@@ -81,6 +61,7 @@ router.get('/vendedores', (req, res) => userController.getAllVendedores(req, res
  *     summary: Listar todos os usuários
  *     description: Retorna uma lista de todos os usuários (compradores e vendedores)
  *     tags: [Users]
+ *     security: []
  *     responses:
  *       200:
  *         description: Lista de usuários obtida com sucesso
@@ -107,6 +88,7 @@ router.get('/', (req, res) => userController.getAllUsers(req, res));
  *     summary: Obter usuário por ID
  *     description: Retorna um usuário específico pelo seu UUID
  *     tags: [Users]
+ *     security: []
  *     parameters:
  *       - in: path
  *         name: id

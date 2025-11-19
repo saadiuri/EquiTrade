@@ -115,35 +115,6 @@ export class CavaloService {
     return updatedCavalo ? this.toCavaloDto(updatedCavalo) : null;
   }
 
-  async getCavaloStats(): Promise<{
-    total: number;
-    available: number;
-    unavailable: number;
-    averagePrice: number;
-    averageAge: number;
-  }> {
-    const allCavalos = await this.cavaloRepository.findAll();
-    const total = allCavalos.length;
-    const available = allCavalos.filter(c => c.disponivel).length;
-    const unavailable = total - available;
-    
-    const averagePrice = total > 0 
-      ? allCavalos.reduce((sum, c) => sum + Number(c.preco), 0) / total 
-      : 0;
-    
-    const averageAge = total > 0 
-      ? allCavalos.reduce((sum, c) => sum + c.idade, 0) / total 
-      : 0;
-
-    return {
-      total,
-      available,
-      unavailable,
-      averagePrice: Math.round(averagePrice * 100) / 100, // Round to 2 decimal places
-      averageAge: Math.round(averageAge * 100) / 100
-    };
-  }
-
   // Private mapping method
   private toCavaloDto(cavalo: Cavalo): CavaloDto {
     return {

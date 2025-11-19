@@ -19,6 +19,14 @@ const swaggerDefinition: SwaggerDefinition = {
     },
   ],
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Enter your JWT token from /api/auth/login',
+      },
+    },
     schemas: {
       CompradorDto: {
         type: 'object',
@@ -176,29 +184,6 @@ const swaggerDefinition: SwaggerDefinition = {
         },
         required: ['nome', 'email', 'senha'],
       },
-      UserStatsDto: {
-        type: 'object',
-        properties: {
-          total: {
-            type: 'integer',
-            description: 'Total de usuários cadastrados',
-          },
-          compradores: {
-            type: 'integer',
-            description: 'Número de compradores',
-          },
-          vendedores: {
-            type: 'integer',
-            description: 'Número de vendedores',
-          },
-          averageVendedorRating: {
-            type: 'number',
-            format: 'float',
-            description: 'Avaliação média dos vendedores',
-          },
-        },
-        required: ['total', 'compradores', 'vendedores', 'averageVendedorRating'],
-      },
       CavaloDto: {
         type: 'object',
         properties: {
@@ -354,34 +339,6 @@ const swaggerDefinition: SwaggerDefinition = {
           },
         },
         description: 'Todos os campos são opcionais para atualização',
-      },
-      CavaloStatsDto: {
-        type: 'object',
-        properties: {
-          total: {
-            type: 'integer',
-            description: 'Total de cavalos cadastrados',
-          },
-          available: {
-            type: 'integer',
-            description: 'Número de cavalos disponíveis',
-          },
-          unavailable: {
-            type: 'integer',
-            description: 'Número de cavalos indisponíveis',
-          },
-          averagePrice: {
-            type: 'number',
-            format: 'float',
-            description: 'Preço médio dos cavalos',
-          },
-          averageAge: {
-            type: 'number',
-            format: 'float',
-            description: 'Idade média dos cavalos',
-          },
-        },
-        required: ['total', 'available', 'unavailable', 'averagePrice', 'averageAge'],
       },
       MensagemDto: {
         type: 'object',
@@ -637,24 +594,6 @@ const swaggerDefinition: SwaggerDefinition = {
         },
         description: 'Todos os campos são opcionais para atualização',
       },
-      AnuncioStatsDto: {
-        type: 'object',
-        properties: {
-          total: {
-            type: 'integer',
-            description: 'Total de anúncios cadastrados',
-          },
-          active: {
-            type: 'integer',
-            description: 'Número de anúncios ativos',
-          },
-          inactive: {
-            type: 'integer',
-            description: 'Número de anúncios inativos',
-          },
-        },
-        required: ['total', 'active', 'inactive'],
-      },
       ApiResponse: {
         type: 'object',
         properties: {
@@ -678,6 +617,11 @@ const swaggerDefinition: SwaggerDefinition = {
       },
     },
   },
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
 };
 
 const options = {

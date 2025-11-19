@@ -5,6 +5,7 @@ import { Vendedor } from '../db/entities/Vendedor';
 import { Cavalo } from '../db/entities/Cavalos';
 import { Anuncio } from '../db/entities/Anuncio';
 import { Mensagem } from '../db/entities/Mensagem';
+import { AuthService } from '../services/AuthService';
 
 async function seed() {
   try {
@@ -16,6 +17,7 @@ async function seed() {
     const cavaloRepository = AppDataSource.getRepository(Cavalo);
     const anuncioRepository = AppDataSource.getRepository(Anuncio);
     const mensagemRepository = AppDataSource.getRepository(Mensagem);
+    const authService = new AuthService();
 
     // Check if data already exists
     const existingCompradores = await compradorRepository.count();
@@ -28,19 +30,21 @@ async function seed() {
       return;
     }
 
+    const hashedPassword = await authService.hashPassword('password123');
+
     // Compradores
     const compradores = [
       {
         nome: 'Maria Santos',
         email: 'maria@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(11) 99999-1111',
         endereco: 'São Paulo, SP'
       },
       {
         nome: 'João Comprador',
         email: 'joao.comprador@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(21) 99999-2222',
         endereco: 'Rio de Janeiro, RJ'
       }
@@ -51,7 +55,7 @@ async function seed() {
       {
         nome: 'Pedro Oliveira',
         email: 'pedro@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(31) 99999-3333',
         endereco: 'Belo Horizonte, MG',
         nota: 4.5
@@ -59,7 +63,7 @@ async function seed() {
       {
         nome: 'Ana Vendedora',
         email: 'ana.vendedora@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(41) 99999-4444',
         endereco: 'Curitiba, PR',
         nota: 4.8

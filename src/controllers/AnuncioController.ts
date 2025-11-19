@@ -26,6 +26,7 @@ export class AnuncioController {
    *     summary: Buscar todos os anúncios
    *     description: Retorna uma lista de anúncios com filtros opcionais
    *     tags: [Anúncios]
+   *     security: []
    *     parameters:
    *       - in: query
    *         name: ativo
@@ -118,6 +119,7 @@ export class AnuncioController {
    *     summary: Buscar anúncio por ID
    *     description: Retorna um anúncio específico pelo seu ID
    *     tags: [Anúncios]
+   *     security: []
    *     parameters:
    *       - in: path
    *         name: id
@@ -180,6 +182,7 @@ export class AnuncioController {
    *     summary: Buscar anúncios por vendedor
    *     description: Retorna todos os anúncios de um vendedor específico
    *     tags: [Anúncios]
+   *     security: []
    *     parameters:
    *       - in: path
    *         name: vendedorId

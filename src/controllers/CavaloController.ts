@@ -26,6 +26,7 @@ export class CavaloController {
    *     summary: Buscar todos os cavalos
    *     description: Retorna uma lista de cavalos com filtros opcionais
    *     tags: [Cavalos]
+   *     security: []
    *     parameters:
    *       - in: query
    *         name: disponivel
@@ -129,6 +130,7 @@ export class CavaloController {
    *     summary: Buscar cavalo por ID
    *     description: Retorna um cavalo específico pelo seu ID
    *     tags: [Cavalos]
+   *     security: []
    *     parameters:
    *       - in: path
    *         name: id
@@ -208,6 +210,7 @@ export class CavaloController {
    *     summary: Buscar cavalos por proprietário
    *     description: Retorna todos os cavalos de um proprietário específico
    *     tags: [Cavalos]
+   *     security: []
    *     parameters:
    *       - in: path
    *         name: donoId
@@ -707,49 +710,6 @@ export class CavaloController {
       res.status(statusCode).json({
         success: false,
         message: "Failed to mark cavalo as available",
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
-    }
-  }
-
-  /**
-   * @swagger
-   * /api/cavalos/stats:
-   *   get:
-   *     summary: Estatísticas dos cavalos
-   *     description: Retorna estatísticas gerais dos cavalos cadastrados
-   *     tags: [Cavalos]
-   *     responses:
-   *       200:
-   *         description: Estatísticas retornadas com sucesso
-   *         content:
-   *           application/json:
-   *             schema:
-   *               allOf:
-   *                 - $ref: '#/components/schemas/ApiResponse'
-   *                 - type: object
-   *                   properties:
-   *                     data:
-   *                       $ref: '#/components/schemas/CavaloStatsDto'
-   *       500:
-   *         description: Erro interno do servidor
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/ApiResponse'
-   */
-  async getCavaloStats(req: Request, res: Response): Promise<void> {
-    try {
-      const stats = await this.cavaloService.getCavaloStats();
-
-      res.json({
-        success: true,
-        data: stats,
-      });
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: "Failed to fetch cavalo statistics",
         error: error instanceof Error ? error.message : "Unknown error",
       });
     }

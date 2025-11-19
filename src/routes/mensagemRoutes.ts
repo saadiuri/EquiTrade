@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { MensagemController } from '../controllers/MensagemController';
+import { authenticate } from '../middleware/auth.middleware';
 
 const router = Router();
 const mensagemController = new MensagemController();
+
+// All message routes require authentication
+router.use(authenticate);
 
 // POST /api/mensagens - Send new message
 router.post('/', mensagemController.sendMessage.bind(mensagemController));

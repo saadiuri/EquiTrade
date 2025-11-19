@@ -34,11 +34,4 @@ export abstract class User {
 
   @OneToMany(() => Mensagem, mensagem => mensagem.destinatario)
   mensagensRecebidas!: Mensagem[];
-
-  // Métodos abstratos para implementação nas classes filhas
-  abstract signUp(): Promise<void>;
-  abstract login(email: string, senha: string): Promise<boolean>;
-  abstract logout(): Promise<void>;
-  abstract editarPerfil(dados: Partial<User>): Promise<void>;
-  abstract enviarMensagem(destinatarioId: string, conteudo: string): Promise<Mensagem>;
 }

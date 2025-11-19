@@ -48,18 +48,26 @@ export class MensagemController {
    */
   async sendMessage(req: Request, res: Response): Promise<void> {
     try {
-      const { remetente_id, destinatario_id, conteudo } = req.body;
+      const { destinatario_id, conteudo } = req.body;
 
-      if (!remetente_id || !destinatario_id || !conteudo) {
+      if (!destinatario_id || !conteudo) {
         res.status(400).json({
           success: false,
-          message: "remetente_id, destinatario_id, and conteudo are required",
+          message: "destinatario_id and conteudo are required",
+        });
+        return;
+      }
+
+      if (!req.user) {
+        res.status(401).json({
+          success: false,
+          message: "Authentication required",
         });
         return;
       }
 
       const mensagem = await this.mensagemService.sendMessage(
-        remetente_id,
+        req.user.userId,
         destinatario_id,
         conteudo
       );
@@ -152,16 +160,8 @@ export class MensagemController {
    * /api/mensagens/sent:
    *   get:
    *     summary: Buscar mensagens enviadas
-   *     description: Retorna todas as mensagens enviadas por um usuário
+   *     description: Retorna todas as mensagens enviadas pelo usuário autenticado
    *     tags: [Mensagens]
-   *     parameters:
-   *       - in: query
-   *         name: userId
-   *         required: true
-   *         schema:
-   *           type: string
-   *           format: uuid
-   *         description: ID do usuário remetente
    *     responses:
    *       200:
    *         description: Lista de mensagens enviadas retornada com sucesso
@@ -187,17 +187,15 @@ export class MensagemController {
    */
   async getSentMessages(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.query.userId as string;
-
-      if (!userId) {
-        res.status(400).json({
+      if (!req.user) {
+        res.status(401).json({
           success: false,
-          message: "userId query parameter is required",
+          message: "Authentication required",
         });
         return;
       }
 
-      const mensagens = await this.mensagemService.getSentMessages(userId);
+      const mensagens = await this.mensagemService.getSentMessages(req.user.userId);
 
       res.json({
         success: true,
@@ -220,16 +218,8 @@ export class MensagemController {
    * /api/mensagens/received:
    *   get:
    *     summary: Buscar mensagens recebidas
-   *     description: Retorna todas as mensagens recebidas por um usuário
+   *     description: Retorna todas as mensagens recebidas pelo usuário autenticado
    *     tags: [Mensagens]
-   *     parameters:
-   *       - in: query
-   *         name: userId
-   *         required: true
-   *         schema:
-   *           type: string
-   *           format: uuid
-   *         description: ID do usuário destinatário
    *     responses:
    *       200:
    *         description: Lista de mensagens recebidas retornada com sucesso
@@ -255,17 +245,15 @@ export class MensagemController {
    */
   async getReceivedMessages(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.query.userId as string;
-
-      if (!userId) {
-        res.status(400).json({
+      if (!req.user) {
+        res.status(401).json({
           success: false,
-          message: "userId query parameter is required",
+          message: "Authentication required",
         });
         return;
       }
 
-      const mensagens = await this.mensagemService.getReceivedMessages(userId);
+      const mensagens = await this.mensagemService.getReceivedMessages(req.user.userId);
 
       res.json({
         success: true,
@@ -288,7 +276,7 @@ export class MensagemController {
    * /api/mensagens/conversation/{userId}:
    *   get:
    *     summary: Buscar conversa com usuário
-   *     description: Retorna todas as mensagens trocadas entre dois usuários
+   *     description: Retorna todas as mensagens trocadas entre o usuário autenticado e outro usuário
    *     tags: [Mensagens]
    *     parameters:
    *       - in: path
@@ -298,13 +286,6 @@ export class MensagemController {
    *           type: string
    *           format: uuid
    *         description: ID do outro usuário na conversa
-   *       - in: query
-   *         name: currentUserId
-   *         required: true
-   *         schema:
-   *           type: string
-   *           format: uuid
-   *         description: ID do usuário atual
    *     responses:
    *       200:
    *         description: Conversa retornada com sucesso
@@ -327,7 +308,6 @@ export class MensagemController {
   async getConversation(req: Request, res: Response): Promise<void> {
     try {
       const otherUserId = req.params.userId;
-      const currentUserId = req.query.currentUserId as string;
 
       if (!otherUserId || typeof otherUserId !== "string") {
         res.status(400).json({
@@ -337,15 +317,15 @@ export class MensagemController {
         return;
       }
 
-      if (!currentUserId) {
-        res.status(400).json({
+      if (!req.user) {
+        res.status(401).json({
           success: false,
-          message: "currentUserId query parameter is required",
+          message: "Authentication required",
         });
         return;
       }
 
-      const conversation = await this.mensagemService.getConversation(currentUserId, otherUserId);
+      const conversation = await this.mensagemService.getConversation(req.user.userId, otherUserId);
 
       res.json({
         success: true,

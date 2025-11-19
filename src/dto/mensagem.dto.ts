@@ -15,7 +15,6 @@ export interface MensagemDto {
 }
 
 export interface CreateMensagemDto {
-  remetente_id: string;
   destinatario_id: string;
   conteudo: string;
 }

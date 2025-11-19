@@ -142,35 +142,39 @@ async function seed() {
     const anuncios = [
       {
         titulo: 'Thunder - Cavalo de Salto Campeão',
+        tipo: 'Venda',
         descricao: 'Excelente cavalo para competições de salto. Muito bem treinado e com histórico de vitórias.',
         preco: 120000.00,
         ativo: true,
         vendedor: savedVendedores[0],
-        cavalo: savedCavalos[0] // Thunder
+        cavalo: savedCavalos[0]
       },
       {
         titulo: 'Elegance - Égua de Adestramento',
+        tipo: 'Venda',
         descricao: 'Égua com excelente adestramento, movimentos harmoniosos e ótima para competições.',
         preco: 95000.00,
         ativo: true,
         vendedor: savedVendedores[1],
-        cavalo: savedCavalos[1] // Elegance
+        cavalo: savedCavalos[1]
       },
       {
         titulo: 'Sereno - Ideal para Iniciantes',
+        tipo: 'Venda',
         descricao: 'Cavalo manso e confiável, perfeito para quem está começando na equitação.',
         preco: 45000.00,
         ativo: true,
         vendedor: savedVendedores[0],
-        cavalo: savedCavalos[2] // Sereno
+        cavalo: savedCavalos[2]
       },
       {
         titulo: 'Estrela - Égua para Passeios',
+        tipo: 'Venda',
         descricao: 'Égua dócil com boa resistência, perfeita para passeios e cavalgadas.',
         preco: 38000.00,
         ativo: true,
         vendedor: savedVendedores[1],
-        cavalo: savedCavalos[3] // Estrela
+        cavalo: savedCavalos[3]
       }
     ];
 

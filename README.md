@@ -24,12 +24,12 @@ Funcionalidades principais
 - Sistema de mensagens internas e propostas.
 
 ## Tecnologias
-- **Frontend:** (Em desenvolvimento)
+- **Frontend:** HTML5, CSS3, TypeScript
 - **Backend:** Node.js, Express, TypeScript
 - **Banco de dados:** PostgreSQL, TypeORM
 - **Organização:** Estrutura modular com rotas organizadas e separação de responsabilidades
 - Armazenamento de mídia: (Em desenvolvimento)
-- Autenticação: (Em desenvolvimento)
+- Autenticação: JWT (JSON Web Tokens)
 - CI/CD: GitHub Actions
 - Testes: (Em desenvolvimento)
 
@@ -53,6 +53,8 @@ createuser -s postgres
 ```
 
 ### Desenvolvimento
+
+#### Backend
 ```bash
 # Clonar o repositório
 git clone https://github.com/SEU_USUARIO/EquiTrade.git
@@ -74,6 +76,39 @@ npm run dev
 # Desenvolvimento com auto-restart
 npm run dev:watch
 ```
+
+#### Frontend
+```bash
+# Compilar TypeScript do frontend para JavaScript
+npm run frontend:build
+
+# Compilar com watch (recompila automaticamente)
+npm run frontend:watch
+
+# Servir o frontend (porta 8080)
+npm run frontend:serve
+
+# Build + Serve em um comando
+npm run frontend:dev
+```
+
+#### Desenvolvimento Full-Stack
+Para desenvolvimento completo, execute em terminais separados:
+```bash
+# Terminal 1 - Backend
+npm run dev:watch
+
+# Terminal 2 - Frontend Watch (opcional, recompila automaticamente)
+npm run frontend:watch
+
+# Terminal 3 - Servidor Frontend
+npm run frontend:serve
+```
+
+**Acessos:**
+- Frontend: http://localhost:8080
+- Backend API: http://localhost:3333
+- Documentação API: http://localhost:3333/api-docs
 
 ### Produção
 ```bash
@@ -114,6 +149,23 @@ npm start
 - `npm run db:reset` - **Limpa e repovoar o banco de dados**
   - 🗑️ Remove todos os dados existentes
   - 🌱 Recria e popula com dados frescos
+
+#### 🎨 **Frontend**
+- `npm run frontend:build` - **Compila TypeScript do frontend para JavaScript**
+  - 📦 Gera arquivos na pasta `src/resources/scripts/js/`
+  - ⚠️ **Necessário antes de servir o frontend pela primeira vez**
+  
+- `npm run frontend:watch` - **Compila com auto-reload**
+  - 🔄 Recompila automaticamente quando detectar mudanças
+  - 💡 Ideal para desenvolvimento contínuo
+  
+- `npm run frontend:serve` - **Inicia servidor HTTP na porta 8080**
+  - 🌐 Serve os arquivos estáticos do frontend
+  - 📂 Abre automaticamente no navegador
+  
+- `npm run frontend:dev` - **Build + Serve em um comando**
+  - 🚀 Compila e inicia o servidor
+  - ⚡ Atalho rápido para iniciar o frontend
 
 #### ⚡ **Quando usar cada comando:**
 - **Desenvolvimento diário**: `npm run dev` (mais rápido, não precisa de build)

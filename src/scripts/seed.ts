@@ -4,6 +4,8 @@ import { Comprador } from '../db/entities/Comprador';
 import { Vendedor } from '../db/entities/Vendedor';
 import { Cavalo } from '../db/entities/Cavalos';
 import { Anuncio } from '../db/entities/Anuncio';
+import { Mensagem } from '../db/entities/Mensagem';
+import { AuthService } from '../services/AuthService';
 
 async function seed() {
   try {
@@ -14,6 +16,8 @@ async function seed() {
     const vendedorRepository = AppDataSource.getRepository(Vendedor);
     const cavaloRepository = AppDataSource.getRepository(Cavalo);
     const anuncioRepository = AppDataSource.getRepository(Anuncio);
+    const mensagemRepository = AppDataSource.getRepository(Mensagem);
+    const authService = new AuthService();
 
     // Check if data already exists
     const existingCompradores = await compradorRepository.count();
@@ -26,30 +30,32 @@ async function seed() {
       return;
     }
 
-    // Create compradores (buyers)
+    const hashedPassword = await authService.hashPassword('password123');
+
+    // Compradores
     const compradores = [
       {
         nome: 'Maria Santos',
         email: 'maria@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(11) 99999-1111',
         endereco: 'São Paulo, SP'
       },
       {
         nome: 'João Comprador',
         email: 'joao.comprador@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(21) 99999-2222',
         endereco: 'Rio de Janeiro, RJ'
       }
     ];
 
-    // Create vendedores (sellers)
+    // Vendedores
     const vendedores = [
       {
         nome: 'Pedro Oliveira',
         email: 'pedro@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(31) 99999-3333',
         endereco: 'Belo Horizonte, MG',
         nota: 4.5
@@ -57,13 +63,13 @@ async function seed() {
       {
         nome: 'Ana Vendedora',
         email: 'ana.vendedora@equitrade.com',
-        senha: 'password123',
+        senha: hashedPassword,
         celular: '(41) 99999-4444',
         endereco: 'Curitiba, PR',
         nota: 4.8
       }
     ];
-    
+
     // Seed compradores
     for (const compradorData of compradores) {
       const comprador = compradorRepository.create(compradorData);
@@ -72,6 +78,7 @@ async function seed() {
     }
 
     // Seed vendedores
+    let vendedorPrincipal: Vendedor | null = null;
     for (const vendedorData of vendedores) {
       const vendedor = vendedorRepository.create(vendedorData);
       await vendedorRepository.save(vendedor);
@@ -139,35 +146,39 @@ async function seed() {
     const anuncios = [
       {
         titulo: 'Thunder - Cavalo de Salto Campeão',
+        tipo: 'Venda',
         descricao: 'Excelente cavalo para competições de salto. Muito bem treinado e com histórico de vitórias.',
         preco: 120000.00,
         ativo: true,
         vendedor: savedVendedores[0],
-        cavalo: savedCavalos[0] // Thunder
+        cavalo: savedCavalos[0]
       },
       {
         titulo: 'Elegance - Égua de Adestramento',
+        tipo: 'Venda',
         descricao: 'Égua com excelente adestramento, movimentos harmoniosos e ótima para competições.',
         preco: 95000.00,
         ativo: true,
         vendedor: savedVendedores[1],
-        cavalo: savedCavalos[1] // Elegance
+        cavalo: savedCavalos[1]
       },
       {
         titulo: 'Sereno - Ideal para Iniciantes',
+        tipo: 'Venda',
         descricao: 'Cavalo manso e confiável, perfeito para quem está começando na equitação.',
         preco: 45000.00,
         ativo: true,
         vendedor: savedVendedores[0],
-        cavalo: savedCavalos[2] // Sereno
+        cavalo: savedCavalos[2]
       },
       {
         titulo: 'Estrela - Égua para Passeios',
+        tipo: 'Venda',
         descricao: 'Égua dócil com boa resistência, perfeita para passeios e cavalgadas.',
         preco: 38000.00,
         ativo: true,
         vendedor: savedVendedores[1],
-        cavalo: savedCavalos[3] // Estrela
+        cavalo: savedCavalos[3]
       }
     ];
 
@@ -178,13 +189,69 @@ async function seed() {
       console.log(`📢 Created anúncio: ${anuncio.titulo}`);
     }
 
-    console.log(`Successfully seeded complete database!`);
+    const savedCompradores = await compradorRepository.find();
+
+    const mensagens = [
+      {
+        remetente: savedCompradores[0],
+        destinatario: savedVendedores[0],
+        conteudo: 'Olá! Tenho interesse no cavalo Thunder. Ele ainda está disponível?'
+      },
+      {
+        remetente: savedVendedores[0],
+        destinatario: savedCompradores[0],
+        conteudo: 'Sim, o Thunder está disponível! É um excelente cavalo para competições.'
+      },
+      {
+        remetente: savedCompradores[0],
+        destinatario: savedVendedores[0],
+        conteudo: 'Ótimo! Gostaria de agendar uma visita para conhecê-lo. Qual seria o melhor horário?'
+      },
+      {
+        remetente: savedCompradores[1],
+        destinatario: savedVendedores[1],
+        conteudo: 'Boa tarde! Vi o anúncio da égua Elegance. Poderia me passar mais informações sobre o temperamento dela?'
+      },
+      {
+        remetente: savedVendedores[1],
+        destinatario: savedCompradores[1],
+        conteudo: 'Boa tarde! A Elegance é muito dócil e focada. Perfeita para adestramento e muito receptiva aos comandos.'
+      },
+      {
+        remetente: savedCompradores[1],
+        destinatario: savedVendedores[0],
+        conteudo: 'Olá Pedro! Estou procurando um cavalo para meu filho que está começando. O Sereno seria indicado?'
+      },
+      {
+        remetente: savedVendedores[0],
+        destinatario: savedCompradores[1],
+        conteudo: 'Com certeza! O Sereno é perfeito para iniciantes. Muito manso e paciente.'
+      },
+      {
+        remetente: savedCompradores[0],
+        destinatario: savedVendedores[1],
+        conteudo: 'A Estrela ainda está à venda? Procuro uma égua para passeios.'
+      }
+    ];
+
+    console.log(`\nSeeding mensagens...`);
+    for (const mensagemData of mensagens) {
+      try {
+        const mensagem = mensagemRepository.create(mensagemData);
+        await mensagemRepository.save(mensagem);
+        console.log(`💬 Created message: ${mensagem.remetente.nome} → ${mensagem.destinatario.nome}`);
+      } catch (error) {
+        console.error(`Failed to create message:`, error);
+        throw error;
+      }
+    }
+
+    console.log(`\n✅ Successfully seeded complete database!`);
     
   } catch (error) {
     console.error('Seed failed:', error);
     process.exit(1);
   } finally {
-    // Close connection
     if (AppDataSource.isInitialized) {
       await AppDataSource.destroy();
     }
@@ -192,7 +259,6 @@ async function seed() {
   }
 }
 
-// Run if called directly (ES module check)
 if (import.meta.url === `file://${process.argv[1]}`) {
   seed();
 }

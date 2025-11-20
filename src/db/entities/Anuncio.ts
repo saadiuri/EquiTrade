@@ -10,6 +10,9 @@ export class Anuncio {
   @Column({ type: 'varchar', length: 150 })
   titulo!: string;
 
+  @Column({ type: "varchar" })
+  tipo!: string;
+
   @Column({ type: 'text', nullable: true })
   descricao?: string;
 
@@ -27,12 +30,12 @@ export class Anuncio {
 
   // Relacionamento: um anúncio pertence a um usuário (vendedor)
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'vendedorId' })
+  @JoinColumn({ name: 'vendedor_id' })
   vendedor!: User;
 
   // Relacionamento: um anúncio está vinculado a um cavalo
   @ManyToOne(() => Cavalo, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'cavaloId' })
+  @JoinColumn({ name: 'cavalo_id' })
   cavalo!: Cavalo;
 
   // Métodos simples para MVP

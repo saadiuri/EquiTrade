@@ -17,13 +17,7 @@ export class Mensagem {
   @JoinColumn({ name: 'remetente_id' })
   remetente!: User;
 
-  @Column({ type: 'uuid' })
-  remetente_id!: string;
-
   @ManyToOne(() => User, user => user.mensagensRecebidas)
   @JoinColumn({ name: 'destinatario_id' })
   destinatario!: User;
-
-  @Column({ type: 'uuid' })
-  destinatario_id!: string;
 }

@@ -4,9 +4,21 @@ import swaggerUi from 'swagger-ui-express';
 import { AppDataSource } from './config/database';
 import { swaggerSpec } from './config/swagger';
 import apiRoutes from './routes';
+import cors from 'cors'; // permitir CORS par testes locais
+
+
 
 const app: Application = express();
 const PORT: number = parseInt(process.env.PORT as string) || 3000;
+
+// Habilita CORS para todas as origens (pode restringir depois)
+// app.use(cors());
+// PARA TESTES LOCAIS, PERMITIR CORS DE TODAS AS ORIGENS
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 const initializeDatabase = async () => {
   try {
@@ -42,11 +54,12 @@ app.get('/', (req: Request, res: Response) => {
 
 // API routes
 app.use('/api', apiRoutes);
+app.use(express.static("src/resources")); // para teste local de arquivos estáticos
 
 // Start the server
 const startServer = async () => {
   await initializeDatabase();
-  
+
   app.listen(PORT, () => {
     console.log(`🚀 EquiTrade server is running on port ${PORT}`);
     console.log(`📍 Access the server at: http://localhost:${PORT}`);

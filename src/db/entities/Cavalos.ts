@@ -44,7 +44,7 @@ export class Cavalo {
 
   // Dono do cavalo
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'dono_id' }) // garante que o banco cria a FK corretamente
+  @JoinColumn({ name: 'dono_id' })
   dono!: User;
 
   // Métodos de regra de negócio

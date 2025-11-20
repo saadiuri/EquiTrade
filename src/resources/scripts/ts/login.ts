@@ -36,14 +36,10 @@ async function logarUsuario(): Promise<void> {
         }
 
         const token = json.data.token;
-        const user = json.data.user;
 
-        // SALVAR TOKEN E USUÁRIO CORRETAMENTE
         localStorage.setItem("authToken", token);
-        localStorage.setItem("usuarioLogado", JSON.stringify(user));
 
         window.location.href = "paginaInicial.html";
-
     } catch (erro) {
         console.error(erro);
         alert("Erro ao tentar fazer login. Tente novamente mais tarde.");
@@ -57,5 +53,5 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-// ADICIONAR ESTA LINHA 
+// Expose function to window so HTML can call it
 (window as any).logarUsuario = logarUsuario;

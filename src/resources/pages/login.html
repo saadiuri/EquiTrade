@@ -19,10 +19,10 @@
 <body>
     <div class="login-container">
         <div class="form-card">
-            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo do EquiTrade" class="logo">
+            <img src="../../../assets/Imagens/logoSemFundo.png" alt="Logo do EquiTrade" class="logo">
             <h1>EquiTrade</h1>
             <h3>Faça login na sua conta</h3>
-            <form onsubmit="event.preventDefault(); logarUsuario();" arial-label="Formulário de login">
+            <form onsubmit="event.preventDefault(); window.logarUsuario();" arial-label="Formulário de login">
                 <div class="input-group">
                     <i class="fas fa-envelope icon"></i>
                     <input type="email" id="emailLogin" name="emailLogin" autocomplete="email"
@@ -41,7 +41,7 @@
         </div>
     </div>
     <!-- Script TypeScript compilado para JavaScript -->
-    <script type="module" src="../scripts/js/login.js"></script>
+    <script src="../scripts/js/login.js"></script>
 </body>
 
 </html>

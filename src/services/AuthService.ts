@@ -72,13 +72,14 @@ export class AuthService {
 
   async register(registerData: RegisterDto): Promise<AuthResponseDto> {
     const { email, senha, tipo, ...userData } = registerData;
-
+    console.log("registerData: ", registerData);
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
       throw new Error('Email já cadastrado');
     }
 
     const hashedPassword = await this.hashPassword(senha);
+    console.log("hashedPassword: ", hashedPassword);
 
     let user: User;
     if (tipo === 'Comprador') {

@@ -1,3 +1,5 @@
+import { API_BASE_URL } from './config.js';
+
 interface Cavalo {
     id: string;
     nome: string;
@@ -19,7 +21,7 @@ async function carregarCavalosDestaque(): Promise<void> {
     }
 
     try {
-        const resposta = await fetch("http://localhost:3000/api/cavalos/paginaInicial", {
+        const resposta = await fetch(`${API_BASE_URL}/cavalos/paginaInicial`, {
             headers: {
                 "Authorization": `Bearer ${token} `
             }
@@ -67,6 +69,6 @@ function adicionarEventosVerDetalhes(): void {
             }
         });
     });
-
-
 }
+
+export {};

@@ -34,47 +34,46 @@
 
                 <div class="form-group input-icon">
                     <label for="nome">Nome Completo</label>
-                    <span class="icon">&#128100;</span>
                     <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Usuário</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="tipo" value="Comprador" checked required>
+                            <span>Comprador</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipo" value="Vendedor" required>
+                            <span>Vendedor</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group input-icon">
                     <label for="email">E-mail</label>
-                    <span class="icon">&#9993;</span>
-                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                    <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
                 </div>
 
                 <div class="form-group input-icon">
-                    <label for="senha">Senha</label>
-                    <span class="icon">&#128274;</span>
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <label for="senha">Senha (mínimo 6 caracteres)</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" minlength="6" required>
                 </div>
 
                 <div class="form-group input-icon">
-                    <label for="telefone">Telefone</label>
-                    <span class="icon">&#128222;</span>
-                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                    <label for="telefone">Telefone (DDD + 9 dígitos)</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="11987654321" pattern="[0-9]{11}" title="Digite 11 dígitos: DDD + número" required>
                 </div>
 
                 <div class="form-group input-icon">
                     <label for="endereco">Endereço</label>
-                    <span class="icon">&#127968;</span>
                     <input type="text" id="endereco" name="endereco" placeholder="Rua, Número, Cidade" required>
                 </div>
 
 
                 <button type="submit" class="submit-button">Cadastrar Usuário</button>
             </form>
-
-            <pre id="resultado"></pre>
-
-            <div class="listagem-container">
-                <h2>Lista de Usuários Cadastrados</h2>
-                <button id="listarBtn" class="submit-button">Listar Todos os Usuários</button>
-                <ul id="listaUsuarios">
-                    <!-- Usuários serão injetados aqui -->
-                </ul>
-            </div>
 
             <!-- Script TypeScript compilado para JavaScript -->
             <script type="module" src="../scripts/js/cadastroUsuario.js"></script>

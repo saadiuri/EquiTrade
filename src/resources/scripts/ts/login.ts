@@ -1,4 +1,4 @@
-//   login.ts - EquiTrade
+import { API_BASE_URL } from './config.js';
 
 interface LoginResponse {
     id: number;
@@ -20,7 +20,7 @@ async function logarUsuario(): Promise<void> {
     }
 
     try {
-        const resposta = await fetch("http://localhost:3000/api/auth/login", {
+        const resposta = await fetch(`${API_BASE_URL}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -46,12 +46,22 @@ async function logarUsuario(): Promise<void> {
     }
 }
 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        const botao = document.getElementById("btnLogin") as HTMLButtonElement;
-        if (botao) botao.click();
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector('form') as HTMLFormElement;
+    
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            logarUsuario();
+        });
     }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const botao = document.getElementById("btnLogin") as HTMLButtonElement;
+            if (botao) botao.click();
+        }
+    });
 });
 
-// Expose function to window so HTML can call it
-(window as any).logarUsuario = logarUsuario;
+export {};

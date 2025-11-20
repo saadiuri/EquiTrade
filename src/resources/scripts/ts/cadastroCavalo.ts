@@ -1,12 +1,8 @@
-// Transpilado de src/resources/scripts/ts/cadastroCavalo.ts
-// Versão totalmente corrigida — token agora vem de authToken corretamente.
+import { API_BASE_URL } from './config';
 
 (function () {
-    const API_URL = 'http://localhost:3000/api/cavalos';
+    const API_URL = `${API_BASE_URL}/cavalos`;
 
-    /* --------------------------------------------------------------------------
-     *   FUNÇÕES AUXILIARES SIMPLES E CORRETAS
-     * -------------------------------------------------------------------------- */
 
     /** Lê o usuário do localStorage.usuarioLogado */
     function getUser() {
@@ -34,9 +30,6 @@
         return document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | null;
     }
 
-    /* --------------------------------------------------------------------------
-     *   INICIALIZAÇÃO DO FORMULÁRIO
-     * -------------------------------------------------------------------------- */
 
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('cadastroCavalo') as HTMLFormElement | null;
@@ -56,9 +49,7 @@
             console.log('donoId preenchido:', userId);
         }
 
-        /* ----------------------------------------------------------------------
-         *   FUNÇÃO DE ENVIO
-         * ---------------------------------------------------------------------- */
+
 
         const handler = async function () {
             const nome = safeInput('nome')?.value.trim() || '';

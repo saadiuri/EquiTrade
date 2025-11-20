@@ -1,15 +1,24 @@
+// Interface alinhada com o backend
 interface Cavalo {
     id: string;
     nome: string;
     idade: number;
     raca: string;
-    descricao: string;
+    descricao?: string;
     preco: number;
+    disponivel: boolean;
+    premios?: string;
     imagemUrl?: string;
+    dono: {
+        id: string;
+        nome: string;
+        email: string;
+    };
 }
 
 interface CavaloResponse {
-    resultados: Cavalo[];
+    success: boolean;
+    data: Cavalo[];
 }
 
 // Seletores do HTML
@@ -22,7 +31,7 @@ if (formBusca) {
         event.preventDefault();
 
         const termo = inputBusca.value.trim();
-        if (termo.length === 0) {
+        if (!termo) {
             alert("Digite algo para buscar.");
             return;
         }
@@ -34,21 +43,35 @@ if (formBusca) {
 // Função que consulta o backend
 async function buscarCavalos(termo: string) {
     try {
-        const response = await fetch(`http://localhost:8080/api/cavalos/buscar?nome=${encodeURIComponent(termo)}`);
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            alert("Você precisa estar logado!");
+            return;
+        }
+
+        const response = await fetch(
+            `http://localhost:3000/api/cavalos?nome=${encodeURIComponent(termo)}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
 
         if (!response.ok) {
             resultadosContainer.innerHTML = `<p class="erro">Erro ao buscar cavalos.</p>`;
             return;
         }
 
-        const dados: CavaloResponse = await response.json();
+        const json: CavaloResponse = await response.json();
 
-        if (dados.resultados.length === 0) {
+        if (!json.success || json.data.length === 0) {
             resultadosContainer.innerHTML = `<p class="nenhum">Nenhum cavalo encontrado.</p>`;
             return;
         }
 
-        exibirResultados(dados.resultados);
+        exibirResultados(json.data);
 
     } catch (error) {
         console.error(error);
@@ -70,7 +93,9 @@ function exibirResultados(lista: Cavalo[]) {
             <p><strong>Raça:</strong> ${cavalo.raca}</p>
             <p><strong>Idade:</strong> ${cavalo.idade} anos</p>
             <p><strong>Preço:</strong> R$ ${cavalo.preco.toFixed(2)}</p>
-            <p class="descricao">${cavalo.descricao}</p>
+            <p class="descricao">${cavalo.descricao || ""}</p>
+            <p><strong>Dono:</strong> ${cavalo.dono.nome} (${cavalo.dono.email})</p>
+            <p><strong>Disponível:</strong> ${cavalo.disponivel ? "Sim" : "Não"}</p>
         `;
 
         resultadosContainer.appendChild(card);

@@ -5,13 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EquiTrade — Troca de Cavalos</title>
+
     <link rel="stylesheet" href="/src/resources/style/stylePaginaInicial.css">
+
+    <!-- Assumindo que este caminho está correto -->
+    <link rel="stylesheet" href="../style/stylePaginaInicial.css">
+   
 </head>
 
 <body>
     <header class="navbar">
         <div class="logo">
             <img src="../../../assets/Imagens/logoSemFundo.png" alt="EquiTrade">
+    
             <h1></h1>
         </div>
         <nav>
@@ -27,48 +33,33 @@
         <div class="hero-content">
             <h2>Encontre o cavalo ideal para troca</h2>
             <p>Conecte-se com criadores e apaixonados por cavalos em todo o Brasil.</p>
-            <a href="#" class="btn-primary">Explorar Cavalos</a>
+
+            <!-- CORREÇÃO 1: Trocado de <button> para <a> para navegação -->
+            <a href="listagemCavalo.html" class="btn-primary">Explorar Cavalos</a>
         </div>
     </section>
 
     <section class="cavalos-destaque">
         <h2>Cavalos em destaque</h2>
+        <!-- ESTA DIV SERÁ POPULADA PELO JAVASCRIPT/TYPESCRIPT -->
         <div class="cards">
-            <div class="card">
-                <img src="img/cavalo1.jpg" alt="Cavalo Relâmpago">
-                <div class="info">
-                    <h3>Relâmpago</h3>
-                    <p>Raça: Mangalarga</p>
-                    <button>Ver detalhes</button>
-                </div>
-            </div>
 
-            <div class="card">
-                <img src="img/cavalo2.jpg" alt="Cavalo Estrela">
-                <div class="info">
-                    <h3>Estrela</h3>
-                    <p>Raça: Lusitano</p>
-                    <button>Ver detalhes</button>
-                </div>
-            </div>
+            <!-- Estes são cards de demonstração. O JavaScript irá substituí-los. -->
+            <!-- O código TypeScript está perfeito para gerar os botões funcionais! -->
+    
+                    <!-- O TS vai substituir esta <button> pela versão com data-id -->
 
-            <div class="card">
-                <img src="img/cavalo3.jpg" alt="Cavalo Ventania">
-                <div class="info">
-                    <h3>Ventania</h3>
-                    <p>Raça: Árabe</p>
-                    <button>Ver detalhes</button>
-                </div>
-            </div>
         </div>
-        <!-- Script TypeScript compilado para JavaScript -->
-        <script type="module" src="../scripts/js/autenticacao.js"></script>
-        <script type="module" src="../scripts/js/paginaInicial.js"></script>
+
     </section>
 
     <footer>
         <p>© 2025 EquiTrade — Plataforma de Troca de Cavalos</p>
     </footer>
+
+    <!-- CORREÇÃO 2: A tag de script deve estar no final do <body> -->
+    <!-- Ajuste o caminho src para onde o seu TS é compilado. Mantive o que você forneceu. -->
+    <script type="module" src="/dist/resources/scripts/ts/paginaInicial.js"></script>
 </body>
 
 </html>

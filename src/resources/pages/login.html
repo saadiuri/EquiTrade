@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Livros Viajantes</title>
+    <title>Login - Equitrade</title>
     <!-- Fonte Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         crossorigin="anonymous">
     <!-- CSS Aprimorado -->
+    <!-- Este caminho /src/resources/style/styleLogin.css parece ser absoluto e pode funcionar, mas verifique o caminho da imagem dentro dele! -->
     <link rel="stylesheet" href="/src/resources/style/styleLogin.css">
 </head>
 
@@ -22,7 +23,7 @@
             <img src="../../../assets/Imagens/logoSemFundo.png" alt="Logo do EquiTrade" class="logo">
             <h1>EquiTrade</h1>
             <h3>Faça login na sua conta</h3>
-            <form arial-label="Formulário de login">
+            <form id="formLogin" arial-label="Formulário de login">
                 <div class="input-group">
                     <i class="fas fa-envelope icon"></i>
                     <input type="email" id="emailLogin" name="emailLogin" autocomplete="email"
@@ -41,7 +42,8 @@
         </div>
     </div>
     <!-- Script TypeScript compilado para JavaScript -->
-    <script type="module" src="../scripts/js/login.js"></script>
+    <!-- CORREÇÃO DO CAMINHO JS: Tente primeiro o caminho absoluto simples: -->
+    <script type="module" src="/dist/resources/scripts/ts/login.js"></script>
 </body>
 
 </html>

@@ -51,7 +51,9 @@ export class AuthService {
       throw new Error('Email ou senha inválidos');
     }
 
-    const isPasswordValid = await this.comparePassword(senha, user.senha);
+    // const isPasswordValid = await this.comparePassword(senha, user.senha);
+    const isPasswordValid = senha === user.senha; /*PARA TESTAR O LOGIN SEM HASH LOCALMENTE*/
+
     if (!isPasswordValid) {
       throw new Error('Email ou senha inválidos');
     }

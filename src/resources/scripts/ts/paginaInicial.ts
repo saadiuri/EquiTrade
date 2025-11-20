@@ -1,6 +1,3 @@
-//  paginaInicial.ts - EquiTrade
-//  Carrega cavalos em destaque
-
 interface Cavalo {
     id: string;
     nome: string;
@@ -8,40 +5,45 @@ interface Cavalo {
     foto: string;
 }
 
-// Busca cavalos em destaque assim que a página carregar
 document.addEventListener("DOMContentLoaded", carregarCavalosDestaque);
 
 async function carregarCavalosDestaque(): Promise<void> {
     const container = document.querySelector(".cards");
-
     if (!container) return;
 
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        alert("Você precisa fazer login para acessar esta página.");
+        window.location.href = "login.html";
+        return;
+    }
+
     try {
-        // Endpoint de cavalos em destaque (a ser implementado no backend)
-        const resposta = await fetch("http://localhost:3333/api/cavalos/destaque");
+        const resposta = await fetch("http://localhost:3000/api/cavalos/paginaInicial", {
+            headers: {
+                "Authorization": `Bearer ${token} `
+            }
+        });
 
         if (!resposta.ok) {
-            console.warn("API de cavalos em destaque ainda não disponível.");
+            console.warn("API de cavalos em destaque indisponível ou token inválido.");
             return;
         }
 
         const cavalos: Cavalo[] = await resposta.json();
-
         container.innerHTML = "";
 
         cavalos.forEach((cavalo) => {
             const card = document.createElement("div");
             card.className = "card";
-
             card.innerHTML = `
-                <img src="${cavalo.foto}" alt="${cavalo.nome}">
-                <div class="info">
-                    <h3>${cavalo.nome}</h3>
-                    <p>Raça: ${cavalo.raca}</p>
-                    <button data-id="${cavalo.id}">Ver detalhes</button>
-                </div>
-            `;
-
+        < img src = "${cavalo.foto}" alt = "${cavalo.nome}" >
+            <div class="info" >
+                <h3>${cavalo.nome} </h3>
+                    < p > Raça: ${cavalo.raca} </p>
+                        < button data - id="${cavalo.id}" > Ver detalhes </button>
+                            </div>
+                                `;
             container.appendChild(card);
         });
 
@@ -50,9 +52,10 @@ async function carregarCavalosDestaque(): Promise<void> {
     } catch (erro) {
         console.error("Erro ao carregar cavalos:", erro);
     }
+
+
 }
 
-// Ativa botões "Ver detalhes"
 function adicionarEventosVerDetalhes(): void {
     const botoes = document.querySelectorAll("button[data-id]");
 
@@ -60,8 +63,10 @@ function adicionarEventosVerDetalhes(): void {
         btn.addEventListener("click", () => {
             const id = btn.getAttribute("data-id");
             if (id) {
-                window.location.href = `detalhesCavalo.html?id=${id}`;
+                window.location.href = `detalhesCavalo.html ? id = ${id} `;
             }
         });
     });
+
+
 }

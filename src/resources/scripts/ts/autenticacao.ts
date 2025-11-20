@@ -15,6 +15,14 @@ export function logout(): void {
     window.location.href = "login.html";
 }
 
+export function requireAuth(): boolean {
+    if (!isLoggedIn()) {
+        window.location.href = "login.html";
+        return false;
+    }
+    return true;
+}
+
 export function updateAuthHeader(): void {
     const loginBtn = document.querySelector('.btn-login') as HTMLAnchorElement;
     

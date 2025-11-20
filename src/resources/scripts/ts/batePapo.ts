@@ -1,4 +1,5 @@
-// Estrutura para enviar mensagens
+import { requireAuth } from './autenticacao.js';
+
 interface MensagemFormData {
     remetenteId: string;
     destinatarioId: string;
@@ -111,5 +112,8 @@ function formatarHorario(data: string) {
     return d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 }
 
-// Carrega o histórico assim que o TS rodar
-carregarHistorico();
+if (requireAuth()) {
+    carregarHistorico();
+}
+
+export {};

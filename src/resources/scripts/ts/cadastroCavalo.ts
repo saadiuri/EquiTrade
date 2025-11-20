@@ -1,10 +1,11 @@
-import { API_BASE_URL } from './config';
+import { API_BASE_URL } from './config.js';
+import { requireAuth } from './autenticacao.js';
 
 (function () {
+    if (!requireAuth()) return;
+
     const API_URL = `${API_BASE_URL}/cavalos`;
 
-
-    /** Lê o usuário do localStorage.usuarioLogado */
     function getUser() {
         try {
             const raw = localStorage.getItem('usuarioLogado');

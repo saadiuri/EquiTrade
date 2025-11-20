@@ -14,17 +14,14 @@ async function carregarCavalosDestaque(): Promise<void> {
     if (!container) return;
 
     const token = localStorage.getItem("authToken");
-    if (!token) {
-        alert("Você precisa fazer login para acessar esta página.");
-        window.location.href = "login.html";
-        return;
-    }
 
     try {
+        const headers: HeadersInit = token 
+            ? { "Authorization": `Bearer ${token}` }
+            : {};
+
         const resposta = await fetch(`${API_BASE_URL}/cavalos/paginaInicial`, {
-            headers: {
-                "Authorization": `Bearer ${token} `
-            }
+            headers
         });
 
         if (!resposta.ok) {

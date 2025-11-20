@@ -14,14 +14,13 @@ async function logarUsuario(): Promise<void> {
     const email = emailInput.value.trim();
     const senha = senhaInput.value.trim();
 
-    // Validação simples
     if (!email || !senha) {
         alert("Por favor, preencha todos os campos.");
         return;
     }
 
     try {
-        const resposta = await fetch("http://localhost:3333/login", {
+        const resposta = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -29,17 +28,20 @@ async function logarUsuario(): Promise<void> {
             body: JSON.stringify({ email, senha })
         });
 
-        if (!resposta.ok) {
+        const json = await resposta.json();
+
+        if (!json.success) {
             alert("E-mail ou senha incorretos.");
             return;
         }
 
-        const usuario: LoginResponse = await resposta.json();
+        const token = json.data.token;
+        const user = json.data.user;
 
-        // Salva no localStorage
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+        // SALVAR TOKEN E USUÁRIO CORRETAMENTE
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("usuarioLogado", JSON.stringify(user));
 
-        // Redireciona
         window.location.href = "paginaInicial.html";
 
     } catch (erro) {
@@ -48,10 +50,12 @@ async function logarUsuario(): Promise<void> {
     }
 }
 
-// Permite login com Enter
 document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const botao = document.getElementById("btnLogin") as HTMLButtonElement;
         if (botao) botao.click();
     }
 });
+
+// ADICIONAR ESTA LINHA 
+(window as any).logarUsuario = logarUsuario;

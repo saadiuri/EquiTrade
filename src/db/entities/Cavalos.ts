@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn
+} from 'typeorm';
+
 import { User } from './User';
 
 @Entity('cavalos')
@@ -25,7 +34,7 @@ export class Cavalo {
   disponivel!: boolean;
 
   @Column({ type: 'text', nullable: true })
-  premios?: string; // String simples para versao incial, depois será entidade separado em uma relacao com outra entidade de premios
+  premios?: string;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -33,11 +42,12 @@ export class Cavalo {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  // Relacionamento: um cavalo pertence a um usuário (dono/vendedor)
+  // Dono do cavalo
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'dono_id' }) // garante que o banco cria a FK corretamente
   dono!: User;
 
-  // Métodos simples para MVP
+  // Métodos de regra de negócio
   marcarComoVendido(): void {
     this.disponivel = false;
   }

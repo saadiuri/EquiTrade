@@ -35,7 +35,7 @@ async function carregarCavalosDestaque(): Promise<void> {
         if (feedback) feedback.textContent = "Carregando Cavalos em Destaque...";
 
         // 2. Requisição à API
-        const resposta = await fetch(API_BASE_URL, {
+        const resposta = await fetch(`${API_BASE_URL}/cavalos`, {
             headers: {
                 // Remove espaços extras com .trim()
                 "Authorization": `Bearer ${token}`.trim()
@@ -70,7 +70,7 @@ async function carregarCavalosDestaque(): Promise<void> {
             const card = document.createElement("div");
             card.className = "card";
             card.innerHTML = `
-                <img src="${cavalo.foto}" alt="${cavalo.nome}" loading="lazy">
+                <img src="${cavalo.foto}" alt="${cavalo.nome}" loading="lazy"> 
                 <div class="info">
                     <h3>${cavalo.nome}</h3>
                     <p>Raça: ${cavalo.raca}</p>

@@ -10,14 +10,14 @@
 
     <!-- Assumindo que este caminho está correto -->
     <link rel="stylesheet" href="../style/stylePaginaInicial.css">
-   
+
 </head>
 
 <body>
     <header class="navbar">
         <div class="logo">
             <img src="../../../assets/Imagens/logoSemFundo.png" alt="EquiTrade">
-    
+
             <h1></h1>
         </div>
         <nav>
@@ -29,15 +29,15 @@
         </nav>
     </header>
 
-    <section class="hero">
+    <div class="hero">
+        <img id="hero-bg" class="hero-bg" src="img/cavalo1.jpg" alt="">
         <div class="hero-content">
             <h2>Encontre o cavalo ideal para troca</h2>
             <p>Conecte-se com criadores e apaixonados por cavalos em todo o Brasil.</p>
-
-            <!-- CORREÇÃO 1: Trocado de <button> para <a> para navegação -->
             <a href="listagemCavalo.html" class="btn-primary">Explorar Cavalos</a>
         </div>
-    </section>
+    </div>
+
 
     <section class="cavalos-destaque">
         <h2>Cavalos em destaque</h2>
@@ -46,8 +46,8 @@
 
             <!-- Estes são cards de demonstração. O JavaScript irá substituí-los. -->
             <!-- O código TypeScript está perfeito para gerar os botões funcionais! -->
-    
-                    <!-- O TS vai substituir esta <button> pela versão com data-id -->
+
+            <!-- O TS vai substituir esta <button> pela versão com data-id -->
 
         </div>
 
@@ -60,6 +60,7 @@
     <!-- CORREÇÃO 2: A tag de script deve estar no final do <body> -->
     <!-- Ajuste o caminho src para onde o seu TS é compilado. Mantive o que você forneceu. -->
     <script type="module" src="/dist/resources/scripts/ts/paginaInicial.js"></script>
+    <script type="module" src="/dist/resources/scripts/ts/carrosselHero.js"></script>
 </body>
 
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Ajuste o caminho do CSS se necessário -->
-    <link rel="stylesheet" href="/src/resources/style/styleCadastroUsuario.css">
+    <link rel="stylesheet" href="../style/styleCadastroUsuario.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Cadastro de Usuário</title>
 </head>
@@ -58,12 +58,14 @@
 
                 <div class="form-group input-icon">
                     <label for="senha">Senha (mínimo 6 caracteres)</label>
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" minlength="6" required>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" minlength="6"
+                        required>
                 </div>
 
                 <div class="form-group input-icon">
                     <label for="telefone">Telefone (DDD + 9 dígitos)</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="11987654321" pattern="[0-9]{11}" title="Digite 11 dígitos: DDD + número" required>
+                    <input type="tel" id="telefone" name="telefone" placeholder="11987654321" pattern="[0-9]{11}"
+                        title="Digite 11 dígitos: DDD + número" required>
                 </div>
 
                 <div class="form-group input-icon">
@@ -76,7 +78,7 @@
             </form>
 
             <!-- Script TypeScript compilado para JavaScript -->
-            <script type="module" src="../scripts/js/cadastroUsuario.js"></script>
+            <script type="module" src="/dist/resources/scripts/ts/cadastroUsuario.js"></script>
         </div>
     </main>
 

@@ -1,6 +1,5 @@
-// =============================
+
 // Tipos
-// =============================
 interface Mensagem {
     id: string;
     remetenteId: string;
@@ -9,22 +8,16 @@ interface Mensagem {
     enviadoEm: string;
 }
 
-// =============================
 // Elementos do DOM
-// =============================
 const inputMensagem = document.getElementById("mensagemInput") as HTMLInputElement;
 const chatContainer = document.getElementById("chatBox") as HTMLDivElement;
 const btnEnviar = document.getElementById("enviarBtn") as HTMLButtonElement;
 
-// =============================
 // Token e IDs
-// =============================
 const token = localStorage.getItem("authToken");
 const destinatarioId = localStorage.getItem("destinatarioId");
 
-// =============================
 // Decodificar JWT
-// =============================
 function pegarUsuarioId(jwt: string | null): string | null {
     if (!jwt) return null;
 
@@ -40,14 +33,10 @@ function pegarUsuarioId(jwt: string | null): string | null {
 
 const remetenteId = pegarUsuarioId(token);
 
-// =============================
 // LOG DEBUG
-// =============================
 console.log("CHAT:", { remetenteId, destinatarioId });
 
-// =============================
 // Enviar mensagem
-// =============================
 async function enviarMensagem(texto: string) {
     if (!texto.trim()) return;
 
@@ -83,9 +72,7 @@ async function enviarMensagem(texto: string) {
     adicionarMensagem(data.data);
 }
 
-// =============================
 // Carregar histórico
-// =============================
 async function carregarHistorico() {
     if (!token) return;
     if (!destinatarioId) return console.error("destinatarioId ausente!");
@@ -113,9 +100,7 @@ async function carregarHistorico() {
     mensagens.forEach(msg => adicionarMensagem(msg));
 }
 
-// =============================
 // Renderizar mensagem
-// =============================
 function adicionarMensagem(msg: Mensagem) {
     const div = document.createElement("div");
     div.className = msg.remetenteId === remetenteId
@@ -134,9 +119,7 @@ function adicionarMensagem(msg: Mensagem) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// =============================
 // Eventos
-// =============================
 btnEnviar.addEventListener("click", () => {
     enviarMensagem(inputMensagem.value);
     inputMensagem.value = "";
@@ -149,7 +132,5 @@ inputMensagem.addEventListener("keydown", e => {
     }
 });
 
-// =============================
 // Auto-load
-// =============================
 document.addEventListener("DOMContentLoaded", carregarHistorico);

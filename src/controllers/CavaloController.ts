@@ -101,11 +101,11 @@ export class CavaloController {
       };
 
       // Remove undefined values
-      Object.keys(filters).forEach(key => 
+      Object.keys(filters).forEach(key =>
         filters[key as keyof FilterCavaloDto] === undefined && delete filters[key as keyof FilterCavaloDto]
       );
 
-      const cavalos = Object.keys(filters).length > 0 
+      const cavalos = Object.keys(filters).length > 0
         ? await this.cavaloService.getCavalosByFilters(filters)
         : await this.cavaloService.getAllCavalos();
 
@@ -714,4 +714,49 @@ export class CavaloController {
       });
     }
   }
+
+  // BUSCAR CAVALO POR TERMO
+  // GET /api/cavalos?nome=termo
+  async buscarCavalos(req: Request, res: Response) {
+    try {
+      const { nome, raca, disponivel } = req.query;
+
+      // Converte disponivel para boolean se passado
+      const filtros: any = {};
+      if (nome) filtros.nome = String(nome);
+      if (raca) filtros.raca = String(raca);
+      if (disponivel !== undefined) filtros.disponivel = disponivel === 'true';
+
+      const cavalos = await this.cavaloService.getCavalosByFilters(filtros);
+
+      res.status(200).json({
+        success: true,
+        data: cavalos
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: 'Erro ao buscar cavalos',
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+
+  // GET /api/cavalos
+  async listarTodosCavalos(req: Request, res: Response) {
+    try {
+      const cavalos = await this.cavaloService.getAllCavalos();
+      res.status(200).json({
+        success: true,
+        data: cavalos
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: 'Erro ao listar cavalos',
+        error: err instanceof Error ? err.message : 'Unknown error'
+      });
+    }
+  }
+
 }

@@ -1,10 +1,10 @@
 import { CavaloRepository } from '../db/repositories/CavaloRepository';
 import { Cavalo } from '../db/entities/Cavalos';
-import { 
-  CavaloDto, 
-  CreateCavaloDto, 
-  UpdateCavaloDto, 
-  FilterCavaloDto 
+import {
+  CavaloDto,
+  CreateCavaloDto,
+  UpdateCavaloDto,
+  FilterCavaloDto
 } from '../dto/cavalo.dto';
 
 export class CavaloService {
@@ -35,30 +35,42 @@ export class CavaloService {
   }
 
   async createCavalo(cavaloData: CreateCavaloDto): Promise<CavaloDto> {
+    // Busca o dono
     const dono = await this.cavaloRepository.findUserById(cavaloData.donoId);
+    console.log('📌 Dono encontrado:', dono);
+
     if (!dono) {
       throw new Error('Dono (owner) not found');
     }
 
-    if (cavaloData.preco <= 0) {
-      throw new Error('Price must be greater than zero');
-    }
-
-    if (cavaloData.idade <= 0 || cavaloData.idade > 50) {
+    // Validações básicas
+    if (cavaloData.preco <= 0) throw new Error('Price must be greater than zero');
+    if (cavaloData.idade <= 0 || cavaloData.idade > 50)
       throw new Error('Age must be between 1 and 50 years');
-    }
 
-    // Destructure to separate donoId from other fields
+    // Prepara o objeto para criar o cavalo
     const { donoId, ...cavaloFields } = cavaloData;
-    const cavaloToCreate: Partial<Cavalo> = {
+    // Allow an optional `type` property alongside Partial<Cavalo> to avoid excess property checks
+    const cavaloToCreate: Partial<Cavalo> & { type?: string } = {
       ...cavaloFields,
       disponivel: cavaloData.disponivel ?? true,
-      dono: dono
+      dono: dono,
+      type: (cavaloData as any).type || 'Cavalo' // <-- adiciona type com valor default
     };
 
+    console.log('📌 Cavalo a criar:', cavaloToCreate);
+
+    // Cria no repositório
     const cavalo = await this.cavaloRepository.create(cavaloToCreate);
+
     return this.toCavaloDto(cavalo);
   }
+
+  async getCavaloByIdParaDetalhesCavalo(id: string): Promise<CavaloDto | null> {
+    const cavalo = await this.cavaloRepository.findById(id);
+    return cavalo ? this.toCavaloDto(cavalo) : null;
+}
+
 
   async updateCavalo(id: string, cavaloData: UpdateCavaloDto): Promise<CavaloDto | null> {
     const existingCavalo = await this.cavaloRepository.findById(id);

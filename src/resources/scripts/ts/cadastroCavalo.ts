@@ -102,15 +102,10 @@ import { requireAuth } from './autenticacao.js';
 
             // TOKEN CORRETO AQUI 🚀
             const token = extractToken();
-            const headers: Record<string, string> = {
-                'Content-Type': 'application/json'
+            const headers = {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
             };
-
-            if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            } else {
-                console.warn('⚠ Nenhum token encontrado para envio no header');
-            }
 
             console.log('➡ Enviando payload:', payload);
             console.log('➡ Token:', token || '<VAZIO>');

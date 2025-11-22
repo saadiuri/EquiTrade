@@ -19,11 +19,10 @@
         <nav>
             <a href="paginaInicial.html">Início</a>
             <a href="buscaCavalo.html">Buscar Cavalos</a>
-            <a href="listagemCavalo.html">Listagem</a>
+            <a href="listagemCavalo.html" class="ativo">Listagem</a>
             <a href="batePapo.html">Bate-Papo</a>
             <a href="login.html" class="btn-login">Entrar</a>
         </nav>
-
     </header>
 
     <section class="page-header">
@@ -31,13 +30,12 @@
         <p>Veja todos os cavalos cadastrados para venda ou troca.</p>
     </section>
 
-    <!-- TABELA DE CAVALOS -->
+    <!-- TABELA DE CAVALOS SEM FOTO -->
     <section class="tabela-container">
         <table class="tabela-cavalos">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Foto</th>
                     <th>Nome</th>
                     <th>Raça</th>
                     <th>Idade</th>
@@ -47,38 +45,7 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td>01</td>
-                    <td><img src="img/cavalo1.jpg" alt="Cavalo 1"></td>
-                    <td>Ventania</td>
-                    <td>Mangalarga</td>
-                    <td>5 anos</td>
-                    <td>R$ 12.000</td>
-                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
-                </tr>
-
-                <tr>
-                    <td>02</td>
-                    <td><img src="img/cavalo2.jpg" alt="Cavalo 2"></td>
-                    <td>Sereno</td>
-                    <td>Quarto de Milha</td>
-                    <td>7 anos</td>
-                    <td>R$ 15.500</td>
-                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
-                </tr>
-
-                <tr>
-                    <td>03</td>
-                    <td><img src="img/cavalo3.jpg" alt="Cavalo 3"></td>
-                    <td>Relâmpago</td>
-                    <td>Puro-Sangue</td>
-                    <td>4 anos</td>
-                    <td>R$ 21.000</td>
-                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
-                </tr>
-                <!-- Script TypeScript compilado para JavaScript -->
-                <script type="module" src="../scripts/js/autenticacao.js"></script>
-                <script type="module" src="../scripts/js/listagemCavalo.js"></script>
+                <!-- Linhas da tabela serão preenchidas dinamicamente via JavaScript -->
             </tbody>
         </table>
     </section>
@@ -87,6 +54,8 @@
         <p>© 2025 EquiTrade — Plataforma de Troca e Venda de Cavalos</p>
     </footer>
 
+    <!-- Script JS compilado -->
+    <script type="module" src="/dist/resources/scripts/ts/listagemCavalo.js"></script>
 </body>
 
 </html>

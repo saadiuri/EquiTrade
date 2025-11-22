@@ -1,13 +1,6 @@
-import { requireAuth } from './autenticacao.js';
 
-interface MensagemFormData {
-    remetenteId: string;
-    destinatarioId: string;
-    conteudo: string;
-}
-
-// Estrutura retornada pelo backend (quando existir)
-interface MensagemResponse {
+// Tipos
+interface Mensagem {
     id: string;
     remetenteId: string;
     destinatarioId: string;
@@ -15,105 +8,129 @@ interface MensagemResponse {
     enviadoEm: string;
 }
 
-// Estrutura para mensagens no histórico
-interface HistoricoResponse {
-    mensagens: MensagemResponse[];
-}
+// Elementos do DOM
+const inputMensagem = document.getElementById("mensagemInput") as HTMLInputElement;
+const chatContainer = document.getElementById("chatBox") as HTMLDivElement;
+const btnEnviar = document.getElementById("enviarBtn") as HTMLButtonElement;
 
-// Seletores do HTML
-const form = document.getElementById("form-batepapo") as HTMLFormElement;
-const inputMensagem = document.getElementById("mensagem") as HTMLInputElement;
-const chatContainer = document.getElementById("chat-container") as HTMLDivElement;
+// Token e IDs
+const token = localStorage.getItem("authToken");
+const destinatarioId = localStorage.getItem("destinatarioId");
 
-// IDs dos usuários (quando integrar com login, isso virá da sessão)
-const remetenteId = localStorage.getItem("usuarioId") || "1";
-const destinatarioId = localStorage.getItem("destinatarioId") || "2";
+// Decodificar JWT
+function pegarUsuarioId(jwt: string | null): string | null {
+    if (!jwt) return null;
 
-// Enviar mensagem
-if (form) {
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const texto = inputMensagem.value.trim();
-        if (texto.length === 0) return;
-
-        const mensagem: MensagemFormData = {
-            remetenteId,
-            destinatarioId,
-            conteudo: texto
-        };
-
-        try {
-            const response = await fetch("http://localhost:8080/api/batepapo/enviar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(mensagem)
-            });
-
-            if (!response.ok) {
-                alert("Erro ao enviar mensagem.");
-                return;
-            }
-
-            const novaMensagem: MensagemResponse = await response.json();
-
-            adicionarMensagemNaTela(novaMensagem);
-
-            inputMensagem.value = "";
-
-        } catch (error) {
-            console.error(error);
-            alert("Falha ao enviar mensagem.");
-        }
-    });
-}
-
-// Carregar histórico do chat
-async function carregarHistorico() {
     try {
-        const response = await fetch(
-            `http://localhost:8080/api/batepapo/historico?usuario=${remetenteId}`
-        );
-
-        if (!response.ok) {
-            console.warn("Não foi possível carregar o histórico.");
-            return;
-        }
-
-        const historico: HistoricoResponse = await response.json();
-
-        historico.mensagens.forEach((msg) => adicionarMensagemNaTela(msg));
-
-    } catch (error) {
-        console.error(error);
+        const base64Url = jwt.split(".")[1];
+        if (!base64Url) return null;
+        const payload = JSON.parse(atob(base64Url));
+        return payload.userId || null;
+    } catch {
+        return null;
     }
 }
 
-// Renderizar mensagens no HTML
-function adicionarMensagemNaTela(msg: MensagemResponse) {
-    const div = document.createElement("div");
-    div.classList.add("mensagem");
+const remetenteId = pegarUsuarioId(token);
 
-    const classe = msg.remetenteId === remetenteId ? "minha" : "dele";
-    div.classList.add(classe);
+// LOG DEBUG
+console.log("CHAT:", { remetenteId, destinatarioId });
+
+// Enviar mensagem
+async function enviarMensagem(texto: string) {
+    if (!texto.trim()) return;
+
+    if (!token) return console.error("Token ausente!");
+    if (!remetenteId) return console.error("remetenteId ausente!");
+    if (!destinatarioId) return console.error("destinatarioId ausente!");
+
+    const payload = {
+        remetente_id: remetenteId,
+        destinatario_id: destinatarioId,
+        conteudo: texto
+    };
+
+
+    const res = await fetch("http://localhost:3000/api/mensagens", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    console.log("ENVIO:", data);
+
+    if (!data.success) {
+        console.error("Erro ao enviar:", data.message);
+        return;
+    }
+
+    adicionarMensagem(data.data);
+}
+
+// Carregar histórico
+async function carregarHistorico() {
+    if (!token) return;
+    if (!destinatarioId) return console.error("destinatarioId ausente!");
+
+    const res = await fetch(
+        `http://localhost:3000/api/mensagens/conversation/${destinatarioId}`,
+        {
+            headers: { "Authorization": `Bearer ${token}` }
+        }
+    );
+
+    const data = await res.json();
+
+    console.log("HISTÓRICO:", data);
+
+    if (!data.success) {
+        console.error("Erro histórico:", data.message);
+        return;
+    }
+
+    const mensagens: Mensagem[] = Array.isArray(data.data)
+        ? data.data
+        : data.data.mensagens || [];
+
+    mensagens.forEach(msg => adicionarMensagem(msg));
+}
+
+// Renderizar mensagem
+function adicionarMensagem(msg: Mensagem) {
+    const div = document.createElement("div");
+    div.className = msg.remetenteId === remetenteId
+        ? "mensagem enviada"
+        : "mensagem recebida";
 
     div.innerHTML = `
         <p><strong>${msg.remetenteId === remetenteId ? "Você" : "Ele"}:</strong> ${msg.conteudo}</p>
-        <span class="horario">${formatarHorario(msg.enviadoEm)}</span>
+        <span>${new Date(msg.enviadoEm).toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
+    })}</span>
     `;
 
     chatContainer.appendChild(div);
-
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-function formatarHorario(data: string) {
-    const d = new Date(data);
-    return d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-}
+// Eventos
+btnEnviar.addEventListener("click", () => {
+    enviarMensagem(inputMensagem.value);
+    inputMensagem.value = "";
+});
 
-if (requireAuth()) {
-    carregarHistorico();
-}
+inputMensagem.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+        enviarMensagem(inputMensagem.value);
+        inputMensagem.value = "";
+    }
+});
 
-export {};
+// Auto-load
+document.addEventListener("DOMContentLoaded", carregarHistorico);

@@ -1,39 +1,46 @@
-interface Cavalo {
+interface CavaloListagem {
     id: string;
     nome: string;
     raca: string;
     idade: number;
+    descricao: string;
     preco: number;
-    fotoUrl: string;
+    proprietario: {
+        nome: string;
+        localizacao: string;
+    };
 }
 
 // Seleciona o corpo da tabela
 const tabelaBody = document.querySelector("tbody") as HTMLTableSectionElement;
 
-// Função principal: Carrega cavalos
 async function carregarCavalos() {
     try {
-        const resposta = await fetch("http://localhost:3333/cavalos");
+        const token = localStorage.getItem("authToken"); // caso a rota exija autenticação
+        const resposta = await fetch("http://localhost:3000/api/cavalos", {
+            headers: token ? { "Authorization": `Bearer ${token}` } : {}
+        });
 
         if (!resposta.ok) {
-            throw new Error("Erro ao buscar cavalos");
+            throw new Error(`Erro ao buscar cavalos: ${resposta.status}`);
         }
 
-        const cavalos: Cavalo[] = await resposta.json();
+        const dados = await resposta.json(); // Espera { success: true, data: CavaloListagem[] }
 
-        // Caso nenhum cavalo encontrado
+        // Verifica se o backend retornou um array
+        const cavalos: CavaloListagem[] = Array.isArray(dados.data) ? dados.data : [];
+
         if (cavalos.length === 0) {
             tabelaBody.innerHTML = `
-                <tr><td colspan="7" class="vazio">Nenhum cavalo encontrado.</td></tr>
+                <tr><td colspan="6" class="vazio">Nenhum cavalo encontrado.</td></tr>
             `;
             return;
         }
 
-        // Renderizar linhas
+        // Monta a tabela dinamicamente
         tabelaBody.innerHTML = cavalos.map(cavalo => `
             <tr>
                 <td>${cavalo.id}</td>
-                <td><img src="${cavalo.fotoUrl}" alt="${cavalo.nome}" /></td>
                 <td>${cavalo.nome}</td>
                 <td>${cavalo.raca}</td>
                 <td>${cavalo.idade} anos</td>
@@ -42,17 +49,18 @@ async function carregarCavalos() {
             </tr>
         `).join("");
 
+        // Adiciona os eventos aos botões
         adicionarEventosNosBotoes();
 
     } catch (erro) {
-        console.error(erro);
+        console.error("Erro ao carregar cavalos:", erro);
         tabelaBody.innerHTML = `
-            <tr><td colspan="7" class="erro">Erro ao carregar a listagem.</td></tr>
+            <tr><td colspan="6" class="erro">Erro ao carregar a listagem.</td></tr>
         `;
     }
 }
 
-// Eventos dos botões "Ver"
+// Função para lidar com os botões "Ver"
 function adicionarEventosNosBotoes() {
     const botoes = document.querySelectorAll(".btn-ver");
 

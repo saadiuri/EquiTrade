@@ -48,7 +48,7 @@ async function logarUsuario(): Promise<void> {
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector('form') as HTMLFormElement;
-    
+
     if (form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -64,4 +64,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-export {};
+export { };

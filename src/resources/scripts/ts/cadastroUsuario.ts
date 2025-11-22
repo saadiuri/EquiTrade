@@ -30,7 +30,7 @@ function validatePhone(phone: string): boolean {
 
 function showMessage(message: string, isSuccess: boolean): void {
     alert(message);
-    
+
     if (isSuccess) {
         setTimeout(() => {
             window.location.href = "login.html";
@@ -56,7 +56,7 @@ async function handleCadastroUsuario(event: Event) {
     const senha = (document.getElementById("senha") as HTMLInputElement)?.value || '';
     const celular = (document.getElementById("telefone") as HTMLInputElement)?.value.trim() || '';
     const endereco = (document.getElementById("endereco") as HTMLInputElement)?.value.trim() || '';
-    
+
     const tipoRadio = document.querySelector('input[name="tipo"]:checked') as HTMLInputElement;
     const tipo: UserType = (tipoRadio?.value as UserType) || USER_TYPE.COMPRADOR;
 
@@ -168,4 +168,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
 });
 
-export {};
+export { };

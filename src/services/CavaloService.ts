@@ -34,33 +34,24 @@ export class CavaloService {
     return cavalos.map(cavalo => this.toCavaloDto(cavalo));
   }
 
-  async createCavalo(cavaloData: CreateCavaloDto): Promise<CavaloDto> {
-    // Busca o dono
-    const dono = await this.cavaloRepository.findUserById(cavaloData.donoId);
-    console.log('📌 Dono encontrado:', dono);
+  async createCavalo(cavaloData: CreateCavaloDto, donoId: string): Promise<CavaloDto> {
+    const dono = await this.cavaloRepository.findUserById(donoId);
 
     if (!dono) {
       throw new Error('Dono (owner) not found');
     }
 
-    // Validações básicas
     if (cavaloData.preco <= 0) throw new Error('Price must be greater than zero');
     if (cavaloData.idade <= 0 || cavaloData.idade > 50)
       throw new Error('Age must be between 1 and 50 years');
 
-    // Prepara o objeto para criar o cavalo
-    const { donoId, ...cavaloFields } = cavaloData;
-    // Allow an optional `type` property alongside Partial<Cavalo> to avoid excess property checks
     const cavaloToCreate: Partial<Cavalo> & { type?: string } = {
-      ...cavaloFields,
+      ...cavaloData,
       disponivel: cavaloData.disponivel ?? true,
       dono: dono,
-      type: (cavaloData as any).type || 'Cavalo' // <-- adiciona type com valor default
+      type: (cavaloData as any).type || 'Cavalo'
     };
 
-    console.log('📌 Cavalo a criar:', cavaloToCreate);
-
-    // Cria no repositório
     const cavalo = await this.cavaloRepository.create(cavaloToCreate);
 
     return this.toCavaloDto(cavalo);

@@ -19,6 +19,7 @@ function initializeHeader(): void {
     nav.innerHTML = `
             <a href="paginaInicial.html">Início</a>
             <a href="listagemCavalo.html">Cavalos</a>
+            <a href="meusCavalos.html">Meus Cavalos</a>
             <a href="sobre.html">Sobre</a>
             <a href="contato.html">Contato</a>
             <a href="batePapo.html">Mensagens</a>
@@ -60,7 +61,8 @@ function highlightActivePage(): void {
     if (
       href === currentPage ||
       (currentPage === "paginaInicial.html" && href === "paginaInicial.html") ||
-      (currentPage.includes("Cavalo") && href === "listagemCavalo.html") ||
+      (currentPage === "listagemCavalo.html" && href === "listagemCavalo.html") ||
+      (currentPage === "meusCavalos.html" && href === "meusCavalos.html") ||
       (currentPage === "batePapo.html" &&
         link.textContent?.trim() === "Mensagens")
     ) {

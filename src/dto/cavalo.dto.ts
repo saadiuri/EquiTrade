@@ -28,10 +28,8 @@ export interface CreateCavaloDto {
   disponivel?: boolean;
   premios?: string;
   foto?: string;
-  donoId: string; // User ID who owns the horse
 }
 
-// Update DTO (all fields optional except id)
 export interface UpdateCavaloDto {
   nome?: string;
   idade?: number;

@@ -56,28 +56,71 @@ nav a {
     text-decoration: none;
     margin-left: 25px;
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--marrom-claro);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
 }
 
 nav a:hover {
     color: var(--marrom-claro);
+    transform: translateY(-2px);
+}
+
+nav a:hover::after {
+    width: 80%;
+}
+
+nav a:active {
+    opacity: 0.5;
+    transform: translateY(0);
 }
 
 nav a.ativo {
     color: var(--marrom-claro);
-    font-weight: bold;
+    font-weight: 700;
+}
+
+nav a.ativo::after {
+    width: 80%;
 }
 
 .btn-login {
     background-color: var(--marrom-claro);
     color: #000;
-    padding: 8px 14px;
+    padding: 10px 18px;
     border-radius: 8px;
     font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(137, 81, 41, 0.3);
+}
+
+.btn-login::after {
+    display: none;
 }
 
 .btn-login:hover {
     background-color: #ffea93;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(137, 81, 41, 0.5);
+}
+
+.btn-login:active {
+    opacity: 0.5;
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(137, 81, 41, 0.3);
 }
 
 /* TÍTULO */

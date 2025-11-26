@@ -328,18 +328,25 @@ export class CavaloController {
    */
   async createCavalo(req: Request, res: Response): Promise<void> {
     try {
-      const { nome, idade, raca, preco, descricao, disponivel, premios, donoId } = req.body;
-
-      // Basic validation
-      if (!nome || !idade || !raca || !preco || !donoId) {
-        res.status(400).json({
+      if (!req.user || !req.user.userId) {
+        res.status(401).json({
           success: false,
-          message: "Nome, idade, raca, preco, and donoId are required",
+          message: "Authentication required",
         });
         return;
       }
 
-      // Type validation
+      const donoId = req.user.userId;
+      const { nome, idade, raca, preco, descricao, disponivel, premios } = req.body;
+
+      if (!nome || !idade || !raca || !preco) {
+        res.status(400).json({
+          success: false,
+          message: "Nome, idade, raca, and preco are required",
+        });
+        return;
+      }
+
       if (typeof idade !== 'number' || typeof preco !== 'number') {
         res.status(400).json({
           success: false,
@@ -356,10 +363,9 @@ export class CavaloController {
         descricao,
         disponivel,
         premios,
-        donoId,
       };
 
-      const cavalo = await this.cavaloService.createCavalo(cavaloData);
+      const cavalo = await this.cavaloService.createCavalo(cavaloData, donoId);
 
       res.status(201).json({
         success: true,

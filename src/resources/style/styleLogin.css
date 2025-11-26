@@ -50,6 +50,42 @@ body::before {
     z-index: 0;
 }
 
+/* Botão de Voltar */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    color: var(--verde-escuro);
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: var(--verde);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.back-button:active {
+    opacity: 0.5;
+    transform: translateY(0);
+}
+
+.back-button svg {
+    width: 24px;
+    height: 24px;
+}
+
 /* Container principal */
 .login-container {
     position: relative;
@@ -173,6 +209,18 @@ button:hover {
 
 /* Responsividade */
 @media (max-width: 480px) {
+    .back-button {
+        top: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .back-button svg {
+        width: 20px;
+        height: 20px;
+    }
+
     .form-card {
         padding: var(--spacing-medium);
     }

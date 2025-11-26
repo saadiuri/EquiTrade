@@ -80,7 +80,7 @@
     } catch (erro) {
       console.error("Erro ao carregar cavalos:", erro);
       tabelaBody.innerHTML = `
-                <tr><td colspan="6" class="erro">Erro ao carregar a listagem.</td></tr>
+                <tr><td colspan="5" class="erro">Erro ao carregar a listagem.</td></tr>
             `;
     }
   }
@@ -90,7 +90,7 @@
 
     if (cavalos.length === 0) {
       tabelaBody.innerHTML = `
-                <tr><td colspan="6" class="vazio">Nenhum cavalo encontrado.</td></tr>
+                <tr><td colspan="5" class="vazio">Nenhum cavalo encontrado.</td></tr>
             `;
       return;
     }
@@ -99,7 +99,6 @@
       .map(
         (cavalo) => `
             <tr>
-                <td>${cavalo.id.substring(0, 8)}...</td>
                 <td>${cavalo.nome}</td>
                 <td>${cavalo.raca}</td>
                 <td>${cavalo.idade} anos</td>

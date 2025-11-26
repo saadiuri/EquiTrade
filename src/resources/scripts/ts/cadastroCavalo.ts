@@ -6,25 +6,25 @@ import { requireAuth } from "./autenticacao.js";
 
   const API_URL = `${API_BASE_URL}/cavalos`;
 
-  function getUser() {
-    try {
-      const raw = localStorage.getItem("usuarioLogado");
-      if (!raw) return null;
-      return JSON.parse(raw);
-    } catch {
-      return null;
-    }
-  }
-
-  /** Extrai o ID do usuário logado */
-  function extractUserId(): string {
-    const u = getUser();
-    return u?.id ? String(u.id) : "";
-  }
-
-  /** Extrai o token JWT certo — AGORA FUNCIONA */
   function extractToken(): string {
     return localStorage.getItem("authToken") || "";
+  }
+
+  function extractUserId(): string {
+    try {
+      const token = extractToken();
+      if (!token) return "";
+
+      // Decode JWT token to read the payload
+      const parts = token.split(".");
+      if (parts.length !== 3 || !parts[1]) return "";
+
+      const payload = JSON.parse(atob(parts[1]));
+      return payload.userId || payload.id || "";
+    } catch (error) {
+      console.error("Erro ao extrair userId do token:", error);
+      return "";
+    }
   }
 
   function safeInput(id: string) {
@@ -47,17 +47,6 @@ import { requireAuth } from "./autenticacao.js";
       return;
     }
 
-    // Preencher donoId ao carregar
-    const donoIdInput = document.getElementById(
-      "donoId"
-    ) as HTMLInputElement | null;
-    const userId = extractUserId();
-
-    if (donoIdInput && userId) {
-      donoIdInput.value = userId;
-      console.log("donoId preenchido:", userId);
-    }
-
     const handler = async function () {
       const nome = safeInput("nome")?.value.trim() || "";
       const idadeStr = safeInput("idade")?.value || "";
@@ -69,15 +58,12 @@ import { requireAuth } from "./autenticacao.js";
         (document.getElementById("disponivel") as HTMLInputElement)?.checked ||
         false;
 
-      let donoId = safeInput("donoId")?.value.trim() || extractUserId();
-
       // validações
       const faltando = [];
       if (!nome) faltando.push("nome");
       if (!idadeStr) faltando.push("idade");
       if (!raca) faltando.push("raça");
       if (!precoStr) faltando.push("preço");
-      if (!donoId) faltando.push("donoId (verifique login)");
 
       if (faltando.length > 0) {
         alert("Preencha: " + faltando.join(", "));
@@ -105,7 +91,7 @@ import { requireAuth } from "./autenticacao.js";
         descricao,
         disponivel,
         premios,
-        donoId,
+        // donoId is extracted from JWT token on backend
       };
 
       // TOKEN CORRETO AQUI 🚀
@@ -128,11 +114,6 @@ import { requireAuth } from "./autenticacao.js";
         if (res.status === 201) {
           alert("Cavalo cadastrado com sucesso!");
           form.reset();
-
-          // reatribuir donoId após reset
-          const novoId = extractUserId();
-          if (donoIdInput && novoId) donoIdInput.value = novoId;
-
           return;
         }
 

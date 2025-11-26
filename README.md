@@ -57,7 +57,7 @@ createuser -s postgres
 #### Backend
 ```bash
 # Clonar o repositório
-git clone https://github.com/SEU_USUARIO/EquiTrade.git
+git clone https://github.com/saadiuri/EquiTrade.git
 cd EquiTrade
 
 # Instalar dependências

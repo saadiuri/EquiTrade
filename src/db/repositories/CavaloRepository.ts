@@ -68,6 +68,10 @@ export class CavaloRepository {
         : idadeConditions[0];
     }
 
+    if (filters.nomeContains) {
+      whereCondition.nome = ILike(`%${filters.nomeContains}%`);
+    }
+
     if (filters.racaContains) {
       whereCondition.raca = ILike(`%${filters.racaContains}%`);
     }

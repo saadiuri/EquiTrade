@@ -34,6 +34,11 @@ export class CavaloController {
    *           type: boolean
    *         description: Filtrar por disponibilidade
    *       - in: query
+   *         name: nome
+   *         schema:
+   *           type: string
+   *         description: Filtrar por nome (busca parcial)
+   *       - in: query
    *         name: raca
    *         schema:
    *           type: string
@@ -89,9 +94,11 @@ export class CavaloController {
    *               $ref: '#/components/schemas/ApiResponse'
    */
   async getAllCavalos(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
     try {
       const filters: FilterCavaloDto = {
         disponivel: req.query.disponivel ? req.query.disponivel === 'true' : undefined,
+        nomeContains: req.query.nome as string,
         racaContains: req.query.raca as string,
         precoMin: req.query.precoMin ? Number(req.query.precoMin) : undefined,
         precoMax: req.query.precoMax ? Number(req.query.precoMax) : undefined,
@@ -741,22 +748,4 @@ export class CavaloController {
       });
     }
   }
-
-  // GET /api/cavalos
-  async listarTodosCavalos(req: Request, res: Response) {
-    try {
-      const cavalos = await this.cavaloService.getAllCavalos();
-      res.status(200).json({
-        success: true,
-        data: cavalos
-      });
-    } catch (err) {
-      res.status(500).json({
-        success: false,
-        message: 'Erro ao listar cavalos',
-        error: err instanceof Error ? err.message : 'Unknown error'
-      });
-    }
-  }
-
 }

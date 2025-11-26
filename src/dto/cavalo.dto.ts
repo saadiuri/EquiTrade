@@ -46,6 +46,7 @@ export interface UpdateCavaloDto {
 // DTO for filtering cavalos
 export interface FilterCavaloDto {
   disponivel?: boolean;
+  nomeContains?: string;
   racaContains?: string;
   precoMin?: number;
   precoMax?: number;

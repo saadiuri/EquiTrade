@@ -1,7 +1,7 @@
 const imagensHero = [
-    "/assets/Imagens/carrossel1.jpg",
-    "/assets/Imagens/carrossel2.jpg",
-    "/assets/Imagens/carrossel3.jpg"
+  "/assets/Imagens/carrossel1.jpg",
+  "/assets/Imagens/carrossel2.jpg",
+  "/assets/Imagens/carrossel3.jpg",
 ];
 
 let indexHero = 0;
@@ -11,57 +11,44 @@ const FADE_DURATION = 1500;
 const INTERVAL = 6000;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const bg = document.getElementById("hero-bg") as HTMLImageElement | null;
+  const bg = document.getElementById("hero-bg") as HTMLImageElement | null;
 
-    if (!bg) {
-        console.error("Elemento com ID 'hero-bg' não encontrado.");
-        return;
-    }
+  if (!bg) {
+    console.error("Elemento com ID 'hero-bg' não encontrado.");
+    return;
+  }
 
-    // Adiciona a imagem inicial sem pré-carregamento
-    bg.src = imagensHero[0] ?? "";
+  bg.src = imagensHero[0] ?? "";
 
-    // Esta função será chamada para fazer a transição
-    function transitionHero() {
-        // 1. Calcula o índice da próxima imagem
-        const nextIndex = (indexHero + 1) % imagensHero.length;
-        const nextImageUrl = imagensHero[nextIndex];
+  function transitionHero() {
+    const nextIndex = (indexHero + 1) % imagensHero.length;
+    const nextImageUrl = imagensHero[nextIndex];
 
-        // 2. Pré-carrega a próxima imagem em memória
-        const preloader = new Image();
-        preloader.src = nextImageUrl ?? "";
+    const preloader = new Image();
+    preloader.src = nextImageUrl ?? "";
 
-        // O que acontece APÓS a próxima imagem ser carregada
-        preloader.onload = () => {
-        // 3. Inicia o Fade-out (opacidade 1 -> 0.6)
+    preloader.onload = () => {
+      if (bg) {
+        bg.style.opacity = "0.6";
+      }
+
+      setTimeout(() => {
         if (bg) {
-            bg.style.opacity = "0.6";
+          bg.src = nextImageUrl ?? "";
         }
-        
-        // 4. Aguarda o tempo de fade-out antes de trocar a imagem e fazer fade-in
-        setTimeout(() => {
-            // 5. Troca o SRC. Agora é seguro, pois a imagem já está na memória cache.
-            if (bg) {
-                bg.src = nextImageUrl ?? "";
-            }
-            indexHero = nextIndex;
-        
-            // 6. Inicia o Fade-in (opacidade 0.6 -> 1)
-            // Usando "1" em vez de "0.6" para o fade-in para garantir opacidade total
-            if (bg) {
-                bg.style.opacity = "1";
-            }
-        }, FADE_DURATION);
-        };
+        indexHero = nextIndex;
 
-        // Trata erro de carregamento (caso o caminho da imagem esteja errado)
-        preloader.onerror = () => {
-            console.error(`Erro ao carregar a imagem: ${nextImageUrl}`);
-            // Pula para a próxima imagem
-            indexHero = nextIndex;
-        };
-    }
+        if (bg) {
+          bg.style.opacity = "1";
+        }
+      }, FADE_DURATION);
+    };
 
-    // Inicia o carrossel após o intervalo
-    setInterval(transitionHero, INTERVAL);
+    preloader.onerror = () => {
+      console.error(`Erro ao carregar a imagem: ${nextImageUrl}`);
+      indexHero = nextIndex;
+    };
+  }
+
+  setInterval(transitionHero, INTERVAL);
 });

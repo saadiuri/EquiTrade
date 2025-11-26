@@ -11,21 +11,13 @@
 <body>
 
     <!-- NAVBAR -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-container">
-                <div class="logo">
-                    <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
-                </div>
-            </div>
-
-            <nav class="header-nav">
-                <a href="paginaInicial.html">Início</a>
-                <a href="listagemCavalo.html">Cavalos</a>
-                <a href="cadastroCavalo.html">Cadastrar Cavalo</a>
-                <a href="contato.html">Contato</a>
-            </nav>
+    <header class="navbar">
+        <div class="logo">
+            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
         </div>
+        <nav>
+            <!-- Header será preenchido dinamicamente pelo headerManager.js -->
+        </nav>
     </header>
 
     <!-- TÍTULO -->
@@ -68,7 +60,7 @@
             </form>
         </div>
 
-        <!-- Script TypeScript compilado para JavaScript -->
+        <script type="module" src="../scripts/js/headerManager.js"></script>
         <script type="module" src="../scripts/js/contato.js"></script>
 
     </main>

@@ -185,6 +185,23 @@ nav a:hover {
     margin-top: 20px;
 }
 
+.btn-primario {
+    background-color: var(--verde);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primario:hover {
+    background-color: var(--verde-escuro);
+    transform: translateY(-2px);
+}
+
 .btns-acao button {
     background-color: var(--verde);
     color: #fff;

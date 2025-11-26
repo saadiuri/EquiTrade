@@ -36,6 +36,9 @@ export class Cavalo {
   @Column({ type: 'text', nullable: true })
   premios?: string;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  foto?: string;
+
   @CreateDateColumn()
   createdAt!: Date;
 

@@ -24,10 +24,11 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: var(--verde-escuro);
-    padding: 15px 40px;
+    background-color: rgba(79, 109, 80, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 10px 40px;
     z-index: 1000;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -37,15 +38,25 @@ body {
 }
 
 .logo-container img {
-    width: 55px;
-    height: 55px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.logo-container img:hover {
+    transform: scale(1.05);
 }
 
 .logo img {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
 }
 
 
@@ -62,7 +73,7 @@ body {
 }
 
 main {
-    padding-top: 130px;
+    padding-top: 110px;
 }
 
 /* TÍTULO + SUBTEXTO */
@@ -71,7 +82,7 @@ main h1 {
     margin-bottom: 10px;
     color: var(--verde-escuro);
     font-size: 2rem;
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
 .contato-texto {

@@ -30,13 +30,15 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--verde-escuro);
+    background-color: rgba(79, 109, 80, 0.95);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    min-height: 180px;
+    padding: 10px 40px;
+    min-height: 100px;
     z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -46,9 +48,14 @@ body {
 }
 
 .logo img {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
 }
 
 .logo h1 {
@@ -85,7 +92,7 @@ main {
     justify-content: center;
     /* centraliza horizontalmente */
     padding: 20px;
-    margin-top: calc(180px + 20px);
+    margin-top: calc(100px + 20px);
     /* espaço para navbar */
     margin-bottom: 60px;
     /* espaço para footer */
@@ -224,8 +231,8 @@ footer {
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
-        padding: 15px;
-        min-height: 150px;
+        padding: 10px;
+        min-height: 90px;
     }
 
     nav {
@@ -248,7 +255,7 @@ footer {
 
 
     main {
-        margin-top: calc(150px + 15px);
+        margin-top: calc(90px + 15px);
         /* espaço navbar menor */
         margin-bottom: 40px;
         /* espaço footer menor */

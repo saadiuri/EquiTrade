@@ -138,6 +138,7 @@ export class CavaloService {
       descricao: cavalo.descricao,
       disponivel: cavalo.disponivel,
       premios: cavalo.premios,
+      foto: cavalo.foto,
       createdAt: cavalo.createdAt,
       updatedAt: cavalo.updatedAt,
       dono: {

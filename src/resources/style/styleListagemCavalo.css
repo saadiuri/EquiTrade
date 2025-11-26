@@ -32,7 +32,7 @@ body {
 main {
     flex: 1;
     padding: 20px;
-    padding-top: 180px;
+    padding-top: 100px;
     /* altura do header fixo */
 }
 
@@ -42,12 +42,14 @@ main {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: var(--verde-escuro);
+    background-color: rgba(79, 109, 80, 0.95);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 10px 40px;
     z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -57,9 +59,14 @@ main {
 }
 
 .logo img {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
 }
 
 .logo h1 {
@@ -89,9 +96,9 @@ nav a:hover {
 /* HEADER DA PÁGINA */
 .page-header {
     text-align: center;
-    padding-top: 120px;
+    padding-top: 100px;
     padding-bottom: 20px;
-    margin-top: 120px;
+    margin-top: 20px;
     /* espaço suficiente para não ficar atrás do header */
 }
 
@@ -114,8 +121,6 @@ nav a:hover {
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    margin-top: 100px;
-    /* espaço suficiente para não ficar atrás do header */
 }
 
 .tabela-cavalos {

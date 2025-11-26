@@ -8,6 +8,7 @@ export interface CavaloDto {
   descricao?: string;
   disponivel: boolean;
   premios?: string;
+  foto?: string;
   createdAt: Date;
   updatedAt: Date;
   dono: {
@@ -26,6 +27,7 @@ export interface CreateCavaloDto {
   descricao?: string;
   disponivel?: boolean;
   premios?: string;
+  foto?: string;
   donoId: string; // User ID who owns the horse
 }
 
@@ -38,6 +40,7 @@ export interface UpdateCavaloDto {
   descricao?: string;
   disponivel?: boolean;
   premios?: string;
+  foto?: string;
 }
 
 // DTO for filtering cavalos

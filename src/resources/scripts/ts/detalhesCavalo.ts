@@ -5,6 +5,7 @@ interface CavaloDetalhes {
     idade: number;
     descricao: string;
     preco: number;
+    foto?: string;
     proprietario?: {
         nome: string;
         endereco: string;
@@ -13,6 +14,7 @@ interface CavaloDetalhes {
 
 // Seletores do DOM
 const nomeElemento = document.querySelector(".detalhes-info h2") as HTMLElement;
+const fotoElemento = document.querySelector(".cavalo-foto") as HTMLImageElement;
 const racaElemento = document.querySelector(".raça") as HTMLElement;
 const idadeElemento = document.querySelector(".idade") as HTMLElement;
 const descricaoElemento = document.querySelector(".descricao") as HTMLElement;
@@ -65,6 +67,10 @@ async function carregarDetalhes(id: string) {
     function preencherPagina(cavalo: CavaloDetalhes) {
         // Preencher informações básicas
         if (nomeElemento) nomeElemento.innerText = cavalo.nome || "Sem nome";
+        if (fotoElemento) {
+            fotoElemento.src = cavalo.foto || "/assets/Imagens/logoSemFundo.png";
+            fotoElemento.alt = `Foto de ${cavalo.nome}`;
+        }
         if (racaElemento) racaElemento.innerText = `Raça: ${cavalo.raca || "Desconhecida"} `;
         if (idadeElemento) idadeElemento.innerText = `Idade: ${cavalo.idade ?? "Desconhecida"} anos`;
         if (descricaoElemento) descricaoElemento.innerText = cavalo.descricao || "Sem descrição";
@@ -79,7 +85,5 @@ async function carregarDetalhes(id: string) {
             if (propNomeElemento) propNomeElemento.innerText = "Desconhecido";
             if (propLocalElemento) propLocalElemento.innerText = "Localização não informada";
         }
-
-
     }
 }

@@ -19,7 +19,6 @@ body {
     color: var(--marrom);
 }
 
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -127,7 +126,6 @@ main {
     padding-top: 110px;
 }
 
-/* TÍTULO + SUBTEXTO */
 main h1 {
     text-align: center;
     margin-bottom: 10px;
@@ -143,7 +141,6 @@ main h1 {
     color: var(--marrom);
 }
 
-/* FORM */
 .form-container {
     width: 90%;
     max-width: 640px;
@@ -192,7 +189,6 @@ textarea:focus {
     box-shadow: 0 0 6px rgba(107, 139, 110, 0.4);
 }
 
-/* BOTÃO */
 .submit-button {
     width: 100%;
     padding: 14px;
@@ -210,7 +206,6 @@ textarea:focus {
     background-color: var(--verde-escuro);
 }
 
-/* FOOTER */
 .footer {
     background-color: var(--verde-escuro);
     text-align: center;
@@ -220,7 +215,6 @@ textarea:focus {
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* RESPONSIVO */
 @media (max-width: 700px) {
 
     nav {

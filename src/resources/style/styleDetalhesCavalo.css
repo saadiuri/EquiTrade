@@ -16,7 +16,6 @@
 html,
 body {
     min-height: 100vh;
-    /* garante altura total da tela */
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -25,11 +24,9 @@ body {
 
 main {
     flex: 1;
-    /* ocupa todo o espaço disponível, empurrando o footer para baixo */
     padding: 20px;
 }
 
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -143,7 +140,6 @@ nav a.ativo::after {
     background-color: #ffea93;
 }
 
-/* DETALHES DO CAVALO */
 .detalhes-container {
     display: flex;
     justify-content: space-around;
@@ -269,20 +265,15 @@ nav a.ativo::after {
     background-color: var(--verde-escuro);
 }
 
-/* FOOTER */
 footer {
     background-color: var(--verde-escuro);
     color: #fff;
     text-align: center;
     padding: 20px;
     flex-shrink: 0;
-    /* garante que o footer não encolha */
     margin-top: 0;
-    /* remove margin-top fixo */
 }
 
-
-/* RESPONSIVIDADE */
 @media (max-width: 900px) {
     .detalhes-container {
         flex-direction: column;

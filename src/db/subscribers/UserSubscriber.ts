@@ -10,35 +10,27 @@ import { User } from '../entities/User';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
-  /**
-   * Indicates that this subscriber only listen to User events.
-   */
+  // Indicates that this subscriber only listen to User events.
   listenTo() {
     return User;
   }
 
-  /**
-   * Called before user insertion.
-   */
+  // Called before user insertion.
   beforeInsert(event: InsertEvent<User>) {
-    // Normalize email
     if (event.entity.email) {
       event.entity.email = event.entity.email.toLowerCase().trim();
     }
   }
 
-  /**
-   * Called after user insertion.
-   */
+
+  // Called after user insertion.
   afterInsert(event: InsertEvent<User>) {
     console.log(`User created: ${event.entity.email}`);
   }
 
-  /**
-   * Called before user update.
-   */
+
+  // Called before user update.
   beforeUpdate(event: UpdateEvent<User>) {
-    // Normalize email if it's being updated
     if (event.entity?.email) {
       event.entity.email = event.entity.email.toLowerCase().trim();
     }

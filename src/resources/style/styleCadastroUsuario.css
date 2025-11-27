@@ -19,7 +19,6 @@ body {
     color: var(--marrom);
 }
 
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -123,7 +122,6 @@ nav a.ativo::after {
     box-shadow: 0 1px 3px rgba(137, 81, 41, 0.3);
 }
 
-/* TÍTULO */
 main {
     padding-top: 110px;
 }
@@ -143,7 +141,6 @@ main h2 {
     font-size: 2rem;
 }
 
-/* FORM */
 .form-container {
     width: 90%;
     max-width: 620px;
@@ -168,7 +165,6 @@ label {
     color: var(--verde-escuro);
 }
 
-/* ícones */
 .input-icon .icon {
     position: absolute;
     top: 38px;
@@ -196,7 +192,6 @@ select:focus {
     box-shadow: 0 0 6px rgba(107, 139, 110, 0.4);
 }
 
-/* RADIO BUTTONS */
 .radio-group {
     display: flex;
     gap: 20px;
@@ -236,7 +231,6 @@ select:focus {
     background: rgba(107, 139, 110, 0.1);
 }
 
-/* BOTÃO */
 .submit-button {
     width: 100%;
     padding: 14px;
@@ -255,7 +249,6 @@ select:focus {
     background-color: var(--verde-escuro);
 }
 
-/* FOOTER */
 .footer {
     background-color: var(--verde-escuro);
     text-align: center;
@@ -265,7 +258,6 @@ select:focus {
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 700px) {
 
     nav {
@@ -284,5 +276,4 @@ select:focus {
     main h2 {
         font-size: 1.6rem;
     }
-}
 }

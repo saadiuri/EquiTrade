@@ -1,7 +1,7 @@
 interface ContatoFormData {
   nome: string;
   email: string;
-  assunto: string; // Adicionado: Assumindo que o HTML tem este campo
+  assunto: string;
   mensagem: string;
 }
 
@@ -10,14 +10,13 @@ interface ContatoResponse {
   mensagem: string;
 }
 
-// URL da API de Contato (usando a porta 3000 para consistência)
 const API_URL = "http://localhost:3000/api/mensagens";
 
 // Seletores do HTML
 const formContato = document.getElementById("form-contato") as HTMLFormElement;
 const inputNome = document.getElementById("contato-nome") as HTMLInputElement;
 const inputEmail = document.getElementById("contato-email") as HTMLInputElement;
-const inputAssunto = document.getElementById("assunto") as HTMLInputElement; // Adicionado: Ajuste o ID conforme o seu HTML real
+const inputAssunto = document.getElementById("assunto") as HTMLInputElement; 
 const inputMensagemContato = document.getElementById(
   "contato-mensagem"
 ) as HTMLTextAreaElement;
@@ -41,13 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
         mensagem: inputMensagemContato.value.trim(),
       };
 
-      // 2. Validação Mínima
       if (!dados.nome || !dados.email || !dados.mensagem) {
         mostrarMensagem("Preencha todos os campos obrigatórios.", false);
         return;
       }
 
-      // 3. Bloqueio de Envio Duplicado e Feedback
+      // Bloqueio de Envio Duplicado e Feedback
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = "Enviando...";
@@ -55,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await enviarContato(dados);
 
-      // 4. Reabilitação do Botão
+      // Reabilitação do Botão
       if (submitButton) {
         submitButton.disabled = false;
         submitButton.textContent = "Enviar Mensagem";
@@ -64,14 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Função que faz a requisição para o backend
 async function enviarContato(dados: ContatoFormData) {
-  // Limpa o status anterior
   mostrarMensagem("", false);
 
   try {
     const response = await fetch(API_URL, {
-      // URL corrigida para porta 3000
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +75,6 @@ async function enviarContato(dados: ContatoFormData) {
     });
 
     if (!response.ok) {
-      // Tenta obter uma mensagem de erro mais detalhada do backend
       let mensagemErro = "Erro ao enviar mensagem. Tente novamente.";
       try {
         const erroJson = await response.json();
@@ -115,15 +109,12 @@ async function enviarContato(dados: ContatoFormData) {
   }
 }
 
-// Exibe mensagens de sucesso/erro na tela
 function mostrarMensagem(texto: string, sucesso: boolean) {
   if (!mensagemStatus) return;
 
   mensagemStatus.innerText = texto;
-  // Uso de cores mais profissionais (verde/vermelho)
   mensagemStatus.style.color = sucesso ? "#22c55e" : "#ef4444";
   mensagemStatus.style.fontWeight = "600";
-  // Opcional: Adiciona transição para melhor feedback visual
   mensagemStatus.style.opacity = texto ? "1" : "0";
   mensagemStatus.style.transition = "opacity 0.3s";
 }

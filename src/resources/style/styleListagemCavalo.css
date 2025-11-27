@@ -28,16 +28,12 @@ body {
     min-height: 100vh;
 }
 
-/* main ocupa todo espaço restante */
 main {
     flex: 1;
     padding: 20px;
     padding-top: 100px;
-    /* altura do header fixo */
 }
 
-
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -146,7 +142,6 @@ nav a.ativo::after {
     box-shadow: 0 1px 3px rgba(137, 81, 41, 0.3);
 }
 
-/* HEADER DA PÁGINA */
 .page-header {
     text-align: center;
     padding-top: 100px;
@@ -165,7 +160,6 @@ nav a.ativo::after {
     color: var(--marrom);
 }
 
-/* SEÇÃO DE BUSCA */
 .search-section {
     width: 90%;
     max-width: 1100px;
@@ -254,7 +248,6 @@ nav a.ativo::after {
     opacity: 0.5;
 }
 
-/* TABELA */
 .tabela-container {
     width: 90%;
     max-width: 1100px;
@@ -293,7 +286,6 @@ nav a.ativo::after {
     border-radius: 8px;
 }
 
-/* BOTÃO VER */
 .btn-ver {
     background-color: var(--verde);
     color: #fff;
@@ -311,7 +303,6 @@ nav a.ativo::after {
     transform: translateY(-2px);
 }
 
-/* Estilos para células vazias ou erro */
 .vazio, .erro {
     text-align: center;
     padding: 40px;
@@ -323,8 +314,6 @@ nav a.ativo::after {
     color: #b30000;
 }
 
-/* FOOTER */
-/* footer sempre no final */
 footer {
     background-color: var(--verde-escuro);
     color: #fff;
@@ -333,7 +322,6 @@ footer {
     margin-top: 7%;
 }
 
-/* RESPONSIVO */
 @media (max-width: 700px) {
 
     nav {

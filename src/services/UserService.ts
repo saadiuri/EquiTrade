@@ -44,7 +44,6 @@ export class UserService {
       const comprador = await this.userRepository.createComprador(userData.data);
       return this.toUserDto(comprador);
     } else {
-      // Default nota to 0.0 if not provided for Vendedor
       const vendedorData = {
         ...userData.data,
         nota: userData.data.nota ?? 0.0
@@ -55,7 +54,6 @@ export class UserService {
   }
 
   async updateUser(id: string, userData: UpdateUserDto): Promise<UserDto | null> {
-    // Business logic: check if user exists
     const existingUser = await this.userRepository.findById(id);
     if (!existingUser) {
       throw new Error('User not found');
@@ -73,7 +71,6 @@ export class UserService {
     let updatedUser: User | null = null;
 
     if (userData.type === USER_TYPE.COMPRADOR) {
-      // Ensure we're updating the right type
       const comprador = await this.userRepository.findCompradorById(id);
       if (!comprador) {
         throw new Error('User is not a Comprador');

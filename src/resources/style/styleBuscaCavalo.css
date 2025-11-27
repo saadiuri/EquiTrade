@@ -31,12 +31,9 @@ body {
 .container {
     flex: 1;
     margin-top: 120px;
-    /* mantém o espaço para navbar */
     padding: 0 40px;
 }
 
-
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -145,7 +142,6 @@ nav a.ativo::after {
     box-shadow: 0 1px 3px rgba(137, 81, 41, 0.3);
 }
 
-/* CONTAINER */
 .container {
     margin-top: 100px;
     padding: 0 40px;
@@ -157,7 +153,6 @@ nav a.ativo::after {
     color: var(--verde-escuro);
 }
 
-/* SEARCH BOX */
 .search-box {
     display: flex;
     gap: 10px;
@@ -186,7 +181,6 @@ nav a.ativo::after {
     background-color: #ffe68b;
 }
 
-/* FILTROS */
 .filtros {
     display: flex;
     gap: 15px;
@@ -201,7 +195,6 @@ nav a.ativo::after {
     font-size: 1rem;
 }
 
-/* CARDS */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -256,7 +249,6 @@ nav a.ativo::after {
     background: var(--verde-escuro);
 }
 
-/* FOOTER */
 footer {
     background-color: var(--verde-escuro);
     color: #fff;
@@ -265,7 +257,6 @@ footer {
     margin-top: 40px;
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 768px) {
     .filtros {
         flex-direction: column;

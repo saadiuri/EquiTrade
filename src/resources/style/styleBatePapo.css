@@ -24,7 +24,6 @@ body {
     padding: 0;
 }
 
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -140,18 +139,15 @@ nav a.ativo::after {
 main {
     display: flex;
     justify-content: center;
-    /* centraliza horizontalmente */
     padding: 20px;
     margin-top: calc(100px + 20px);
-    /* espaço para navbar */
     margin-bottom: 60px;
-    /* espaço para footer */
 }
 
 /* CHAT CONTAINER */
 .chat-container {
     width: 100%;
-    margin: auto;       /* centraliza horizontalmente */
+    margin: auto;
     max-width: 800px;
     background-color: #fff;
     border-radius: 25px;
@@ -160,10 +156,8 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* Centraliza verticalmente dentro do main se necessário */
 }
 
-/* CHAT HEADER */
 .chat-header {
     display: flex;
     align-items: center;
@@ -274,7 +268,6 @@ main {
     align-self: flex-end;
 }
 
-/* CHAT INPUT */
 .chat-input {
     display: flex;
     gap: 10px;
@@ -305,7 +298,6 @@ main {
     background-color: #ffe98d;
 }
 
-/* FOOTER */
 footer {
     background-color: var(--verde-escuro);
     color: #fff;
@@ -314,7 +306,6 @@ footer {
     flex-shrink: 0;
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -343,8 +334,6 @@ footer {
 
     main {
         margin-top: calc(90px + 15px);
-        /* espaço navbar menor */
         margin-bottom: 40px;
-        /* espaço footer menor */
     }
 }

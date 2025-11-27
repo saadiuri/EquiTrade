@@ -28,14 +28,12 @@ body {
     background-color: var(--bege);
 }
 
-/* main ocupa todo espaço restante */
 main {
     flex: 1;
     padding: 20px;
     padding-top: 100px;
 }
 
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -144,7 +142,6 @@ nav a.ativo::after {
     box-shadow: 0 1px 3px rgba(137, 81, 41, 0.3);
 }
 
-/* HEADER DA PÁGINA */
 .page-header {
     text-align: center;
     padding-top: 100px;
@@ -162,7 +159,6 @@ nav a.ativo::after {
     color: var(--marrom);
 }
 
-/* SEÇÃO DO FORMULÁRIO */
 .form-section {
     width: 90%;
     max-width: 1100px;
@@ -291,7 +287,6 @@ nav a.ativo::after {
     opacity: 0.5;
 }
 
-/* SEÇÃO DA TABELA */
 .table-section {
     width: 90%;
     max-width: 1100px;
@@ -332,7 +327,6 @@ nav a.ativo::after {
     background-color: #f5f5f5;
 }
 
-/* STATUS BADGES */
 .status-badge {
     display: inline-block;
     padding: 4px 12px;
@@ -351,7 +345,6 @@ nav a.ativo::after {
     color: #721c24;
 }
 
-/* BOTÕES DA TABELA */
 .btn-ver {
     background-color: var(--verde);
     color: #fff;
@@ -392,7 +385,6 @@ nav a.ativo::after {
     opacity: 0.5;
 }
 
-/* Estilos para células vazias ou erro */
 .vazio,
 .erro {
     text-align: center;
@@ -405,7 +397,6 @@ nav a.ativo::after {
     color: #b30000;
 }
 
-/* FOOTER */
 footer {
     background-color: var(--verde-escuro);
     color: #fff;
@@ -414,7 +405,6 @@ footer {
     margin-top: 40px;
 }
 
-/* RESPONSIVO */
 @media (max-width: 700px) {
     nav {
         display: none;

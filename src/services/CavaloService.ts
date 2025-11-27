@@ -1,10 +1,10 @@
 import { CavaloRepository } from '../db/repositories/CavaloRepository';
 import { Cavalo } from '../db/entities/Cavalos';
-import { 
-  CavaloDto, 
-  CreateCavaloDto, 
-  UpdateCavaloDto, 
-  FilterCavaloDto 
+import {
+  CavaloDto,
+  CreateCavaloDto,
+  UpdateCavaloDto,
+  FilterCavaloDto
 } from '../dto/cavalo.dto';
 
 export class CavaloService {
@@ -34,31 +34,34 @@ export class CavaloService {
     return cavalos.map(cavalo => this.toCavaloDto(cavalo));
   }
 
-  async createCavalo(cavaloData: CreateCavaloDto): Promise<CavaloDto> {
-    const dono = await this.cavaloRepository.findUserById(cavaloData.donoId);
+  async createCavalo(cavaloData: CreateCavaloDto, donoId: string): Promise<CavaloDto> {
+    const dono = await this.cavaloRepository.findUserById(donoId);
+
     if (!dono) {
       throw new Error('Dono (owner) not found');
     }
 
-    if (cavaloData.preco <= 0) {
-      throw new Error('Price must be greater than zero');
-    }
-
-    if (cavaloData.idade <= 0 || cavaloData.idade > 50) {
+    if (cavaloData.preco <= 0) throw new Error('Price must be greater than zero');
+    if (cavaloData.idade <= 0 || cavaloData.idade > 50)
       throw new Error('Age must be between 1 and 50 years');
-    }
 
-    // Destructure to separate donoId from other fields
-    const { donoId, ...cavaloFields } = cavaloData;
-    const cavaloToCreate: Partial<Cavalo> = {
-      ...cavaloFields,
+    const cavaloToCreate: Partial<Cavalo> & { type?: string } = {
+      ...cavaloData,
       disponivel: cavaloData.disponivel ?? true,
-      dono: dono
+      dono: dono,
+      type: (cavaloData as any).type || 'Cavalo'
     };
 
     const cavalo = await this.cavaloRepository.create(cavaloToCreate);
+
     return this.toCavaloDto(cavalo);
   }
+
+  async getCavaloByIdParaDetalhesCavalo(id: string): Promise<CavaloDto | null> {
+    const cavalo = await this.cavaloRepository.findById(id);
+    return cavalo ? this.toCavaloDto(cavalo) : null;
+}
+
 
   async updateCavalo(id: string, cavaloData: UpdateCavaloDto): Promise<CavaloDto | null> {
     const existingCavalo = await this.cavaloRepository.findById(id);
@@ -126,6 +129,7 @@ export class CavaloService {
       descricao: cavalo.descricao,
       disponivel: cavalo.disponivel,
       premios: cavalo.premios,
+      foto: cavalo.foto,
       createdAt: cavalo.createdAt,
       updatedAt: cavalo.updatedAt,
       dono: {

@@ -1,7 +1,6 @@
-// tests/controllers/UserController.test.ts
 import request from "supertest";
 import http from "http";
-import app from "../../server"; // mantém como está
+import app from "../../server";
 import { AppDataSource } from "../../config/database";
 
 // Mock do banco de dados para evitar conexão real
@@ -21,7 +20,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    // Fecha o servidor e o mock do banco após os testes
     await AppDataSource.destroy();
     server.close();
 });
@@ -29,7 +27,7 @@ afterAll(async () => {
 describe("Rotas de usuário", () => {
     it("GET /users deve retornar lista de usuários", async () => {
         const res = await request(server).get("/users");
-        expect([200, 404]).toContain(res.status); // aceita 200 se existir, 404 se não
+        expect([200, 404]).toContain(res.status);
     });
 
     it("POST /users deve criar um novo usuário", async () => {
@@ -37,7 +35,6 @@ describe("Rotas de usuário", () => {
             .post("/users")
             .send({ nome: "Carlos", email: "carlos@teste.com", senha: "abc123" });
 
-        // Espera 201 se a rota existir, ou 404 se ainda não foi implementada
         expect([201, 404]).toContain(res.status);
     });
 });

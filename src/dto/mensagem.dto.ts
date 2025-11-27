@@ -24,6 +24,7 @@ export interface ConversationDto {
     id: string;
     nome: string;
     email: string;
+    type: string;
   };
   messages: MensagemDto[];
   totalMessages: number;

@@ -33,6 +33,8 @@ CREATE TABLE cavalos (
   preco DECIMAL(10,2) NOT NULL,
   descricao TEXT,
   disponivel BOOLEAN DEFAULT TRUE,
+  premios TEXT,
+  foto VARCHAR(255),
   createdAt DATETIME NOT NULL,
   updatedAt DATETIME NOT NULL,
   dono CHAR(36) NOT NULL,

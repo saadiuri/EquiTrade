@@ -1,70 +1,152 @@
-interface Cavalo {
+(function () {
+  interface CavaloListagem {
     id: string;
     nome: string;
     raca: string;
     idade: number;
+    descricao: string;
     preco: number;
-    fotoUrl: string;
-}
+    foto?: string;
+    proprietario?: {
+      nome: string;
+      localizacao: string;
+    };
+  }
 
-// Seleciona o corpo da tabela
-const tabelaBody = document.querySelector("tbody") as HTMLTableSectionElement;
+  interface FiltrosBusca {
+    nome?: string;
+    raca?: string;
+    idadeMin?: number;
+    idadeMax?: number;
+    precoMin?: number;
+    precoMax?: number;
+  }
 
-// Função principal: Carrega cavalos
-async function carregarCavalos() {
+  const tabelaBody = document.querySelector(
+    "tbody"
+  ) as HTMLTableSectionElement | null;
+  const formBusca = document.getElementById(
+    "form-busca-cavalo"
+  ) as HTMLFormElement | null;
+  const btnLimpar = document.getElementById(
+    "btn-limpar-busca"
+  ) as HTMLButtonElement | null;
+
+  async function carregarCavalos(filtros: FiltrosBusca = {}) {
+    if (!tabelaBody) return;
+
     try {
-        const resposta = await fetch("http://localhost:3333/cavalos");
+      const token = localStorage.getItem("authToken");
 
-        if (!resposta.ok) {
-            throw new Error("Erro ao buscar cavalos");
-        }
+      // Constrói a URL com query parameters
+      const url = new URL("http://localhost:3000/api/cavalos");
+      
+      if (filtros.nome) {
+        url.searchParams.append("nome", filtros.nome);
+      }
+      if (filtros.raca) {
+        url.searchParams.append("raca", filtros.raca);
+      }
+      if (filtros.idadeMin !== undefined) {
+        url.searchParams.append("idadeMin", filtros.idadeMin.toString());
+      }
+      if (filtros.idadeMax !== undefined) {
+        url.searchParams.append("idadeMax", filtros.idadeMax.toString());
+      }
+      if (filtros.precoMin !== undefined) {
+        url.searchParams.append("precoMin", filtros.precoMin.toString());
+      }
+      if (filtros.precoMax !== undefined) {
+        url.searchParams.append("precoMax", filtros.precoMax.toString());
+      }
 
-        const cavalos: Cavalo[] = await resposta.json();
+      const headers: HeadersInit = {};
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
 
-        // Caso nenhum cavalo encontrado
-        if (cavalos.length === 0) {
-            tabelaBody.innerHTML = `
-                <tr><td colspan="7" class="vazio">Nenhum cavalo encontrado.</td></tr>
+      const resposta = await fetch(url.toString(), { headers });
+
+      if (!resposta.ok) {
+        throw new Error(`Erro ao buscar cavalos: ${resposta.status}`);
+      }
+
+      const dados = await resposta.json();
+      const cavalos: CavaloListagem[] = Array.isArray(dados.data)
+        ? dados.data
+        : [];
+
+      exibirCavalos(cavalos);
+    } catch (erro) {
+      console.error("Erro ao carregar cavalos:", erro);
+      tabelaBody.innerHTML = `
+                <tr><td colspan="5" class="erro">Erro ao carregar a listagem.</td></tr>
             `;
-            return;
-        }
+    }
+  }
 
-        // Renderizar linhas
-        tabelaBody.innerHTML = cavalos.map(cavalo => `
+  function exibirCavalos(cavalos: CavaloListagem[]) {
+    if (!tabelaBody) return;
+
+    if (cavalos.length === 0) {
+      tabelaBody.innerHTML = `
+                <tr><td colspan="5" class="vazio">Nenhum cavalo encontrado.</td></tr>
+            `;
+      return;
+    }
+
+    tabelaBody.innerHTML = cavalos
+      .map(
+        (cavalo) => `
             <tr>
-                <td>${cavalo.id}</td>
-                <td><img src="${cavalo.fotoUrl}" alt="${cavalo.nome}" /></td>
                 <td>${cavalo.nome}</td>
                 <td>${cavalo.raca}</td>
                 <td>${cavalo.idade} anos</td>
-                <td>R$ ${cavalo.preco.toLocaleString("pt-BR")}</td>
-                <td><button class="btn-ver" data-id="${cavalo.id}">Ver</button></td>
+                <td>R$ ${cavalo.preco.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}</td>
+                <td><a href="detalhesCavalo.html?id=${
+                  cavalo.id
+                }" class="btn-ver">Ver</a></td>
             </tr>
-        `).join("");
+        `
+      )
+      .join("");
+  }
 
-        adicionarEventosNosBotoes();
+  if (formBusca) {
+    formBusca.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(formBusca);
+      const filtros: FiltrosBusca = {};
 
-    } catch (erro) {
-        console.error(erro);
-        tabelaBody.innerHTML = `
-            <tr><td colspan="7" class="erro">Erro ao carregar a listagem.</td></tr>
-        `;
-    }
-}
+      const nome = formData.get("nome")?.toString().trim();
+      const raca = formData.get("raca")?.toString().trim();
+      const idadeMin = formData.get("idadeMin")?.toString();
+      const idadeMax = formData.get("idadeMax")?.toString();
+      const precoMin = formData.get("precoMin")?.toString();
+      const precoMax = formData.get("precoMax")?.toString();
 
-// Eventos dos botões "Ver"
-function adicionarEventosNosBotoes() {
-    const botoes = document.querySelectorAll(".btn-ver");
+      if (nome) filtros.nome = nome;
+      if (raca) filtros.raca = raca;
+      if (idadeMin) filtros.idadeMin = Number(idadeMin);
+      if (idadeMax) filtros.idadeMax = Number(idadeMax);
+      if (precoMin) filtros.precoMin = Number(precoMin);
+      if (precoMax) filtros.precoMax = Number(precoMax);
 
-    botoes.forEach(botao => {
-        botao.addEventListener("click", () => {
-            const id = (botao as HTMLElement).getAttribute("data-id");
-            if (id) {
-                window.location.href = `detalhesCavalo.html?id=${id}`;
-            }
-        });
+      await carregarCavalos(filtros);
     });
-}
+  }
 
-// Executa ao carregar a página
-document.addEventListener("DOMContentLoaded", carregarCavalos);
+  if (btnLimpar && formBusca) {
+    btnLimpar.addEventListener("click", async () => {
+      formBusca.reset();
+      await carregarCavalos();
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    carregarCavalos();
+  });
+})();

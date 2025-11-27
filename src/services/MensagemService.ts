@@ -61,6 +61,42 @@ export class MensagemService {
     return mensagens.map(msg => this.toMensagemDto(msg));
   }
 
+  async getAllConversations(userId: string): Promise<ConversationDto[]> {
+    const user = await this.mensagemRepository.findUserById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const sent = await this.mensagemRepository.findBySenderId(userId);
+    const received = await this.mensagemRepository.findByReceiverId(userId);
+
+    const uniqueUserIds = new Set<string>();
+    sent.forEach(msg => uniqueUserIds.add(msg.destinatario.id));
+    received.forEach(msg => uniqueUserIds.add(msg.remetente.id));
+
+    const conversations: ConversationDto[] = [];
+
+    for (const otherUserId of uniqueUserIds) {
+      const otherUser = await this.mensagemRepository.findUserById(otherUserId);
+      if (!otherUser) continue;
+
+      const mensagens = await this.mensagemRepository.findConversation(userId, otherUserId);
+      
+      conversations.push({
+        otherUser: {
+          id: otherUser.id,
+          nome: otherUser.nome,
+          email: otherUser.email,
+          type: otherUser.constructor.name
+        },
+        messages: mensagens.map(msg => this.toMensagemDto(msg)),
+        totalMessages: mensagens.length
+      });
+    }
+
+    return conversations;
+  }
+
   async getConversation(userId1: string, userId2: string): Promise<ConversationDto> {
     const user1 = await this.mensagemRepository.findUserById(userId1);
     if (!user1) {
@@ -78,7 +114,8 @@ export class MensagemService {
       otherUser: {
         id: user2.id,
         nome: user2.nome,
-        email: user2.email
+        email: user2.email,
+        type: user2.constructor.name
       },
       messages: mensagens.map(msg => this.toMensagemDto(msg)),
       totalMessages: mensagens.length

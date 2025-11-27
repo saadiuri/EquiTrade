@@ -10,34 +10,59 @@
 
 <body>
 
-    <!-- NAVBAR -->
     <header class="navbar">
         <div class="logo">
             <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
         </div>
-
         <nav>
-            <a href="paginaInicial.html">Início</a>
-            <a href="buscaCavalo.html">Buscar Cavalos</a>
-            <a href="listagemCavalo.html">Listagem</a>
-            <a href="batePapo.html">Bate-Papo</a>
-            <a href="login.html" class="btn-login">Entrar</a>
+            <!-- Header será preenchido dinamicamente pelo headerManager.js -->
         </nav>
-
     </header>
 
     <section class="page-header">
-        <h2>📜 Lista de Cavalos Disponíveis</h2>
+        <h2>Lista de Cavalos Disponíveis</h2>
         <p>Veja todos os cavalos cadastrados para venda ou troca.</p>
     </section>
 
-    <!-- TABELA DE CAVALOS -->
+    <section class="search-section">
+        <form id="form-busca-cavalo" class="search-box">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input id="nome" name="nome" type="text" placeholder="Nome do cavalo">
+                </div>
+                <div class="form-group">
+                    <label for="raca">Raça:</label>
+                    <input id="raca" name="raca" type="text" placeholder="Raça">
+                </div>
+                <div class="form-group">
+                    <label for="idadeMin">Idade Mínima:</label>
+                    <input id="idadeMin" name="idadeMin" type="number" min="0" placeholder="Ex: 3">
+                </div>
+                <div class="form-group">
+                    <label for="idadeMax">Idade Máxima:</label>
+                    <input id="idadeMax" name="idadeMax" type="number" min="0" placeholder="Ex: 10">
+                </div>
+                <div class="form-group">
+                    <label for="precoMin">Preço Mínimo (R$):</label>
+                    <input id="precoMin" name="precoMin" type="number" min="0" step="0.01" placeholder="Ex: 5000">
+                </div>
+                <div class="form-group">
+                    <label for="precoMax">Preço Máximo (R$):</label>
+                    <input id="precoMax" name="precoMax" type="number" min="0" step="0.01" placeholder="Ex: 50000">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Buscar</button>
+                <button type="button" id="btn-limpar-busca" class="btn-secondary">Limpar Filtros</button>
+            </div>
+        </form>
+    </section>
+
     <section class="tabela-container">
         <table class="tabela-cavalos">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Foto</th>
                     <th>Nome</th>
                     <th>Raça</th>
                     <th>Idade</th>
@@ -47,38 +72,6 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td>01</td>
-                    <td><img src="img/cavalo1.jpg" alt="Cavalo 1"></td>
-                    <td>Ventania</td>
-                    <td>Mangalarga</td>
-                    <td>5 anos</td>
-                    <td>R$ 12.000</td>
-                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
-                </tr>
-
-                <tr>
-                    <td>02</td>
-                    <td><img src="img/cavalo2.jpg" alt="Cavalo 2"></td>
-                    <td>Sereno</td>
-                    <td>Quarto de Milha</td>
-                    <td>7 anos</td>
-                    <td>R$ 15.500</td>
-                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
-                </tr>
-
-                <tr>
-                    <td>03</td>
-                    <td><img src="img/cavalo3.jpg" alt="Cavalo 3"></td>
-                    <td>Relâmpago</td>
-                    <td>Puro-Sangue</td>
-                    <td>4 anos</td>
-                    <td>R$ 21.000</td>
-                    <td><a href="detalhesCavalo.html" class="btn-ver">Ver</a></td>
-                </tr>
-                <!-- Script TypeScript compilado para JavaScript -->
-                <script type="module" src="../scripts/js/autenticacao.js"></script>
-                <script type="module" src="../scripts/js/listagemCavalo.js"></script>
             </tbody>
         </table>
     </section>
@@ -87,6 +80,8 @@
         <p>© 2025 EquiTrade — Plataforma de Troca e Venda de Cavalos</p>
     </footer>
 
+    <script type="module" src="../scripts/js/headerManager.js"></script>
+    <script type="module" src="../scripts/js/listagemCavalo.js"></script>
 </body>
 
 </html>

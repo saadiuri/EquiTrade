@@ -10,27 +10,19 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-container">
-                <div class="logo">
-                    <img src="../../../assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade" />
-                </div>
-            </div>
-            <nav class="header-nav">
-                <a href="paginaInicial.html" class="header-button">Início</a>
-                <a href="sobre.html" class="header-button">Sobre</a>
-                <a href="contato.html" class="header-button">Contato</a>
-            </nav>
+    <header class="navbar">
+        <div class="logo">
+            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade" />
         </div>
+        <nav>
+            <!-- Header será preenchido dinamicamente pelo headerManager.js -->
+        </nav>
     </header>
 
     <main>
         <div class="form-container">
             <h1>Cadastro de Cavalo</h1>
 
-            <!-- Formulário com os parâmetros exigidos pelo backend:
-                 { nome, idade, raca, preco, descricao, disponivel, premios, donoId } -->
             <form id="cadastroCavalo" method="post" enctype="multipart/form-data" novalidate>
                 <div class="form-group input-icon">
                     <label for="nome">Nome do Cavalo</label>
@@ -70,17 +62,20 @@
                 </div>
 
                 <div class="form-group input-icon">
+                    <label for="foto">URL da Foto (opcional)</label>
+                    <span class="icon">&#128247;</span>
+                    <input type="url" id="foto" name="foto" placeholder="https://exemplo.com/imagem-cavalo.jpg" />
+                </div>
+
+                <div class="form-group input-icon">
                     <label for="disponivel">Disponível para venda</label>
                     <span class="icon">&#9989;</span>
                     <input type="checkbox" id="disponivel" name="disponivel" checked />
                 </div>
 
-                <!-- donoId deve ser enviado no payload; deixei como hidden para ser preenchido por JS -->
-                <input type="hidden" id="donoId" name="donoId" value="" />
-
                 <button type="submit" class="submit-button">Cadastrar Cavalo</button>
             </form>
-            <!-- Script TypeScript compilado para JavaScript -->
+            <script type="module" src="../scripts/js/headerManager.js"></script>
             <script type="module" src="../scripts/js/cadastroCavalo.js"></script>
         </div>
     </main>

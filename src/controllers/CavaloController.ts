@@ -34,6 +34,11 @@ export class CavaloController {
    *           type: boolean
    *         description: Filtrar por disponibilidade
    *       - in: query
+   *         name: nome
+   *         schema:
+   *           type: string
+   *         description: Filtrar por nome (busca parcial)
+   *       - in: query
    *         name: raca
    *         schema:
    *           type: string
@@ -89,9 +94,11 @@ export class CavaloController {
    *               $ref: '#/components/schemas/ApiResponse'
    */
   async getAllCavalos(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
     try {
       const filters: FilterCavaloDto = {
         disponivel: req.query.disponivel ? req.query.disponivel === 'true' : undefined,
+        nomeContains: req.query.nome as string,
         racaContains: req.query.raca as string,
         precoMin: req.query.precoMin ? Number(req.query.precoMin) : undefined,
         precoMax: req.query.precoMax ? Number(req.query.precoMax) : undefined,
@@ -101,11 +108,11 @@ export class CavaloController {
       };
 
       // Remove undefined values
-      Object.keys(filters).forEach(key => 
+      Object.keys(filters).forEach(key =>
         filters[key as keyof FilterCavaloDto] === undefined && delete filters[key as keyof FilterCavaloDto]
       );
 
-      const cavalos = Object.keys(filters).length > 0 
+      const cavalos = Object.keys(filters).length > 0
         ? await this.cavaloService.getCavalosByFilters(filters)
         : await this.cavaloService.getAllCavalos();
 
@@ -321,18 +328,25 @@ export class CavaloController {
    */
   async createCavalo(req: Request, res: Response): Promise<void> {
     try {
-      const { nome, idade, raca, preco, descricao, disponivel, premios, donoId } = req.body;
-
-      // Basic validation
-      if (!nome || !idade || !raca || !preco || !donoId) {
-        res.status(400).json({
+      if (!req.user || !req.user.userId) {
+        res.status(401).json({
           success: false,
-          message: "Nome, idade, raca, preco, and donoId are required",
+          message: "Authentication required",
         });
         return;
       }
 
-      // Type validation
+      const donoId = req.user.userId;
+      const { nome, idade, raca, preco, descricao, disponivel, premios } = req.body;
+
+      if (!nome || !idade || !raca || !preco) {
+        res.status(400).json({
+          success: false,
+          message: "Nome, idade, raca, and preco are required",
+        });
+        return;
+      }
+
       if (typeof idade !== 'number' || typeof preco !== 'number') {
         res.status(400).json({
           success: false,
@@ -349,10 +363,9 @@ export class CavaloController {
         descricao,
         disponivel,
         premios,
-        donoId,
       };
 
-      const cavalo = await this.cavaloService.createCavalo(cavaloData);
+      const cavalo = await this.cavaloService.createCavalo(cavaloData, donoId);
 
       res.status(201).json({
         success: true,
@@ -714,4 +727,5 @@ export class CavaloController {
       });
     }
   }
+
 }

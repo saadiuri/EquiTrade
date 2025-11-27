@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
+import { authenticate } from '../middleware/auth.middleware';
 
 const router = Router();
 const userController = new UserController();
@@ -360,5 +361,8 @@ router.put('/:id', (req, res) => userController.updateUser(req, res));
  *               $ref: '#/components/schemas/ApiResponse'
  */
 router.delete('/:id', (req, res) => userController.deleteUser(req, res));
+
+// Rate a seller (authenticated users only)
+router.post('/rate/:id', authenticate, (req, res) => userController.rateVendedor(req, res));
 
 export default router;

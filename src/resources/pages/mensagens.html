@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Conversas - EquiTrade</title>
+    <link rel="stylesheet" href="/src/resources/style/styleMensagens.css">
+</head>
+
+<body>
+
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
+        </div>
+        <nav>
+            <!-- Header será preenchido dinamicamente pelo headerManager.js -->
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h2>Minhas Conversas</h2>
+        <p>Veja todas as suas conversas com outros usuários.</p>
+    </section>
+
+    <section class="table-section">
+        <div class="tabela-container">
+            <table class="tabela-conversas">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Email</th>
+                        <th>Total de Mensagens</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- Será preenchido dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Avaliar Vendedor</h3>
+            <p id="vendedorName"></p>
+            <div class="stars-container">
+                <svg class="star" data-rating="1" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <svg class="star" data-rating="2" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <svg class="star" data-rating="3" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <svg class="star" data-rating="4" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <svg class="star" data-rating="5" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+            </div>
+            <p class="rating-text">Selecione uma nota de 1 a 5 estrelas</p>
+            <div class="modal-actions">
+                <button id="submitRating" class="btn-submit" disabled>Enviar Avaliação</button>
+                <button id="cancelRating" class="btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 EquiTrade — Plataforma de Troca e Venda de Cavalos</p>
+    </footer>
+
+    <script type="module" src="../scripts/js/headerManager.js"></script>
+    <script type="module" src="../scripts/js/mensagens.js"></script>
+</body>
+
+</html>
+

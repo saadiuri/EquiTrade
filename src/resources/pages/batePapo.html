@@ -13,75 +13,35 @@
     <header class="navbar">
         <div class="logo">
             <img src="/assets/Imagens/logoSemFundo.png" alt="Logo EquiTrade">
-            <h1></h1>
         </div>
         <nav>
-            <a href="paginaInicial.html">Início</a>
-            <a href="listagemCavalo.html">Meus Cavalos</a>
-            <a href="buscaCavalo.html">Trocas</a>
-            <a href="batePapo.html" class="ativo">Bate-Papo</a>
-            <a href="login.html" class="btn-login">Sair</a>
         </nav>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="chat-container">
         <div class="chat-header">
+            <a href="mensagens.html" class="btn-back">← Voltar</a>
             <div class="user-info">
-                <img src="/src/resources/img/user1.jpg" alt="Usuário">
-                <div>
-                    <h2>Lucas Silva</h2>
-                    <p>Negociando cavalo: <strong>Relâmpago Dourado</strong></p>
-                </div>
+                <h2 id="nomeUsuario">Carregando...</h2>
+                <p id="emailUsuario"></p>
             </div>
         </div>
 
         <div class="chat-box" id="chatBox">
-            <div class="mensagem recebida">
-                <p>Olá! Vi o cavalo e fiquei interessado, ele ainda está disponível?</p>
-                <span>10:32</span>
-            </div>
-            <div class="mensagem enviada">
-                <p>Oi! Sim, o Relâmpago ainda está disponível 🐎</p>
-                <span>10:34</span>
-            </div>
-            <div class="mensagem recebida">
-                <p>Perfeito! Ele é manso com iniciantes?</p>
-                <span>10:35</span>
-            </div>
+            <p class="loading">Carregando mensagens...</p>
         </div>
 
         <div class="chat-input">
-            <input type="text" id="mensagemInput" placeholder="Digite sua mensagem...">
-            <button id="enviarBtn">Enviar</button>
+            <input type="text" id="mensagemInput" placeholder="Digite sua mensagem..." disabled>
+            <button id="enviarBtn" disabled>Enviar</button>
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2025 EquiTrade — Conectando apaixonados por cavalos</p>
     </footer>
 
-    <script>
-        const input = document.getElementById("mensagemInput");
-        const chatBox = document.getElementById("chatBox");
-        const btn = document.getElementById("enviarBtn");
-
-        btn.addEventListener("click", () => {
-            const texto = input.value.trim();
-            if (texto === "") return;
-
-            const msg = document.createElement("div");
-            msg.classList.add("mensagem", "enviada");
-            msg.innerHTML = `<p>${texto}</p><span>${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
-
-            chatBox.appendChild(msg);
-            chatBox.scrollTop = chatBox.scrollHeight;
-            input.value = "";
-        });
-    </script>
-    <!-- Script TypeScript compilado para JavaScript -->
-    <script type="module" src="../scripts/js/autenticacao.js"></script>
+    <script type="module" src="../scripts/js/headerManager.js"></script>
     <script type="module" src="../scripts/js/batePapo.js"></script>
 </body>
 

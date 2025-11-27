@@ -68,6 +68,10 @@ export class CavaloRepository {
         : idadeConditions[0];
     }
 
+    if (filters.nomeContains) {
+      whereCondition.nome = ILike(`%${filters.nomeContains}%`);
+    }
+
     if (filters.racaContains) {
       whereCondition.raca = ILike(`%${filters.racaContains}%`);
     }
@@ -88,8 +92,16 @@ export class CavaloRepository {
   }
 
   async create(cavaloData: Partial<Cavalo>): Promise<Cavalo> {
+    console.log('🛠️ CavaloRepository.create chamado com:', cavaloData);
     const cavalo = this.cavaloRepository.create(cavaloData);
-    return await this.cavaloRepository.save(cavalo);
+    try {
+      const savedCavalo = await this.cavaloRepository.save(cavalo);
+      console.log('✅ Cavalo salvo com sucesso:', savedCavalo);
+      return savedCavalo;
+    } catch (err) {
+      console.error('❌ Erro ao salvar cavalo:', err);
+      throw err; // Propaga para o service
+    }
   }
 
   async update(id: string, cavaloData: Partial<Cavalo>): Promise<Cavalo | null> {
@@ -133,4 +145,5 @@ export class CavaloRepository {
     await this.cavaloRepository.update(id, { disponivel: true });
     return await this.findById(id);
   }
+
 }

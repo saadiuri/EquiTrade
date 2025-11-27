@@ -1,89 +1,126 @@
-interface CavaloDetalhes {
+(function () {
+  interface CavaloDetalhes {
     id: string;
     nome: string;
     raca: string;
     idade: number;
     descricao: string;
-    imagens: string[];
-    proprietario: {
-        nome: string;
-        foto: string;
-        localizacao: string;
+    preco: number;
+    foto?: string;
+    proprietario?: {
+      nome: string;
+      endereco: string;
     };
-}
+  }
 
-const imgPrincipal = document.querySelector(".detalhes-img img") as HTMLImageElement;
-const galeriaMini = document.querySelector(".galeria-mini") as HTMLElement;
+  document.addEventListener("DOMContentLoaded", () => {
+    const parametros = new URLSearchParams(window.location.search);
+    const idCavalo = parametros.get("id");
 
-const nomeElemento = document.querySelector(".detalhes-info h2") as HTMLElement;
-const racaElemento = document.querySelector(".raça") as HTMLElement;
-const idadeElemento = document.querySelector(".idade") as HTMLElement;
-const descricaoElemento = document.querySelector(".descricao") as HTMLElement;
+    if (!idCavalo) {
+      alert("Erro: nenhum ID de cavalo informado.");
+    } else {
+      carregarDetalhes(idCavalo);
+    }
 
-const propImg = document.querySelector(".proprietario img") as HTMLImageElement;
-const propNome = document.querySelector(".proprietario strong") as HTMLElement;
-const propLocal = document.querySelector(".proprietario p:nth-child(2)") as HTMLElement;
-
-const parametros = new URLSearchParams(window.location.search);
-const idCavalo = parametros.get("id");
-
-// Se não tiver ID, exibe erro
-if (!idCavalo) {
-    alert("Erro: nenhum ID de cavalo informado.");
-} else {
-    carregarDetalhes(idCavalo);
-}
-
-async function carregarDetalhes(id: string) {
-    try {
-        const resposta = await fetch(`http://localhost:8080/api/cavalos/${id}`);
-
-        if (!resposta.ok) {
-            alert("Cavalo não encontrado.");
-            return;
+    const btnEnviarMensagem = document.getElementById("enviar-mensagem-btn");
+    if (btnEnviarMensagem) {
+      btnEnviarMensagem.addEventListener("click", () => {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          alert("Você precisa estar logado para enviar mensagens.");
+          window.location.href = "login.html";
+        } else {
+          window.location.href = "batePapo.html";
         }
+      });
+    }
+  });
 
-        const cavalo: CavaloDetalhes = await resposta.json();
-        preencherPagina(cavalo);
+  async function carregarDetalhes(id: string): Promise<void> {
+    try {
+      const token = localStorage.getItem("authToken");
 
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const resposta = await fetch(`http://localhost:3000/api/cavalos/${id}`, {
+        headers,
+      });
+
+      if (!resposta.ok) {
+        alert("Cavalo não encontrado.");
+        return;
+      }
+
+      const dados = await resposta.json();
+      const cavalo: CavaloDetalhes = dados.data;
+
+      preencherPagina(cavalo);
     } catch (erro) {
-        console.error(erro);
-        alert("Erro ao conectar com o servidor.");
+      console.error("Erro ao conectar com o servidor:", erro);
+      alert(
+        "Erro ao conectar com o servidor. Verifique se o backend está rodando."
+      );
     }
-}
+  }
 
-function preencherPagina(cavalo: CavaloDetalhes) {
+  function preencherPagina(cavalo: CavaloDetalhes): void {
+    const nomeElemento = document.querySelector(
+      ".detalhes-info h2"
+    ) as HTMLElement | null;
+    const fotoElemento = document.querySelector(
+      ".cavalo-foto"
+    ) as HTMLImageElement | null;
+    const racaElemento = document.querySelector(".raça") as HTMLElement | null;
+    const idadeElemento = document.querySelector(
+      ".idade"
+    ) as HTMLElement | null;
+    const descricaoElemento = document.querySelector(
+      ".descricao"
+    ) as HTMLElement | null;
+    const precoElemento = document.querySelector(
+      ".preco"
+    ) as HTMLElement | null;
+    const propNomeElemento = document.querySelector(
+      ".proprietario .nome-proprietario"
+    ) as HTMLElement | null;
+    const propLocalElemento = document.querySelector(
+      ".proprietario .localizacao"
+    ) as HTMLElement | null;
 
-    // IMAGEM PRINCIPAL
-    if (cavalo.imagens && cavalo.imagens.length > 0 && cavalo.imagens[0]) {
-        imgPrincipal.src = cavalo.imagens[0]!;
+    if (nomeElemento) nomeElemento.innerText = cavalo.nome || "Sem nome";
+    if (fotoElemento) {
+      fotoElemento.src = cavalo.foto || "/assets/Imagens/logoSemFundo.png";
+      fotoElemento.alt = `Foto de ${cavalo.nome}`;
     }
+    if (racaElemento)
+      racaElemento.innerText = `Raça: ${cavalo.raca || "Desconhecida"} `;
+    if (idadeElemento)
+      idadeElemento.innerText = `Idade: ${cavalo.idade ?? "Desconhecida"} anos`;
+    if (descricaoElemento)
+      descricaoElemento.innerText = cavalo.descricao || "Sem descrição";
+    if (precoElemento)
+      precoElemento.innerText = `Preço: R$ ${
+        cavalo.preco?.toLocaleString("pt-BR") || "0"
+      } `;
 
-    // MINI GALERIA
-    if (galeriaMini) {
-        galeriaMini.innerHTML = "";
-
-        cavalo.imagens.forEach((imgUrl) => {
-            const mini = document.createElement("img");
-            mini.src = imgUrl;
-            mini.alt = "Miniatura";
-
-            mini.addEventListener("click", () => {
-                imgPrincipal.src = imgUrl;
-            });
-
-            galeriaMini.appendChild(mini);
-        });
+    if (cavalo.proprietario) {
+      if (propNomeElemento)
+        propNomeElemento.innerText = cavalo.proprietario.nome || "Desconhecido";
+      if (propLocalElemento)
+        propLocalElemento.innerText = `Localização: ${
+          cavalo.proprietario.endereco || "Não informada"
+        }`;
+    } else {
+      if (propNomeElemento) propNomeElemento.innerText = "Desconhecido";
+      if (propLocalElemento)
+        propLocalElemento.innerText = "Localização não informada";
     }
-
-    // TEXTO PRINCIPAL
-    nomeElemento.innerText = cavalo.nome;
-    racaElemento.innerText = `Raça: ${cavalo.raca}`;
-    idadeElemento.innerText = `Idade: ${cavalo.idade} anos`;
-    descricaoElemento.innerText = cavalo.descricao;
-
-    // PROPRIETÁRIO
-    propImg.src = cavalo.proprietario.foto;
-    propNome.innerText = cavalo.proprietario.nome;
-    propLocal.innerText = cavalo.proprietario.localizacao;
-}
+  }
+})();

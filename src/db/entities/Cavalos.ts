@@ -36,6 +36,9 @@ export class Cavalo {
   @Column({ type: 'text', nullable: true })
   premios?: string;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  foto?: string;
+
   @CreateDateColumn()
   createdAt!: Date;
 
@@ -44,7 +47,9 @@ export class Cavalo {
 
   // Dono do cavalo
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'dono_id' })
+
+  @JoinColumn({ name: 'donoId' }) // garante que o banco cria a FK corretamente
+
   dono!: User;
 
   // Métodos de regra de negócio

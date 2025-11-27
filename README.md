@@ -203,8 +203,3 @@ http://localhost:3000/docs
 1. Inicie o servidor: `npm run dev`
 2. Acesse: [http://localhost:3000/docs](http://localhost:3000/docs)
 3. Explore e teste os endpoints diretamente na interface
-
-Contato
-- Autor: SEU_NOME (substitua aqui)
-- Email: seu-email@exemplo.com
-- Repositório: https://github.com/SEU_USUARIO/EquiTrade

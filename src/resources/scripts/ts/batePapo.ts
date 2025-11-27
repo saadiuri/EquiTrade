@@ -1,119 +1,201 @@
-import { requireAuth } from './autenticacao.js';
+import { API_BASE_URL } from "./config.js";
+import { requireAuth } from "./autenticacao.js";
 
-interface MensagemFormData {
-    remetenteId: string;
-    destinatarioId: string;
-    conteudo: string;
-}
+(function () {
+  if (!requireAuth()) return;
 
-// Estrutura retornada pelo backend (quando existir)
-interface MensagemResponse {
+  const API_URL = `${API_BASE_URL}/mensagens`;
+
+  interface Mensagem {
     id: string;
-    remetenteId: string;
-    destinatarioId: string;
     conteudo: string;
-    enviadoEm: string;
-}
+    createAt: string;
+    remetente: {
+      id: string;
+      nome: string;
+      email: string;
+    };
+    destinatario: {
+      id: string;
+      nome: string;
+      email: string;
+    };
+  }
 
-// Estrutura para mensagens no histórico
-interface HistoricoResponse {
-    mensagens: MensagemResponse[];
-}
+  interface Conversation {
+    otherUser: {
+      id: string;
+      nome: string;
+      email: string;
+    };
+    messages: Mensagem[];
+    totalMessages: number;
+  }
 
-// Seletores do HTML
-const form = document.getElementById("form-batepapo") as HTMLFormElement;
-const inputMensagem = document.getElementById("mensagem") as HTMLInputElement;
-const chatContainer = document.getElementById("chat-container") as HTMLDivElement;
+  const inputMensagem = document.getElementById(
+    "mensagemInput"
+  ) as HTMLInputElement;
+  const chatContainer = document.getElementById("chatBox") as HTMLDivElement;
+  const btnEnviar = document.getElementById("enviarBtn") as HTMLButtonElement;
+  const nomeUsuarioEl = document.getElementById("nomeUsuario");
+  const emailUsuarioEl = document.getElementById("emailUsuario");
 
-// IDs dos usuários (quando integrar com login, isso virá da sessão)
-const remetenteId = localStorage.getItem("usuarioId") || "1";
-const destinatarioId = localStorage.getItem("destinatarioId") || "2";
+  const urlParams = new URLSearchParams(window.location.search);
+  const otherUserId = urlParams.get("userId");
 
-// Enviar mensagem
-if (form) {
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+  if (!otherUserId) {
+    alert("Nenhuma conversa selecionada.");
+    window.location.href = "mensagens.html";
+    throw new Error("No userId in URL");
+  }
 
-        const texto = inputMensagem.value.trim();
-        if (texto.length === 0) return;
+  function extractToken(): string {
+    return localStorage.getItem("authToken") || "";
+  }
 
-        const mensagem: MensagemFormData = {
-            remetenteId,
-            destinatarioId,
-            conteudo: texto
-        };
-
-        try {
-            const response = await fetch("http://localhost:8080/api/batepapo/enviar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(mensagem)
-            });
-
-            if (!response.ok) {
-                alert("Erro ao enviar mensagem.");
-                return;
-            }
-
-            const novaMensagem: MensagemResponse = await response.json();
-
-            adicionarMensagemNaTela(novaMensagem);
-
-            inputMensagem.value = "";
-
-        } catch (error) {
-            console.error(error);
-            alert("Falha ao enviar mensagem.");
-        }
-    });
-}
-
-// Carregar histórico do chat
-async function carregarHistorico() {
+  function extractUserId(): string {
     try {
-        const response = await fetch(
-            `http://localhost:8080/api/batepapo/historico?usuario=${remetenteId}`
-        );
+      const token = extractToken();
+      if (!token) return "";
 
-        if (!response.ok) {
-            console.warn("Não foi possível carregar o histórico.");
-            return;
-        }
+      const parts = token.split(".");
+      if (parts.length !== 3 || !parts[1]) return "";
 
-        const historico: HistoricoResponse = await response.json();
-
-        historico.mensagens.forEach((msg) => adicionarMensagemNaTela(msg));
-
+      const payload = JSON.parse(atob(parts[1]));
+      return payload.userId || payload.id || "";
     } catch (error) {
-        console.error(error);
+      console.error("Erro ao extrair userId do token:", error);
+      return "";
     }
-}
+  }
 
-// Renderizar mensagens no HTML
-function adicionarMensagemNaTela(msg: MensagemResponse) {
-    const div = document.createElement("div");
-    div.classList.add("mensagem");
+  const usuarioLogadoId = extractUserId();
 
-    const classe = msg.remetenteId === remetenteId ? "minha" : "dele";
-    div.classList.add(classe);
+  if (!usuarioLogadoId) {
+    alert("Erro ao identificar usuário. Faça login novamente.");
+    window.location.href = "login.html";
+    throw new Error("Cannot identify logged user");
+  }
 
-    div.innerHTML = `
-        <p><strong>${msg.remetenteId === remetenteId ? "Você" : "Ele"}:</strong> ${msg.conteudo}</p>
-        <span class="horario">${formatarHorario(msg.enviadoEm)}</span>
-    `;
+  async function carregarConversa() {
+    try {
+      const token = extractToken();
+      const url = `${API_URL}/conversation/${otherUserId}`;
 
-    chatContainer.appendChild(div);
+      const headers: HeadersInit = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      const resposta = await fetch(url, { headers });
+
+      if (!resposta.ok) {
+        throw new Error("Erro ao carregar conversa");
+      }
+
+      const dados = await resposta.json();
+      const conversation: Conversation = dados.data;
+
+      if (nomeUsuarioEl) nomeUsuarioEl.textContent = conversation.otherUser.nome;
+      if (emailUsuarioEl) emailUsuarioEl.textContent = conversation.otherUser.email;
+// Enable input and button
+      inputMensagem.disabled = false;
+      btnEnviar.disabled = false;
+
+      exibirMensagens(conversation.messages);
+    } catch (erro) {
+      console.error("Erro ao carregar conversa:", erro);
+      chatContainer.innerHTML =
+        "<p class='erro'>Erro ao carregar conversa.</p>";
+    }
+  }
+
+  function exibirMensagens(mensagens: Mensagem[]) {
+    chatContainer.innerHTML = "";
+
+    if (mensagens.length === 0) {
+      chatContainer.innerHTML =
+        "<p class='vazio'>Nenhuma mensagem ainda. Comece a conversa!</p>";
+      return;
+    }
+
+    mensagens.forEach((msg) => {
+      const divMensagem = document.createElement("div");
+      divMensagem.classList.add("mensagem");
+
+      if (msg.remetente.id === usuarioLogadoId) {
+        divMensagem.classList.add("enviada");
+      } else {
+        divMensagem.classList.add("recebida");
+      }
+
+      const dataFormatada = new Date(msg.createAt).toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      divMensagem.innerHTML = `
+        <p>${msg.conteudo}</p>
+        <span>${dataFormatada}</span>
+      `;
+
+      chatContainer.appendChild(divMensagem);
+    });
 
     chatContainer.scrollTop = chatContainer.scrollHeight;
-}
+  }
 
-function formatarHorario(data: string) {
-    const d = new Date(data);
-    return d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-}
+  async function enviarMensagem() {
+    const conteudo = inputMensagem.value.trim();
 
-if (requireAuth()) {
-    carregarHistorico();
-}
+    if (!conteudo) {
+      alert("Digite uma mensagem antes de enviar.");
+      return;
+    }
 
-export {};
+    if (!otherUserId) {
+      alert("Erro ao identificar destinatário.");
+      return;
+    }
+
+    try {
+      const token = extractToken();
+      const resposta = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          destinatario_id: otherUserId,
+          conteudo,
+        }),
+      });
+
+      if (!resposta.ok) {
+        throw new Error("Erro ao enviar mensagem");
+      }
+
+      inputMensagem.value = "";
+      await carregarConversa();
+    } catch (erro) {
+      console.error("Erro ao enviar mensagem:", erro);
+      alert("Erro ao enviar mensagem. Tente novamente.");
+    }
+  }
+
+  btnEnviar.addEventListener("click", enviarMensagem);
+
+  inputMensagem.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      enviarMensagem();
+    }
+  });
+
+  carregarConversa();
+
+  setInterval(carregarConversa, 5000);
+})();

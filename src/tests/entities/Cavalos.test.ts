@@ -2,7 +2,7 @@ import { Cavalo } from '../../db/entities/Cavalos';
 import { User } from '../../db/entities/User';
 import { Comprador } from '../../db/entities/Comprador';
 
-// Criamos uma classe concreta para poder testar a abstrata
+// classe concreta para poder testar a abstrata
 class CavaloConcreto extends Cavalo {
     async marcarComoVendido(): Promise<void> {
         this.disponivel = false;
@@ -29,7 +29,7 @@ describe('Entidade Cavalo', () => {
         cavalo.preco = 25000.0;
         cavalo.descricao = 'Cavalo muito dócil e rápido';
         cavalo.dono = user;
-        cavalo.disponivel = true; // 👈 Adicione esta linha
+        cavalo.disponivel = true;
     });
 
 
@@ -48,8 +48,8 @@ describe('Entidade Cavalo', () => {
     });
 
     test('deve reativar o anúncio do cavalo', async () => {
-        await cavalo.marcarComoVendido(); // primeiro vende
-        await cavalo.reativarAnuncio(); // depois reativa
+        await cavalo.marcarComoVendido();
+        await cavalo.reativarAnuncio();
         expect(cavalo.disponivel).toBe(true);
     });
 

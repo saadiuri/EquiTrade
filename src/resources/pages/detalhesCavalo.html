@@ -14,48 +14,25 @@
             <img src="/assets/Imagens/logoSemFundo.png" alt="EquiTrade">
         </div>
         <nav>
-            <a href="paginaInicial.html">Início</a>
-            <a href="listagemCavalo.html">Cavalos</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-            <a href="login.html" class="btn-login">Entrar</a>
+            <!-- Header será preenchido dinamicamente pelo headerManager.js -->
         </nav>
     </header>
 
     <main class="detalhes-container">
-        <div class="detalhes-img">
-            <img src="img/cavalo1.jpg" alt="Cavalo Relâmpago">
-            <div class="galeria-mini">
-                <img src="img/cavalo1.jpg" alt="Miniatura">
-                <img src="img/cavalo2.jpg" alt="Miniatura">
-                <img src="img/cavalo3.jpg" alt="Miniatura">
-            </div>
-        </div>
-
         <div class="detalhes-info">
-            <h2>Relâmpago</h2>
-            <p class="raça">Raça: Mangalarga</p>
-            <p class="idade">Idade: 6 anos</p>
-            <p class="descricao">
-                Relâmpago é um cavalo dócil, de ótimo porte e velocidade. Ideal para cavalgadas
-                e competições de médio desempenho. Está disponível para troca com outros cavalos de raça similar.
-            </p>
-
-            <div class="proprietario">
-                <img src="img/usuario1.jpg" alt="Proprietário">
-                <div>
-                    <p><strong>Proprietário:</strong> João Martins</p>
-                    <p>Localização: Minas Gerais, Brasil</p>
-                </div>
-            </div>
+            <h2>Nome do Cavalo</h2>
+            <img class="cavalo-foto" src="" alt="Foto do cavalo" />
+            <p class="raça">Raça: </p>
+            <p class="idade">Idade: </p>
+            <p class="descricao"></p>
+            <p class="preco"></p>
 
             <div class="acoes">
-                <button class="btn-primary">Propor Troca</button>
-                <button class="btn-secundario">Enviar Mensagem</button>
+                <button id="enviar-mensagem-btn" class="btn-primario">Enviar Mensagem</button>
             </div>
         </div>
-        <!-- Script TypeScript compilado para JavaScript -->
-        <script type="module" src="../scripts/js/autenticacao.js"></script>
+
+        <script type="module" src="../scripts/js/headerManager.js"></script>
         <script type="module" src="../scripts/js/detalhesCavalo.js"></script>
     </main>
 

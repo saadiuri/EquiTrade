@@ -28,12 +28,10 @@
     padding: 0;
 }
 
-/* Fundo bege com overlay suave para leitura */
 body {
     font-family: var(--font-primary);
     height: 100vh;
     width: 100vw;
-    background: var(--bege) url('../pages/img/fundoLivros.png') no-repeat bottom / cover;
     position: relative;
 
     display: flex;
@@ -41,17 +39,49 @@ body {
     justify-content: center;
 }
 
-/* Overlay para deixar leitura mais agradável */
 body::before {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(79, 109, 80, 0.35);
-    /* verde-escuro com transparência */
     z-index: 0;
 }
 
-/* Container principal */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    color: var(--verde-escuro);
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: var(--verde);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.back-button:active {
+    opacity: 0.5;
+    transform: translateY(0);
+}
+
+.back-button svg {
+    width: 24px;
+    height: 24px;
+}
+
 .login-container {
     position: relative;
     width: 100%;
@@ -60,7 +90,6 @@ body::before {
     z-index: 1;
 }
 
-/* Cartão em Glassmorphism */
 .form-card {
     background-color: var(--glass-bg);
     border-radius: 18px;
@@ -75,14 +104,12 @@ body::before {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
 }
 
-/* Logo */
 .logo {
     max-width: 150px;
     display: block;
     margin: 0 auto var(--spacing-large);
 }
 
-/* Títulos */
 h1 {
     text-align: center;
     color: var(--marrom);
@@ -96,7 +123,6 @@ h3 {
     margin-bottom: var(--spacing-large);
 }
 
-/* Inputs */
 .input-group {
     position: relative;
     margin-bottom: var(--spacing-medium);
@@ -128,7 +154,6 @@ h3 {
     background: #fff;
 }
 
-/* Botão */
 button {
     width: 100%;
     padding: 12px;
@@ -147,7 +172,6 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* Link para cadastro */
 .signup-container {
     margin-top: var(--spacing-medium);
     display: flex;
@@ -165,15 +189,25 @@ button:hover {
     text-decoration: underline;
 }
 
-/* Mensagem de erro */
 .error-message {
     color: #b30000;
     font-size: 14px;
     margin-top: 5px;
 }
 
-/* Responsividade */
 @media (max-width: 480px) {
+    .back-button {
+        top: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .back-button svg {
+        width: 20px;
+        height: 20px;
+    }
+
     .form-card {
         padding: var(--spacing-medium);
     }

@@ -33,7 +33,7 @@ export class UserService {
   }
 
   async createUser(userData: CreateUserDto): Promise<UserDto> {
-    // Business logic: validate email uniqueness
+
     const existingUser = await this.userRepository.findByEmail(userData.data.email);
     if (existingUser) {
       throw new Error('Email already exists');
@@ -44,7 +44,6 @@ export class UserService {
       const comprador = await this.userRepository.createComprador(userData.data);
       return this.toUserDto(comprador);
     } else {
-      // Default nota to 0.0 if not provided for Vendedor
       const vendedorData = {
         ...userData.data,
         nota: userData.data.nota ?? 0.0
@@ -55,7 +54,6 @@ export class UserService {
   }
 
   async updateUser(id: string, userData: UpdateUserDto): Promise<UserDto | null> {
-    // Business logic: check if user exists
     const existingUser = await this.userRepository.findById(id);
     if (!existingUser) {
       throw new Error('User not found');
@@ -73,7 +71,6 @@ export class UserService {
     let updatedUser: User | null = null;
 
     if (userData.type === USER_TYPE.COMPRADOR) {
-      // Ensure we're updating the right type
       const comprador = await this.userRepository.findCompradorById(id);
       if (!comprador) {
         throw new Error('User is not a Comprador');
@@ -179,8 +176,39 @@ export class UserService {
       endereco: vendedor.endereco,
       type: USER_TYPE.VENDEDOR,
       nota: vendedor.nota,
+      numero_avaliacoes: vendedor.numero_avaliacoes,
       createdAt: vendedor.createdAt,
       updatedAt: vendedor.updatedAt
     };
+  }
+
+  async rateVendedor(vendedorId: string, rating: number): Promise<VendedorDto> {
+    if (rating < 1 || rating > 5) {
+      throw new Error('Rating must be between 1 and 5');
+    }
+
+    const user = await this.userRepository.findById(vendedorId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (!(user instanceof Vendedor)) {
+      throw new Error('User is not a seller');
+    }
+
+    const currentTotal = user.nota * user.numero_avaliacoes;
+    const newNumAvaliacoes = user.numero_avaliacoes + 1;
+    const newNota = (currentTotal + rating) / newNumAvaliacoes;
+
+    const updatedVendedor = await this.userRepository.updateVendedor(vendedorId, {
+      nota: newNota,
+      numero_avaliacoes: newNumAvaliacoes
+    });
+
+    if (!updatedVendedor) {
+      throw new Error('Failed to update seller rating');
+    }
+
+    return this.toVendedorDto(updatedVendedor);
   }
 }

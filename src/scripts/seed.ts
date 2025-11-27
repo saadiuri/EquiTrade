@@ -58,7 +58,8 @@ async function seed() {
         senha: hashedPassword,
         celular: '(31) 99999-3333',
         endereco: 'Belo Horizonte, MG',
-        nota: 4.5
+        nota: 4.5,
+        numero_avaliacoes: 10
       },
       {
         nome: 'Ana Vendedora',
@@ -66,7 +67,8 @@ async function seed() {
         senha: hashedPassword,
         celular: '(41) 99999-4444',
         endereco: 'Curitiba, PR',
-        nota: 4.8
+        nota: 4.8,
+        numero_avaliacoes: 15
       }
     ];
 
@@ -98,6 +100,7 @@ async function seed() {
         descricao: 'Cavalo experiente em salto, participou de diversas competições nacionais',
         disponivel: true,
         premios: 'Campeão Regional de Salto 2023, 3º lugar Nacional 2022',
+        foto: '/assets/seed/horse_1.jpg',
         dono: savedVendedores[0] // Pedro Oliveira
       },
       {
@@ -108,6 +111,7 @@ async function seed() {
         descricao: 'Égua com excelente adestramento, movimentos harmoniosos',
         disponivel: true,
         premios: '2º lugar Regional de Adestramento 2023',
+        foto: '/assets/seed/horse_2.jpg',
         dono: savedVendedores[1] // Ana Vendedora
       },
       {
@@ -118,6 +122,7 @@ async function seed() {
         descricao: 'Cavalo manso e confiável, ideal para cavalgadas e iniciantes',
         disponivel: true,
         premios: 'Campeão de Resistência Regional 2022',
+        foto: '/assets/seed/horse_3.jpg',
         dono: savedVendedores[0] // Pedro Oliveira
       },
       {
@@ -128,6 +133,7 @@ async function seed() {
         descricao: 'Égua dócil com boa resistência, perfeita para passeios',
         disponivel: true,
         premios: 'Participação em Exposições Locais',
+        foto: '/assets/seed/horse_4.png',
         dono: savedVendedores[1] // Ana Vendedora
       }
     ];

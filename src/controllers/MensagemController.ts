@@ -273,6 +273,64 @@ export class MensagemController {
 
   /**
    * @swagger
+   * /api/mensagens/conversations:
+   *   get:
+   *     summary: Listar todas as conversas
+   *     description: Retorna todas as conversas do usuário autenticado
+   *     tags: [Mensagens]
+   *     responses:
+   *       200:
+   *         description: Lista de conversas retornada com sucesso
+   *         content:
+   *           application/json:
+   *             schema:
+   *               allOf:
+   *                 - $ref: '#/components/schemas/ApiResponse'
+   *                 - type: object
+   *                   properties:
+   *                     count:
+   *                       type: integer
+   *                     data:
+   *                       type: array
+   *                       items:
+   *                         $ref: '#/components/schemas/ConversationDto'
+   *       401:
+   *         description: Não autenticado
+   *       404:
+   *         description: Usuário não encontrado
+   *       500:
+   *         description: Erro interno do servidor
+   */
+  async getAllConversations(req: Request, res: Response): Promise<void> {
+    try {
+      if (!req.user) {
+        res.status(401).json({
+          success: false,
+          message: "Authentication required",
+        });
+        return;
+      }
+
+      const conversations = await this.mensagemService.getAllConversations(req.user.userId);
+
+      res.json({
+        success: true,
+        count: conversations.length,
+        data: conversations,
+      });
+    } catch (error) {
+      const statusCode = error instanceof Error && error.message === "User not found" ? 404 : 500;
+
+      res.status(statusCode).json({
+        success: false,
+        message: "Failed to fetch conversations",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
+  /**
+   * @swagger
    * /api/mensagens/conversation/{userId}:
    *   get:
    *     summary: Buscar conversa com usuário

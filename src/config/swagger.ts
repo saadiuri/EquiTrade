@@ -294,13 +294,9 @@ const swaggerDefinition: SwaggerDefinition = {
             type: 'string',
             description: 'Prêmios e conquistas do cavalo',
           },
-          donoId: {
-            type: 'string',
-            format: 'uuid',
-            description: 'UUID do proprietário do cavalo',
-          },
         },
-        required: ['nome', 'idade', 'raca', 'preco', 'donoId'],
+        required: ['nome', 'idade', 'raca', 'preco'],
+        description: 'O donoId é extraído automaticamente do token JWT do usuário autenticado',
       },
       UpdateCavaloDto: {
         type: 'object',

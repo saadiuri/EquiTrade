@@ -11,3 +11,6 @@ ALTER TABLE cavalos ADD CONSTRAINT fk_dono FOREIGN KEY (dono) REFERENCES users(i
 
 -- 4. Criar índice para melhorar buscas por email
 CREATE INDEX idx_email ON users(email);
+
+-- 5. Adicionar coluna foto à tabela cavalos
+ALTER TABLE cavalos ADD COLUMN foto VARCHAR(255);

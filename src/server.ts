@@ -4,16 +4,11 @@ import swaggerUi from 'swagger-ui-express';
 import { AppDataSource } from './config/database';
 import { swaggerSpec } from './config/swagger';
 import apiRoutes from './routes';
-import cors from 'cors'; // permitir CORS par testes locais
-
-
+import cors from 'cors';
 
 const app: Application = express();
 const PORT: number = parseInt(process.env.PORT as string) || 3000;
 
-// Habilita CORS para todas as origens (pode restringir depois)
-// app.use(cors());
-// PARA TESTES LOCAIS, PERMITIR CORS DE TODAS AS ORIGENS
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -30,7 +25,6 @@ const initializeDatabase = async () => {
   }
 };
 
-// Middleware to parse JSON
 app.use(express.json());
 
 // Swagger Documentation
@@ -54,9 +48,8 @@ app.get('/', (req: Request, res: Response) => {
 
 // API routes
 app.use('/api', apiRoutes);
-app.use(express.static("src/resources")); // para teste local de arquivos estáticos
+app.use(express.static("src/resources"));
 
-// Start the server
 const startServer = async () => {
   await initializeDatabase();
 
@@ -68,7 +61,6 @@ const startServer = async () => {
   });
 };
 
-// Initialize everything
 startServer().catch((error) => {
   console.error('Failed to start server:', error);
   process.exit(1);

@@ -5,4 +5,7 @@ import { User } from './User';
 export class Vendedor extends User {
   @Column({ type: 'float', default: 0.0 })
   nota!: number;
+
+  @Column({ type: 'integer', default: 0 })
+  numero_avaliacoes!: number;
 }

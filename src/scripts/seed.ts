@@ -58,7 +58,8 @@ async function seed() {
         senha: hashedPassword,
         celular: '(31) 99999-3333',
         endereco: 'Belo Horizonte, MG',
-        nota: 4.5
+        nota: 4.5,
+        numero_avaliacoes: 10
       },
       {
         nome: 'Ana Vendedora',
@@ -66,7 +67,8 @@ async function seed() {
         senha: hashedPassword,
         celular: '(41) 99999-4444',
         endereco: 'Curitiba, PR',
-        nota: 4.8
+        nota: 4.8,
+        numero_avaliacoes: 15
       }
     ];
 

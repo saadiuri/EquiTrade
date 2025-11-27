@@ -54,6 +54,7 @@ import { requireAuth } from "./autenticacao.js";
       const precoStr = safeInput("preco")?.value || "";
       const descricao = safeInput("descricao")?.value.trim() || "";
       const premios = safeInput("premios")?.value.trim() || "";
+      const foto = safeInput("foto")?.value.trim() || "";
       const disponivel =
         (document.getElementById("disponivel") as HTMLInputElement)?.checked ||
         false;
@@ -83,7 +84,7 @@ import { requireAuth } from "./autenticacao.js";
         return;
       }
 
-      const payload = {
+      const payload: any = {
         nome,
         idade,
         raca,
@@ -91,8 +92,11 @@ import { requireAuth } from "./autenticacao.js";
         descricao,
         disponivel,
         premios,
-        // donoId is extracted from JWT token on backend
       };
+
+      if (foto) {
+        payload.foto = foto;
+      }
 
       // TOKEN CORRETO AQUI 🚀
       const token = extractToken();

@@ -545,4 +545,87 @@ export class UserController {
       });
     }
   }
+
+  /**
+   * @swagger
+   * /api/users/rate/{id}:
+   *   post:
+   *     summary: Avaliar um vendedor
+   *     description: Permite que usuários avaliem um vendedor (1-5 estrelas)
+   *     tags: [Users]
+   *     security:
+   *       - bearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *           format: uuid
+   *         description: ID do vendedor
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - rating
+   *             properties:
+   *               rating:
+   *                 type: integer
+   *                 minimum: 1
+   *                 maximum: 5
+   *                 example: 5
+   *     responses:
+   *       200:
+   *         description: Avaliação registrada com sucesso
+   *       400:
+   *         description: Rating inválido ou usuário não é vendedor
+   *       404:
+   *         description: Vendedor não encontrado
+   */
+  async rateVendedor(req: Request, res: Response): Promise<void> {
+    try {
+      const vendedorId = req.params.id;
+      const { rating } = req.body;
+
+      if (!vendedorId || typeof vendedorId !== "string") {
+        res.status(400).json({
+          success: false,
+          message: "Invalid seller ID format (UUID expected)",
+        });
+        return;
+      }
+
+      if (!rating || typeof rating !== "number") {
+        res.status(400).json({
+          success: false,
+          message: "Rating is required and must be a number",
+        });
+        return;
+      }
+
+      const vendedor = await this.userService.rateVendedor(vendedorId, rating);
+
+      res.json({
+        success: true,
+        message: "Rating submitted successfully",
+        data: vendedor,
+      });
+    } catch (error) {
+      let statusCode = 500;
+      if (error instanceof Error) {
+        if (error.message === "User not found") statusCode = 404;
+        if (error.message === "User is not a seller") statusCode = 400;
+        if (error.message === "Rating must be between 1 and 5") statusCode = 400;
+      }
+
+      res.status(statusCode).json({
+        success: false,
+        message: "Failed to submit rating",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
 }

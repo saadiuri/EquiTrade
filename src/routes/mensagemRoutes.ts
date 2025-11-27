@@ -11,7 +11,10 @@ router.use(authenticate);
 // POST /api/mensagens - Send new message
 router.post('/', mensagemController.sendMessage.bind(mensagemController));
 
-// GET /api/mensagens/sent - Get sent messages (must be before /:id route)
+// GET /api/mensagens/conversations - Get all conversations (must be before /:id route)
+router.get('/conversations', mensagemController.getAllConversations.bind(mensagemController));
+
+// GET /api/mensagens/sent - Get sent messages
 router.get('/sent', mensagemController.getSentMessages.bind(mensagemController));
 
 // GET /api/mensagens/received - Get received messages

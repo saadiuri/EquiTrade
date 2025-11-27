@@ -22,7 +22,7 @@ function initializeHeader(): void {
             <a href="meusCavalos.html">Meus Cavalos</a>
             <a href="sobre.html">Sobre</a>
             <a href="contato.html">Contato</a>
-            <a href="batePapo.html">Mensagens</a>
+            <a href="mensagens.html">Mensagens</a>
             <a href="#" class="btn-login" id="logout-btn">Sair</a>
         `;
 
@@ -63,8 +63,8 @@ function highlightActivePage(): void {
       (currentPage === "paginaInicial.html" && href === "paginaInicial.html") ||
       (currentPage === "listagemCavalo.html" && href === "listagemCavalo.html") ||
       (currentPage === "meusCavalos.html" && href === "meusCavalos.html") ||
-      (currentPage === "batePapo.html" &&
-        link.textContent?.trim() === "Mensagens")
+      (currentPage === "mensagens.html" && href === "mensagens.html") ||
+      (currentPage === "batePapo.html" && href === "mensagens.html")
     ) {
       link.classList.add("ativo");
     } else {

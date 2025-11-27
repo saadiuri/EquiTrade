@@ -205,6 +205,14 @@ nav a.ativo::after {
     font-size: 0.95rem;
 }
 
+.form-group .field-hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
 .form-group input,
 .form-group textarea {
     padding: 12px 15px;

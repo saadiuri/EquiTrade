@@ -22,6 +22,7 @@ export interface CompradorDto extends BaseUserDto {
 export interface VendedorDto extends BaseUserDto {
   type: typeof USER_TYPE.VENDEDOR;
   nota: number;
+  numero_avaliacoes: number;
 }
 
 // Union type for polymorphic handling
@@ -65,6 +66,7 @@ export interface UpdateVendedorDto {
   celular?: string;
   endereco?: string;
   nota?: number;
+  numero_avaliacoes?: number;
 }
 
 export type UpdateUserDto = 
